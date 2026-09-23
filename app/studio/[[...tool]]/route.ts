@@ -11,9 +11,11 @@ async function leerIndex(request: Request) {
     const assets = (getCloudflareContext().env as { ASSETS?: { fetch: typeof fetch } }).ASSETS
     if (assets) return await assets.fetch(url)
   } catch {
-    // No estamos en Cloudflare (next start / Vercel): se usa HTTP.
+    // No estamos en Cloudflare (Vercel / next start): se lee por HTTP.
   }
-  return fetch(url)
+  // En previews de Vercel con "Deployment Protection" se envía el token de bypass (si está configurado).
+  const bypass = process.env.VERCEL_AUTOMATION_BYPASS_SECRET
+  return fetch(url, bypass ? { headers: { 'x-vercel-protection-bypass': bypass } } : undefined)
 }
 
 export async function GET(request: Request) {

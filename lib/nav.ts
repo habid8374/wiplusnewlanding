@@ -12,4 +12,5 @@ export const legalNav = [
   { href: '/usuario', label: 'Protección al usuario y PQR' },
   { href: '/politica-de-datos', label: 'Política de datos personales' },
   { href: '/terminos', label: 'Términos y condiciones' },
+  { href: '/mapa-del-sitio', label: 'Mapa del sitio' },
 ] as const

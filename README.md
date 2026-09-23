@@ -6,7 +6,7 @@ Atlántico) — https://www.wiplus.com.co. Desarrollado por Axentia Technologies
 - Next.js 16 (App Router) · React 19 · TypeScript strict · Tailwind CSS v4
 - CMS: Sanity (Studio en `/studio`) con respaldo local en `content/`
 - Formularios: Zod · Resend · Cloudflare Turnstile · honeypot · rate limit
-- Despliegue: Cloudflare Workers con `@opennextjs/cloudflare` (compatible con Vercel)
+- Despliegue: Vercel (ver abajo) o Cloudflare Workers con `@opennextjs/cloudflare`
 - Calidad: ESLint · Prettier · Playwright + axe · Lighthouse CI
 
 Documentos: [`CLAUDE.md`](CLAUDE.md) (convenciones) · [`ARQUITECTURA.md`](ARQUITECTURA.md) ·
@@ -46,7 +46,92 @@ marcado `ejemplo: true`. Se ve con la etiqueta **[EJEMPLO]** mientras `NEXT_PUBL
 
 ---
 
-## Despliegue en Cloudflare Workers
+## Despliegue en Vercel (recomendado para empezar)
+
+Next.js funciona en Vercel sin configuración adicional. `wrangler.jsonc` y `open-next.config.ts` se ignoran.
+
+### 1. Crear el proyecto
+
+1. vercel.com › _Add New… › Project_ › importar el repositorio de GitHub `wiplusnewlanding`.
+2. Framework: **Next.js** (se detecta solo). Build command: `npm run build` · Output: por defecto.
+   Node.js: 22.x (_Settings › General_).
+3. Rama de producción: `main` (tras hacer merge de este trabajo).
+
+### 2. Variables de entorno (_Settings › Environment Variables_)
+
+| Variable                                                                                  | Production                  | Preview                     | Nota                                                         |
+| ----------------------------------------------------------------------------------------- | --------------------------- | --------------------------- | ------------------------------------------------------------ |
+| `NEXT_PUBLIC_SITE_URL`                                                                    | `https://www.wiplus.com.co` | `https://www.wiplus.com.co` | URL canónica (siempre la oficial)                            |
+| `NEXT_PUBLIC_SITE_ENV`                                                                    | _(vacío)_                   | _(vacío)_                   | Vercel decide: solo Production se indexa                     |
+| `NEXT_PUBLIC_WHATSAPP_NUMBER`                                                             | `573012133151`              | igual                       | Confirmar con WIPLUS                                         |
+| `NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION`                                                    | código de Search Console    | —                           | Paso 4 (opcional si se verifica por DNS)                     |
+| `NEXT_PUBLIC_GA_ID`                                                                       | `G-XXXXXXX`                 | —                           | Sin GA en previews                                           |
+| `RESEND_API_KEY`, `MAIL_FROM`                                                             | ✔                           | opcional                    | Sin clave en producción, los formularios piden usar WhatsApp |
+| `NEXT_PUBLIC_TURNSTILE_SITE_KEY`, `TURNSTILE_SECRET_KEY`                                  | ✔                           | ✔                           | Agregar el dominio de Vercel en Turnstile                    |
+| `NEXT_PUBLIC_SANITY_PROJECT_ID`, `NEXT_PUBLIC_SANITY_DATASET`, `SANITY_REVALIDATE_SECRET` | ✔                           | ✔                           | Cuando exista el proyecto de Sanity                          |
+
+Las `NEXT_PUBLIC_*` se incrustan en el build: después de cambiarlas, hay que **redesplegar**.
+
+### 3. Dominio
+
+1. _Settings › Domains_ › agregar `www.wiplus.com.co` (principal) y `wiplus.com.co` con
+   **Redirect to www.wiplus.com.co (308)**.
+2. En el DNS del dominio (donde esté hoy) cambiar **solo**:
+   - `www` → `CNAME cname.vercel-dns.com`
+   - `@` (raíz) → `A 76.76.21.21` (o el valor que muestre Vercel)
+     **No tocar los registros MX, SPF, DKIM ni DMARC** del correo `@wiplus.com.co`.
+3. Esperar a que Vercel marque _Valid Configuration_ (el certificado SSL se emite solo).
+4. Comprobar el correo enviando y recibiendo un mensaje en `atencionalcliente@wiplus.com.co`.
+
+### 4. Google Search Console
+
+1. Entrar a https://search.google.com/search-console con la cuenta de Google de WIPLUS.
+2. _Agregar propiedad_ › **Dominio** › `wiplus.com.co` → copiar el registro **TXT** y agregarlo en el DNS
+   (cubre `www`, raíz, http y https). _Alternativa:_ propiedad **Prefijo de URL**
+   `https://www.wiplus.com.co` › método _Etiqueta HTML_ → poner el valor en
+   `NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION`, redesplegar y pulsar _Verificar_.
+3. _Sitemaps_ › enviar **`sitemap.xml`** (`https://www.wiplus.com.co/sitemap.xml`).
+4. _Inspección de URLs_ › probar `https://www.wiplus.com.co/` y `/planes-hogar` › _Solicitar indexación_.
+5. Comprobar las redirecciones del sitio viejo: inspeccionar `https://www.wiplus.com.co/planes/`
+   (debe decir “Página con redirección” → `/planes-hogar`).
+6. Si el sitio anterior tenía propiedad en Search Console, conservarla: el historial se mantiene porque el
+   dominio es el mismo.
+7. A las 2–4 semanas revisar _Indexación de páginas_, _Rendimiento_ (búsquedas como “internet
+   Sabanalarga”) y _Métricas web principales_.
+8. Opcional: Bing Webmaster Tools › _Importar desde Google Search Console_ (o etiqueta en
+   `NEXT_PUBLIC_BING_SITE_VERIFICATION`).
+
+**Perfil de Empresa de Google (Google Maps):** crear/reclamar la ficha “WIPLUS Comunicaciones” en
+business.google.com con la misma dirección (Calle 13 #17-04, Sabanalarga), teléfonos, horario y el sitio
+`https://www.wiplus.com.co`. Es lo que más pesa en búsquedas locales (“internet cerca de mí”).
+
+### 5. Qué queda listo en SEO
+
+- `/sitemap.xml` (generado desde `lib/rutas.ts`) y `/robots.txt` con la URL del sitemap.
+- Página `/mapa-del-sitio` para personas (enlazada en el pie de página).
+- Previews de Vercel con `noindex` y `robots.txt` bloqueado; Production indexable.
+- Título único y descripción por página, URL canónica `https://www.wiplus.com.co/...`, `lang="es-CO"`.
+- Open Graph/Twitter con imagen generada (`/opengraph-image`), favicon, íconos y `manifest.webmanifest`.
+- JSON-LD: LocalBusiness (dirección, geo, teléfonos, horario, municipios atendidos, Facebook), WebSite,
+  BreadcrumbList, FAQPage y Product/Offer (se activa cuando los planes tengan precio).
+- Redirecciones 301 de las URLs de WordPress.
+
+Verificación rápida después de desplegar:
+
+```bash
+curl -s https://www.wiplus.com.co/robots.txt
+curl -s https://www.wiplus.com.co/sitemap.xml | head
+curl -sI https://www.wiplus.com.co/planes/ | grep -i -E "HTTP|location"
+```
+
+Y en https://search.google.com/test/rich-results probar la página de inicio (LocalBusiness y FAQ).
+
+> Nota: en Vercel el límite de envíos por IP de `lib/rate-limit.ts` es por instancia. Para un límite
+> global se puede activar _Firewall › Rate limiting_ de Vercel sobre `/api/*`.
+
+---
+
+## Despliegue alternativo en Cloudflare Workers
 
 ### 1. Requisitos
 
@@ -171,14 +256,6 @@ Cloudflare › Turnstile › _Add site_ (`www.wiplus.com.co`, modo _Managed_). S
 - Cloudflare › Security › WAF › _Rate limiting rules_: `/api/*` método POST, 10 solicitudes/minuto por IP
   (complementa el límite en memoria de `lib/rate-limit.ts`, que es por instancia).
 - Bot Fight Mode activado.
-
----
-
-## Despliegue alternativo en Vercel
-
-El proyecto funciona en Vercel sin cambios de código: importar el repositorio, definir las variables de
-`.env.example` y desplegar. `wrangler.jsonc`/`open-next.config.ts` se ignoran. El Studio se compila en el
-build (`npm run build`) igual que en Cloudflare.
 
 ---
 

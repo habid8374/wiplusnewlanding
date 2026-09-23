@@ -1,6 +1,11 @@
 import type { Metadata, Viewport } from 'next'
 import { Plus_Jakarta_Sans } from 'next/font/google'
-import { SITE_URL, IS_PRODUCTION_SITE } from '@/lib/env'
+import {
+  BING_SITE_VERIFICATION,
+  GOOGLE_SITE_VERIFICATION,
+  IS_PRODUCTION_SITE,
+  SITE_URL,
+} from '@/lib/env'
 import './globals.css'
 
 const jakarta = Plus_Jakarta_Sans({
@@ -29,6 +34,10 @@ export const metadata: Metadata = {
   creator: 'Axentia Technologies',
   formatDetection: { telephone: false },
   openGraph: { locale: 'es_CO', type: 'website', siteName: 'WIPLUS Comunicaciones' },
+  verification: {
+    ...(GOOGLE_SITE_VERIFICATION ? { google: GOOGLE_SITE_VERIFICATION } : {}),
+    ...(BING_SITE_VERIFICATION ? { other: { 'msvalidate.01': BING_SITE_VERIFICATION } } : {}),
+  },
   robots: IS_PRODUCTION_SITE ? { index: true, follow: true } : { index: false, follow: false },
 }
 

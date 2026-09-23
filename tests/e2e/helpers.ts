@@ -12,6 +12,7 @@ export const PAGINAS = [
   { path: '/usuario', h1: /Protección al usuario/ },
   { path: '/politica-de-datos', h1: /Política de tratamiento de datos/ },
   { path: '/terminos', h1: /Términos y condiciones/ },
+  { path: '/mapa-del-sitio', h1: /Mapa del sitio/ },
 ] as const
 
 export const WHATSAPP = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || '573012133151'

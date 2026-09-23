@@ -53,3 +53,6 @@ next-env.d.ts
 /blob-report/
 /.lighthouseci/
 /public/studio/
+
+# sanity
+/.sanity/

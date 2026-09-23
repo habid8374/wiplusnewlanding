@@ -29,7 +29,7 @@ export default async function ContactoPage() {
       />
       <Section id="canales" align="left">
         <div className="grid gap-10 lg:grid-cols-2">
-          <div>
+          <div className="min-w-0">
             <h2 className="text-2xl font-extrabold text-primary-900">Canales de atención</h2>
             <ul className="mt-6 space-y-5">
               <li>
@@ -38,6 +38,7 @@ export default async function ContactoPage() {
                   mensaje={mensajesWhatsApp.general()}
                   ubicacion="contacto"
                   size="lg"
+                  className="w-full sm:w-auto"
                 >
                   Escríbenos por WhatsApp
                 </WhatsAppLink>
@@ -91,7 +92,7 @@ export default async function ContactoPage() {
                     href={sitio.redes.facebook}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 font-bold text-primary-700 hover:underline"
+                    className="inline-flex max-w-full items-center gap-2 font-bold [overflow-wrap:anywhere] text-primary-700 hover:underline"
                   >
                     <FacebookIcon className="size-5" />
                     facebook.com/wipluscomunicaciones

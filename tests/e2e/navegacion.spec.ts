@@ -76,15 +76,19 @@ test.describe('Navegación', () => {
     await expect(page.getByRole('main').locator('a[href^="https://wa.me/"]')).toBeVisible()
   })
 
-  test('sin desbordamiento horizontal', async ({ page }) => {
-    for (const p of PAGINAS) {
-      await page.goto(p.path)
-      const overflow = await page.evaluate(
-        () => document.documentElement.scrollWidth - window.innerWidth,
-      )
-      expect(overflow, `desborde en ${p.path}`).toBeLessThanOrEqual(0)
-    }
-  })
+  for (const fuente of ['web', 'respaldo'] as const) {
+    // La fuente usa display: optional; en conexiones lentas se ve la de respaldo (más ancha).
+    test(`sin desbordamiento horizontal (fuente ${fuente})`, async ({ page }) => {
+      if (fuente === 'respaldo') await page.route('**/*.woff2', (r) => r.abort())
+      for (const p of PAGINAS) {
+        await page.goto(p.path)
+        const overflow = await page.evaluate(
+          () => document.documentElement.scrollWidth - window.innerWidth,
+        )
+        expect(overflow, `desborde en ${p.path}`).toBeLessThanOrEqual(0)
+      }
+    })
+  }
 
   test('teléfonos clicables', async ({ page }) => {
     await page.goto('/contacto')

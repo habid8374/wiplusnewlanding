@@ -11,26 +11,30 @@ export function pageMetadata({
   description,
   path,
   noIndex,
+  absoluteTitle,
 }: {
   title: string
   description: string
   path: string
   noIndex?: boolean
+  /** true = el título ya incluye la marca (no se aplica la plantilla "%s | WIPLUS…") */
+  absoluteTitle?: boolean
 }): Metadata {
   const url = absoluteUrl(path)
+  const fullTitle = absoluteTitle ? title : `${title} | WIPLUS Comunicaciones`
   return {
-    title,
+    title: absoluteTitle ? { absolute: title } : title,
     description,
     alternates: { canonical: url },
     openGraph: {
-      title,
+      title: fullTitle,
       description,
       url,
       type: 'website',
       locale: 'es_CO',
       siteName: 'WIPLUS Comunicaciones',
     },
-    twitter: { card: 'summary_large_image', title, description },
+    twitter: { card: 'summary_large_image', title: fullTitle, description },
     ...(noIndex ? { robots: { index: false, follow: true } } : {}),
   }
 }

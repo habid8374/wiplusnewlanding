@@ -2,7 +2,7 @@ import { SHOW_EXAMPLES } from '@/lib/env'
 import { cn } from '@/lib/cn'
 
 /** Etiqueta visible para contenido de relleno pendiente de datos reales (nunca en producción). */
-export function ExampleBadge({ show = true, className }: { show?: boolean; className?: string }) {
+export function ExampleBadge({ show, className }: { show?: boolean; className?: string }) {
   if (!show || !SHOW_EXAMPLES) return null
   return (
     <span

@@ -49,20 +49,23 @@ export function ConsentAndAnalytics({ gaId }: { gaId: string }) {
         <div
           role="region"
           aria-label="Aviso de cookies"
-          className="border-line shadow-card-hover fixed inset-x-3 bottom-3 z-[60] mx-auto max-w-xl rounded-2xl border bg-white p-4 sm:bottom-6 sm:p-5"
+          className="fixed inset-x-2 bottom-2 z-[60] mx-auto max-w-xl rounded-2xl border border-line bg-white p-3 shadow-card-hover sm:bottom-6 sm:p-5"
         >
           <div className="flex gap-3">
-            <Cookie className="text-primary-600 mt-0.5 size-6 shrink-0" aria-hidden />
-            <p className="text-ink text-sm">
-              Usamos cookies de analítica para saber cómo se usa el sitio y mejorarlo. Puedes
-              aceptarlas o rechazarlas. Más información en nuestra{' '}
-              <Link href="/politica-de-datos" className="text-primary-700 font-semibold underline">
+            <Cookie
+              className="mt-0.5 hidden size-6 shrink-0 text-primary-600 sm:block"
+              aria-hidden
+            />
+            <p className="text-xs text-ink sm:text-sm">
+              Usamos cookies de analítica para mejorar el sitio. Puedes aceptarlas o rechazarlas.
+              Más información en nuestra{' '}
+              <Link href="/politica-de-datos" className="font-semibold text-primary-700 underline">
                 política de datos
               </Link>
               .
             </p>
           </div>
-          <div className="mt-4 flex justify-end gap-2">
+          <div className="mt-2 flex justify-end gap-2 sm:mt-4">
             <button
               type="button"
               onClick={() => write('rechazado')}

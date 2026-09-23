@@ -23,7 +23,7 @@ export function Footer({ sitio }: { sitio: SiteSettings }) {
             <Image src={icono} alt="" width={48} height={48} className="size-12 rounded-xl" />
             <span className="text-lg leading-tight font-extrabold text-white">
               WIPLUS
-              <span className="text-primary-200 block text-xs font-semibold tracking-[0.2em]">
+              <span className="block text-xs font-semibold tracking-[0.2em] text-primary-200">
                 COMUNICACIONES
               </span>
             </span>
@@ -56,7 +56,7 @@ export function Footer({ sitio }: { sitio: SiteSettings }) {
                   ubicacion="footer"
                   className="inline-flex items-center gap-2 hover:text-white hover:underline"
                 >
-                  <Phone className="text-accent-400 size-4" aria-hidden />
+                  <Phone className="size-4 text-accent-400" aria-hidden />
                   {t.numero}
                 </CallLink>
               </li>
@@ -66,18 +66,18 @@ export function Footer({ sitio }: { sitio: SiteSettings }) {
                 href={`mailto:${sitio.correo}`}
                 className="inline-flex items-center gap-2 [overflow-wrap:anywhere] hover:text-white hover:underline"
               >
-                <Mail className="text-accent-400 size-4 shrink-0" aria-hidden />
+                <Mail className="size-4 shrink-0 text-accent-400" aria-hidden />
                 {sitio.correo}
               </a>
             </li>
             <li className="flex gap-2">
-              <MapPin className="text-accent-400 mt-0.5 size-4 shrink-0" aria-hidden />
+              <MapPin className="mt-0.5 size-4 shrink-0 text-accent-400" aria-hidden />
               <span>
                 {sitio.direccion.calle}, {sitio.direccion.municipio}, {sitio.direccion.departamento}
               </span>
             </li>
             <li className="flex gap-2">
-              <Clock className="text-accent-400 mt-0.5 size-4 shrink-0" aria-hidden />
+              <Clock className="mt-0.5 size-4 shrink-0 text-accent-400" aria-hidden />
               <span>
                 {sitio.horario.dias}: {sitio.horario.texto}
               </span>
@@ -141,7 +141,7 @@ export function Footer({ sitio }: { sitio: SiteSettings }) {
         </nav>
       </Container>
       <div className="border-t border-white/10">
-        <Container className="text-primary-200 flex flex-col gap-2 py-6 text-xs sm:flex-row sm:items-center sm:justify-between">
+        <Container className="flex flex-col gap-2 py-6 text-xs text-primary-200 sm:flex-row sm:items-center sm:justify-between">
           <p>
             © {year} {sitio.razonSocial ?? sitio.nombre}
             {sitio.nit ? ` · NIT ${sitio.nit}` : ''}. Todos los derechos reservados.

@@ -7,10 +7,10 @@ import type { SiteSettings } from '@/lib/types'
 export function TopBar({ sitio }: { sitio: SiteSettings }) {
   const tel = sitio.telefonos[0]
   return (
-    <div className="bg-primary-950 text-primary-100 text-sm">
+    <div className="bg-primary-950 text-sm text-primary-100">
       <Container className="flex min-h-9 items-center justify-between gap-4 py-1">
         <p className="flex items-center gap-1.5">
-          <Clock className="text-accent-400 size-4 shrink-0" aria-hidden />
+          <Clock className="size-4 shrink-0 text-accent-400" aria-hidden />
           <span>
             <span className="hidden sm:inline">Atención: </span>
             {sitio.horario.texto}
@@ -23,7 +23,7 @@ export function TopBar({ sitio }: { sitio: SiteSettings }) {
               ubicacion="barra_superior"
               className="flex items-center gap-1.5 font-semibold text-white hover:underline"
             >
-              <Phone className="text-accent-400 size-4" aria-hidden />
+              <Phone className="size-4 text-accent-400" aria-hidden />
               {tel.numero}
             </CallLink>
           )}

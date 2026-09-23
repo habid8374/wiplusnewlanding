@@ -15,10 +15,10 @@ export function PageHero({
   children?: ReactNode
 }) {
   return (
-    <div className="from-primary-950 via-primary-900 to-primary-800 relative overflow-hidden bg-gradient-to-br text-white">
+    <div className="relative overflow-hidden bg-gradient-to-br from-primary-950 via-primary-900 to-primary-800 text-white">
       <div
         aria-hidden
-        className="bg-accent-500/20 pointer-events-none absolute -top-24 -right-24 size-80 rounded-full blur-3xl"
+        className="pointer-events-none absolute -top-24 -right-24 size-80 rounded-full bg-accent-500/20 blur-3xl"
       />
       <Container className="relative py-10 sm:py-14">
         <Breadcrumbs items={crumbs} />
@@ -26,7 +26,7 @@ export function PageHero({
           {title}
         </h1>
         {description && (
-          <p className="text-primary-100 mt-4 max-w-2xl text-lg text-pretty">{description}</p>
+          <p className="mt-4 max-w-2xl text-lg text-pretty text-primary-100">{description}</p>
         )}
         {children && <div className="mt-6">{children}</div>}
       </Container>

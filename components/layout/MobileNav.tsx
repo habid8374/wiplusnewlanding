@@ -50,7 +50,7 @@ export function MobileNav({ items, whatsapp }: { items: readonly Item[]; whatsap
           setOpen(!isOpen)
           setOpenedAt(pathname)
         }}
-        className="text-primary-900 hover:bg-primary-50 inline-flex size-11 items-center justify-center rounded-full"
+        className="inline-flex size-11 items-center justify-center rounded-full text-primary-900 hover:bg-primary-50"
       >
         {isOpen ? <X className="size-6" aria-hidden /> : <Menu className="size-6" aria-hidden />}
         <span className="sr-only">{isOpen ? 'Cerrar menú' : 'Abrir menú'}</span>
@@ -59,10 +59,10 @@ export function MobileNav({ items, whatsapp }: { items: readonly Item[]; whatsap
         id={panelId}
         ref={panelRef}
         hidden={!isOpen}
-        className="border-line shadow-card absolute inset-x-0 top-full z-40 h-[calc(100dvh-4rem)] overflow-y-auto border-t bg-white sm:h-[calc(100dvh-4.5rem)]"
+        className="absolute inset-x-0 top-full z-40 h-[calc(100dvh-4rem)] overflow-y-auto border-t border-line bg-white shadow-card sm:h-[calc(100dvh-4.5rem)]"
       >
         <nav aria-label="Menú móvil" className="px-4 py-4">
-          <ul className="divide-line divide-y">
+          <ul className="divide-y divide-line">
             {items.map((item) => {
               const active = pathname === item.href
               return (
@@ -72,7 +72,7 @@ export function MobileNav({ items, whatsapp }: { items: readonly Item[]; whatsap
                     aria-current={active ? 'page' : undefined}
                     onClick={() => setOpen(false)}
                     className={cn(
-                      'text-primary-900 block px-2 py-4 text-lg font-semibold',
+                      'block px-2 py-4 text-lg font-semibold text-primary-900',
                       active && 'text-primary-600',
                     )}
                   >

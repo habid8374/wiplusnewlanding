@@ -18,7 +18,7 @@ export function NavLinks({ items }: { items: readonly Item[] }) {
               href={item.href}
               aria-current={active ? 'page' : undefined}
               className={cn(
-                'text-ink/80 hover:bg-primary-50 hover:text-primary-800 rounded-full px-3 py-2 text-sm font-semibold transition-colors',
+                'rounded-full px-3 py-2 text-sm font-semibold text-ink/80 transition-colors hover:bg-primary-50 hover:text-primary-800',
                 active && 'bg-primary-50 text-primary-800',
               )}
             >

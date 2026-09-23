@@ -6,7 +6,7 @@ import './globals.css'
 const jakarta = Plus_Jakarta_Sans({
   subsets: ['latin'],
   variable: '--font-jakarta',
-  display: 'swap',
+  display: 'optional', // evita el reemplazo tardío de la fuente (mejor LCP/CLS en móvil)
 })
 
 export const metadata: Metadata = {

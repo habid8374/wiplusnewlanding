@@ -56,15 +56,14 @@ export default async function NosotrosPage() {
               <dt className="text-sm text-primary-200">Municipios</dt>
               <dd className="mt-1 text-3xl font-extrabold">{sitio.municipiosCobertura.length}</dd>
             </div>
-            <div className="col-span-2 flex items-start gap-3 rounded-2xl border border-line p-5">
-              <MapPin className="mt-1 size-5 shrink-0 text-primary-600" aria-hidden />
-              <div>
-                <dt className="font-bold text-primary-900">Oficina principal</dt>
-                <dd className="text-muted">
-                  {sitio.direccion.calle}, {sitio.direccion.municipio},{' '}
-                  {sitio.direccion.departamento}
-                </dd>
-              </div>
+            <div className="col-span-2 rounded-2xl border border-line p-5">
+              <dt className="flex items-center gap-2 font-bold text-primary-900">
+                <MapPin className="size-5 shrink-0 text-primary-600" aria-hidden />
+                Oficina principal
+              </dt>
+              <dd className="mt-1 pl-7 text-muted">
+                {sitio.direccion.calle}, {sitio.direccion.municipio}, {sitio.direccion.departamento}
+              </dd>
             </div>
           </dl>
         </div>

@@ -53,7 +53,7 @@ export default async function PlanesHogarPage() {
       </Section>
 
       <Section id="comparar" title="Compara los planes" tone="surface">
-        <div className="overflow-x-auto rounded-2xl border border-line bg-white shadow-card">
+        <div className="relative overflow-x-auto rounded-2xl border border-line bg-white shadow-card">
           <table className="w-full min-w-[40rem] text-left text-sm">
             <caption className="sr-only">Comparativo de planes de internet hogar de WIPLUS</caption>
             <thead className="bg-primary-900 text-white">

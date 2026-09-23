@@ -1,6 +1,6 @@
 'use client'
 
-import { MUNICIPIOS, TIPOS_FALLA } from '@/lib/schemas/forms'
+import { MUNICIPIOS, TIPOS_FALLA } from '@/lib/schemas/constants'
 import { SelectField, TextAreaField, TextField } from './fields'
 import { FormShell } from './FormShell'
 

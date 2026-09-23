@@ -6,10 +6,12 @@ import { useId, useRef, useState, type FormEvent, type ReactNode } from 'react'
 import { buttonClasses } from '@/components/ui/button-styles'
 import { track } from '@/lib/analytics'
 import { TURNSTILE_SITE_KEY } from '@/lib/env'
-import { erroresPorCampo, formSchemas, type FormResponse, type FormType } from '@/lib/schemas/forms'
+import type { FormResponse, FormType } from '@/lib/schemas/forms'
 import { FORM_ENDPOINTS } from './endpoints'
 import { FormErrorsContext } from './fields'
 import { Turnstile } from './Turnstile'
+
+const cargarEsquemas = () => import('@/lib/schemas/forms')
 
 type Estado =
   | { tipo: 'inicial' }
@@ -53,6 +55,8 @@ export function FormShell({
     data.aceptaPolitica = data.aceptaPolitica === 'on'
     data.turnstileToken = token
 
+    // Zod se carga bajo demanda para no inflar el JavaScript inicial de la página.
+    const { erroresPorCampo, formSchemas } = await cargarEsquemas()
     const parsed = formSchemas[tipo].safeParse(data)
     if (!parsed.success) {
       const fieldErrors = erroresPorCampo(parsed.error)
@@ -140,7 +144,10 @@ export function FormShell({
       <form
         ref={formRef}
         onSubmit={onSubmit}
-        onFocusCapture={() => setActivo(true)}
+        onFocusCapture={() => {
+          if (!activo) void cargarEsquemas()
+          setActivo(true)
+        }}
         noValidate
         aria-labelledby={titulo ? `${id}-titulo` : undefined}
         data-testid={`form-${tipo}`}

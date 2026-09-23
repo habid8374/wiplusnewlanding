@@ -1,4 +1,7 @@
 import { z } from 'zod'
+import { MUNICIPIOS, TIPOS_FALLA } from './constants'
+
+export { MUNICIPIOS, TIPOS_FALLA }
 
 /**
  * Esquemas de formularios compartidos entre cliente (validación inmediata) y servidor (route handlers).
@@ -33,8 +36,6 @@ const comunes = {
   turnstileToken: z.string().optional().default(''),
 }
 
-export const MUNICIPIOS = ['Sabanalarga', 'Luruaco', 'Otro'] as const
-
 export const solicitudSchema = z.object({
   nombre: texto(3, 80, 'tu nombre'),
   celular: celularSchema,
@@ -66,8 +67,6 @@ export const coberturaSchema = z.object({
   direccion: texto(5, 120, 'tu dirección'),
   ...comunes,
 })
-
-export const TIPOS_FALLA = ['Sin servicio', 'Internet lento', 'Intermitente', 'Otro'] as const
 
 export const fallaSchema = z.object({
   titular: texto(3, 80, 'el nombre del titular'),

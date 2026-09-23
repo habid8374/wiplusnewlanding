@@ -64,3 +64,5 @@ puede reemplazar desde el CMS (`/studio`) sin programador.
 - [ ] Claves de Cloudflare Turnstile.
 - [ ] ID de Google Analytics 4.
 - [ ] Acceso a Cloudflare (zona wiplus.com.co) y Google Search Console.
+- [ ] Crear en Cloudflare el bucket R2 y la base D1 y poner el `database_id` real en `wrangler.jsonc`
+      (ver README › Despliegue).

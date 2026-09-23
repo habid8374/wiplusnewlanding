@@ -1,0 +1,57 @@
+// Configuración de Cloudflare Workers (wrangler 4). Ver README › Despliegue.
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "wiplus-web",
+  "main": ".open-next/worker.js",
+  "compatibility_date": "2026-09-01",
+  "compatibility_flags": ["nodejs_compat", "global_fetch_strictly_public"],
+  "assets": {
+    "directory": ".open-next/assets",
+    "binding": "ASSETS",
+    // Sin redirecciones automáticas de barra final: las maneja Next (301) y evita bucles en /studio.
+    "html_handling": "none",
+  },
+  "observability": { "enabled": true },
+
+  // Dominio propio (la zona wiplus.com.co debe estar en Cloudflare). Los registros MX no se tocan.
+  "routes": [
+    { "pattern": "www.wiplus.com.co", "custom_domain": true },
+    { "pattern": "wiplus.com.co", "custom_domain": true },
+  ],
+
+  "services": [
+    // Auto-referencia requerida por OpenNext (el nombre debe coincidir con "name").
+    { "binding": "WORKER_SELF_REFERENCE", "service": "wiplus-web" },
+  ],
+
+  // Caché incremental (ISR). Crear antes: npx wrangler r2 bucket create wiplus-web-opennext-cache
+  "r2_buckets": [
+    { "binding": "NEXT_INC_CACHE_R2_BUCKET", "bucket_name": "wiplus-web-opennext-cache" },
+  ],
+
+  // Caché de etiquetas (revalidateTag). Crear antes: npx wrangler d1 create wiplus-web-tag-cache
+  // y pegar aquí el database_id que devuelve el comando.
+  "d1_databases": [
+    {
+      "binding": "NEXT_TAG_CACHE_D1",
+      "database_name": "wiplus-web-tag-cache",
+      "database_id": "00000000-0000-0000-0000-000000000000", // TODO(WIPLUS): reemplazar por el ID real
+    },
+  ],
+
+  // Cola de revalidación (ISR por tiempo).
+  "durable_objects": {
+    "bindings": [{ "name": "NEXT_CACHE_DO_QUEUE", "class_name": "DOQueueHandler" }],
+  },
+  "migrations": [{ "tag": "v1", "new_sqlite_classes": ["DOQueueHandler"] }],
+
+  // Optimización de imágenes de next/image con Cloudflare Images.
+  "images": { "binding": "IMAGES" },
+
+  // Variables públicas (no secretas). Los secretos se cargan con: npx wrangler secret put NOMBRE
+  "vars": {
+    "NEXT_PUBLIC_SITE_URL": "https://www.wiplus.com.co",
+    "NEXT_PUBLIC_SITE_ENV": "production",
+    "MAIL_TO": "atencionalcliente@wiplus.com.co",
+  },
+}

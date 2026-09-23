@@ -1,0 +1,5 @@
+# Variables para `npm run cf:preview` (wrangler dev). Copiar a .dev.vars
+NEXTJS_ENV=development
+RESEND_API_KEY=
+TURNSTILE_SECRET_KEY=
+SANITY_REVALIDATE_SECRET=

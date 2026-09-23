@@ -12,6 +12,7 @@ const eslintConfig = defineConfig([
     'out/**',
     'build/**',
     'next-env.d.ts',
+    'public/studio/**',
     'cloudflare-env.d.ts',
     'playwright-report/**',
     'test-results/**',

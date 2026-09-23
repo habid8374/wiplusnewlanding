@@ -1,4 +1,3 @@
-import { Resend } from 'resend'
 import { FORM_LABELS, type FormType } from '@/lib/schemas/forms'
 
 /** Etiquetas legibles de cada campo para el correo. */
@@ -102,14 +101,13 @@ export async function enviarCorreos(
     return { ok: true, simulado: true }
   }
 
-  const resend = new Resend(key)
   const interno = correoInterno(tipo, datos, extra)
-  const { error } = await resend.emails.send({
+  const { error } = await enviarResend(key, {
     from,
     to: [to],
     subject: interno.subject,
     html: interno.html,
-    ...(emailUsuario ? { replyTo: emailUsuario } : {}),
+    ...(emailUsuario ? { reply_to: emailUsuario } : {}),
   })
   if (error) {
     console.error('[formularios] Error enviando correo interno', error)
@@ -117,14 +115,32 @@ export async function enviarCorreos(
   }
   if (emailUsuario) {
     const conf = correoConfirmacion(tipo, datos, extra.ticket)
-    const r = await resend.emails.send({
+    const r = await enviarResend(key, {
       from,
       to: [emailUsuario],
       subject: conf.subject,
       html: conf.html,
-      replyTo: to,
+      reply_to: to,
     })
     if (r.error) console.error('[formularios] Error enviando confirmación', r.error)
   }
   return { ok: true }
+}
+
+/** Envío con la API REST de Resend (https://resend.com/docs/api-reference/emails/send-email). */
+async function enviarResend(
+  key: string,
+  body: { from: string; to: string[]; subject: string; html: string; reply_to?: string },
+): Promise<{ error: string | null }> {
+  try {
+    const res = await fetch('https://api.resend.com/emails', {
+      method: 'POST',
+      headers: { Authorization: `Bearer ${key}`, 'Content-Type': 'application/json' },
+      body: JSON.stringify(body),
+    })
+    if (!res.ok) return { error: `Resend ${res.status}: ${(await res.text()).slice(0, 200)}` }
+    return { error: null }
+  } catch (e) {
+    return { error: String(e) }
+  }
 }

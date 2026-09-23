@@ -1,30 +1,44 @@
-import { z } from 'zod'
+import * as z from 'zod/mini'
 import { MUNICIPIOS, TIPOS_FALLA } from './constants'
 
 export { MUNICIPIOS, TIPOS_FALLA }
 
 /**
  * Esquemas de formularios compartidos entre cliente (validación inmediata) y servidor (route handlers).
+ * Se usa `zod/mini` (API modular) para mantener liviano el Worker de Cloudflare y el JS del cliente.
  */
 
 const texto = (min: number, max: number, campo: string) =>
   z
     .string({ error: `Escribe ${campo}.` })
-    .trim()
-    .min(min, `Escribe ${campo}.`)
-    .max(max, `Máximo ${max} caracteres.`)
+    .check(
+      z.trim(),
+      z.minLength(min, `Escribe ${campo}.`),
+      z.maxLength(max, `Máximo ${max} caracteres.`),
+    )
 
-export const celularSchema = z
-  .string({ error: 'Escribe tu número de celular.' })
-  .transform((v) => v.replace(/\D/g, '').replace(/^57(?=3\d{9}$)/, ''))
-  .pipe(
-    z.string().regex(/^3\d{9}$/, 'Escribe un celular colombiano de 10 dígitos (ej. 3012133151).'),
+const textoOpcional = (max: number) =>
+  z._default(
+    z.optional(z.string().check(z.trim(), z.maxLength(max, `Máximo ${max} caracteres.`))),
+    '',
   )
 
-const emailOpcional = z
-  .union([z.literal(''), z.email('Escribe un correo válido.').max(120)])
-  .optional()
-  .transform((v) => (v ? v : undefined))
+export const celularSchema = z.pipe(
+  z.pipe(
+    z.string({ error: 'Escribe tu número de celular.' }),
+    z.transform((v: string) => v.replace(/\D/g, '').replace(/^57(?=3\d{9}$)/, '')),
+  ),
+  z
+    .string()
+    .check(z.regex(/^3\d{9}$/, 'Escribe un celular colombiano de 10 dígitos (ej. 3012133151).')),
+)
+
+const emailOpcional = z.pipe(
+  z.optional(
+    z.union([z.literal(''), z.email('Escribe un correo válido.').check(z.maxLength(120))]),
+  ),
+  z.transform((v: string | undefined) => (v ? v : undefined)),
+)
 
 /** Campos comunes: aceptación de política, honeypot y token de Turnstile. */
 const comunes = {
@@ -32,8 +46,8 @@ const comunes = {
     error: 'Debes aceptar la política de tratamiento de datos para continuar.',
   }),
   // Honeypot: los humanos no lo ven; si trae texto, es un bot.
-  sitioWeb: z.string().max(0).optional().default(''),
-  turnstileToken: z.string().optional().default(''),
+  sitioWeb: z._default(z.optional(z.string().check(z.maxLength(0))), ''),
+  turnstileToken: z._default(z.optional(z.string()), ''),
 }
 
 export const solicitudSchema = z.object({
@@ -49,12 +63,12 @@ export const solicitudSchema = z.object({
 
 export const empresasSchema = z.object({
   empresa: texto(2, 100, 'el nombre de la empresa'),
-  nit: z.string().trim().max(20, 'Máximo 20 caracteres.').optional().default(''),
+  nit: textoOpcional(20),
   contacto: texto(3, 80, 'el nombre de contacto'),
   celular: celularSchema,
-  email: z.email('Escribe un correo válido.').max(120),
+  email: z.email('Escribe un correo válido.').check(z.maxLength(120)),
   velocidad: texto(1, 40, 'la velocidad requerida'),
-  mensaje: z.string().trim().max(1000, 'Máximo 1000 caracteres.').optional().default(''),
+  mensaje: textoOpcional(1000),
   ...comunes,
 })
 
@@ -112,7 +126,9 @@ export type FormResponse =
   | { ok: false; mensaje: string; errores?: Record<string, string[]> }
 
 /** Convierte un ZodError en { campo: [mensajes] }. */
-export function erroresPorCampo(error: z.ZodError): Record<string, string[]> {
+export function erroresPorCampo(error: {
+  issues: readonly { path: readonly PropertyKey[]; message: string }[]
+}): Record<string, string[]> {
   const out: Record<string, string[]> = {}
   for (const issue of error.issues) {
     const key = String(issue.path[0] ?? '_')

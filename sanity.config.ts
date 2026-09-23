@@ -1,7 +1,5 @@
-'use client'
-
 /**
- * Configuración de Sanity Studio, montado en /studio.
+ * Configuración de Sanity Studio, publicado como SPA estática en /studio (ver scripts/build-studio.mjs).
  */
 import { visionTool } from '@sanity/vision'
 import { defineConfig } from 'sanity'

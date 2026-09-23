@@ -7,6 +7,7 @@ import { Container } from '@/components/ui/Container'
 import { legalNav, mainNav } from '@/lib/nav'
 import type { SiteSettings } from '@/lib/types'
 import { mensajesWhatsApp } from '@/lib/whatsapp'
+import axentia from '@/public/axentia/axentia-logo.png'
 import icono from '@/public/brand/wiplus-icono-app.png'
 
 export function Footer({ sitio }: { sitio: SiteSettings }) {
@@ -141,13 +142,23 @@ export function Footer({ sitio }: { sitio: SiteSettings }) {
         </nav>
       </Container>
       <div className="border-t border-white/10">
-        <Container className="flex flex-col gap-2 py-6 text-xs text-primary-200 sm:flex-row sm:items-center sm:justify-between">
+        <Container className="flex flex-col gap-2 pt-6 pb-24 text-xs text-primary-200 sm:flex-row sm:items-center sm:justify-between">
           <p>
             © {year} {sitio.razonSocial ?? sitio.nombre}
             {sitio.nit ? ` · NIT ${sitio.nit}` : ''}. Todos los derechos reservados.
           </p>
-          <p>
-            Desarrollado por <span className="font-semibold text-white">Axentia Technologies</span>
+          <p className="inline-flex items-center gap-2">
+            Powered by
+            <span className="inline-flex items-center gap-1.5 font-semibold text-white">
+              <Image
+                src={axentia}
+                alt=""
+                width={28}
+                height={24}
+                className="h-6 w-auto rounded bg-white p-0.5"
+              />
+              Axentia Technologies
+            </span>
           </p>
         </Container>
       </div>

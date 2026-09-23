@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "node scripts/build-studio.mjs && next build",
     "start": "next start",
     "lint": "eslint --max-warnings=0",
     "typecheck": "tsc --noEmit",
@@ -15,11 +15,13 @@
     "cf:build": "opennextjs-cloudflare build",
     "cf:preview": "opennextjs-cloudflare build && opennextjs-cloudflare preview",
     "cf:deploy": "opennextjs-cloudflare build && opennextjs-cloudflare deploy",
-    "cf-typegen": "wrangler types --env-interface CloudflareEnv cloudflare-env.d.ts"
+    "cf-typegen": "wrangler types --env-interface CloudflareEnv cloudflare-env.d.ts",
+    "build:web": "next build",
+    "studio:build": "node scripts/build-studio.mjs",
+    "studio:dev": "sanity dev --port 3333"
   },
   "dependencies": {
     "@next/third-parties": "^16.3.6",
-    "@sanity/image-url": "^2.1.1",
     "@sanity/vision": "^6.16.0",
     "clsx": "^2.1.1",
     "lucide-react": "^1.47.0",
@@ -27,7 +29,6 @@
     "next-sanity": "^13.3.4",
     "react": "19.2.8",
     "react-dom": "19.2.8",
-    "resend": "^6.28.1",
     "sanity": "^6.16.0",
     "server-only": "^0.0.1",
     "styled-components": "^6.5.3",

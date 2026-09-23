@@ -16,7 +16,8 @@ import type {
   SiteSettings,
   Testimonio,
 } from '@/lib/types'
-import { sanityClient } from '@/sanity/client'
+import { sanityFetch } from '@/sanity/client'
+import { isSanityConfigured } from '@/sanity/env'
 
 /**
  * Capa única de acceso al contenido.
@@ -29,15 +30,18 @@ export const CONTENT_TAG = 'sanity'
 const REVALIDATE_SECONDS = 3600
 
 async function fromSanity<T>(query: string, tag: string, params: Record<string, unknown> = {}) {
-  if (!sanityClient) return null
+  if (!isSanityConfigured) return null
   try {
-    const data = await sanityClient.fetch<T>(query, params, {
-      next: { revalidate: REVALIDATE_SECONDS, tags: [CONTENT_TAG, tag] },
+    const data = await sanityFetch<T>(query, params, {
+      revalidate: REVALIDATE_SECONDS,
+      tags: [CONTENT_TAG, tag],
     })
     if (data == null || (Array.isArray(data) && data.length === 0)) return null
     return data
   } catch (error) {
-    console.error(`[content] Error consultando Sanity (${tag}); se usa el respaldo local.`, error)
+    console.error(
+      `[content] Error consultando Sanity (${tag}); se usa el respaldo local: ${String((error as Error)?.message ?? error).slice(0, 160)}`,
+    )
     return null
   }
 }

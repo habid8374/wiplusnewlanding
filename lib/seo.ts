@@ -1,7 +1,17 @@
 import type { Metadata } from 'next'
 import { SITE_URL } from '@/lib/env'
 import { telE164 } from '@/lib/phone'
+import { OG_ALT } from '@/lib/og-alt'
 import type { Faq, Plan, SiteSettings } from '@/lib/types'
+
+/** Tarjeta para compartir (generada por app/opengraph-image.tsx). */
+export const OG_IMAGE = {
+  url: '/opengraph-image',
+  width: 1200,
+  height: 630,
+  alt: OG_ALT,
+  type: 'image/png',
+}
 
 export const absoluteUrl = (path = '/') => `${SITE_URL}${path === '/' ? '' : path}`
 
@@ -33,8 +43,15 @@ export function pageMetadata({
       type: 'website',
       locale: 'es_CO',
       siteName: 'WIPLUS Comunicaciones',
+      // Explícito: al definir openGraph por página, Next no hereda la imagen de app/opengraph-image.
+      images: [OG_IMAGE],
     },
-    twitter: { card: 'summary_large_image', title: fullTitle, description },
+    twitter: {
+      card: 'summary_large_image',
+      title: fullTitle,
+      description,
+      images: [{ url: '/twitter-image', alt: OG_ALT }],
+    },
     ...(noIndex ? { robots: { index: false, follow: true } } : {}),
   }
 }

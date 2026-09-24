@@ -13,6 +13,15 @@ test.describe('Navegación', () => {
       const canonical = await page.locator('link[rel="canonical"]').getAttribute('href')
       expect(canonical).toBe(`https://www.wiplus.com.co${p.path === '/' ? '' : p.path}`)
       expect(await page.locator('meta[name="description"]').getAttribute('content')).toBeTruthy()
+      // Tarjeta para compartir (WhatsApp, Facebook, X)
+      await expect(page.locator('meta[property="og:image"]')).toHaveAttribute(
+        'content',
+        /^https:\/\/www\.wiplus\.com\.co\/opengraph-image/,
+      )
+      await expect(page.locator('meta[name="twitter:image"]')).toHaveAttribute(
+        'content',
+        /twitter-image/,
+      )
       // Todas las imágenes tienen alt
       expect(await page.locator('img:not([alt])').count()).toBe(0)
       await page.waitForLoadState('networkidle').catch(() => {})

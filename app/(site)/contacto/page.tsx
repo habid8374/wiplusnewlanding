@@ -105,10 +105,9 @@ export default async function ContactoPage() {
               <MapEmbed
                 lat={sitio.geo.lat}
                 lng={sitio.geo.lng}
-                zoom={15}
-                // TODO(WIPLUS): coordenadas exactas de la oficina (hoy es el centro de Sabanalarga,
-                // por eso va sin pin). Con ellas en content/sitio.ts › geo, quitar marcador={false}.
-                marcador={false}
+                zoom={17}
+                // Ficha de la empresa en Google Maps (Cl. 13 #17-4, Sabanalarga).
+                consulta="Wiplus Comunicaciones, Cl. 13 #17-4, Sabanalarga, Atlántico"
                 titulo="Ubicación de la oficina de WIPLUS en Sabanalarga"
                 direccion={`${direccion}, Colombia`}
                 enlace={sitio.mapsUrl}

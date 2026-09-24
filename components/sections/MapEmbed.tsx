@@ -18,6 +18,7 @@ export function MapEmbed({
   direccion,
   marcador = true,
   enlace,
+  consulta,
 }: {
   lat: number
   lng: number
@@ -27,12 +28,16 @@ export function MapEmbed({
   marcador?: boolean
   /** Enlace propio para «Cómo llegar» (p. ej. el de la ficha en Google Maps). */
   enlace?: string
+  /** Búsqueda para el mapa en lugar de coordenadas (p. ej. el nombre de la ficha de Google). */
+  consulta?: string
 }) {
   const [cargar, setCargar] = useState(false)
   const punto = `${lat},${lng}`
-  const src = marcador
-    ? `https://maps.google.com/maps?q=${punto}&z=${zoom}&hl=es&output=embed`
-    : `https://maps.google.com/maps?ll=${punto}&z=${zoom}&hl=es&output=embed`
+  const src = consulta
+    ? `https://maps.google.com/maps?q=${encodeURIComponent(consulta)}&z=${zoom}&hl=es&output=embed`
+    : marcador
+      ? `https://maps.google.com/maps?q=${punto}&z=${zoom}&hl=es&output=embed`
+      : `https://maps.google.com/maps?ll=${punto}&z=${zoom}&hl=es&output=embed`
   const gmaps =
     enlace ??
     `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(direccion ?? punto)}`

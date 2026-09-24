@@ -99,6 +99,13 @@ function proveedor(): Enviar | null {
   return null
 }
 
+/** Quita comillas envolventes (valores copiados tal cual de .env.example a Vercel). */
+const sinComillas = (v?: string) =>
+  v
+    ?.trim()
+    .replace(/^(["'])(.*)\1$/, '$2')
+    .trim()
+
 export const hayProveedorCorreo = () => proveedor() !== null
 
 export async function enviarCorreos(
@@ -107,8 +114,9 @@ export async function enviarCorreos(
   extra: { ticket?: string; ip?: string },
 ): Promise<EmailResult> {
   const enviar = proveedor()
-  const from = process.env.MAIL_FROM || 'WIPLUS Comunicaciones <no-responder@wiplus.com.co>'
-  const to = process.env.MAIL_TO || 'atencionalcliente@wiplus.com.co'
+  const from =
+    sinComillas(process.env.MAIL_FROM) || 'WIPLUS Comunicaciones <no-responder@wiplus.com.co>'
+  const to = sinComillas(process.env.MAIL_TO) || 'atencionalcliente@wiplus.com.co'
   const emailUsuario = typeof datos.email === 'string' && datos.email ? datos.email : undefined
 
   if (!enviar) {

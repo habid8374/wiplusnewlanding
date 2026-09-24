@@ -1,0 +1,5 @@
+# Reporte de vulnerabilidades del sitio de WIPLUS Comunicaciones (RFC 9116)
+Contact: mailto:atencionalcliente@wiplus.com.co
+Expires: 2027-09-24T00:00:00.000Z
+Preferred-Languages: es, en
+Canonical: https://www.wiplus.com.co/.well-known/security.txt

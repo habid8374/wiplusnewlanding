@@ -2,6 +2,7 @@ import { ArrowRight, Info, Sparkles, TriangleAlert } from 'lucide-react'
 import Link from 'next/link'
 import { ExampleBadge } from '@/components/ui/ExampleBadge'
 import { cn } from '@/lib/cn'
+import { enlaceSeguro, esRutaInterna } from '@/lib/safe-url'
 import type { Aviso } from '@/lib/types'
 
 const TONOS = {
@@ -32,6 +33,7 @@ const TONOS = {
 export function AnnouncementBar({ aviso }: { aviso: Aviso | null }) {
   if (!aviso) return null
   const t = TONOS[aviso.tono] ?? TONOS.promo
+  const href = enlaceSeguro(aviso.enlace?.href)
   return (
     <div
       role="region"
@@ -57,15 +59,16 @@ export function AnnouncementBar({ aviso }: { aviso: Aviso | null }) {
         </span>
         <ExampleBadge show={aviso.ejemplo} />
         <span className="text-pretty">{aviso.texto}</span>
-        {aviso.enlace?.href && (
+        {href && (
           <Link
-            href={aviso.enlace.href}
+            {...(esRutaInterna(href) ? {} : { target: '_blank', rel: 'noopener noreferrer' })}
+            href={href}
             className={cn(
               'inline-flex items-center gap-1 rounded-full px-3 py-1 text-sm font-bold shadow-sm transition-colors',
               t.boton,
             )}
           >
-            {aviso.enlace.texto || 'Ver más'}
+            {aviso.enlace?.texto || 'Ver más'}
             <ArrowRight className="size-4" aria-hidden />
           </Link>
         )}

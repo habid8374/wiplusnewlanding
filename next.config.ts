@@ -1,4 +1,5 @@
 import type { NextConfig } from 'next'
+import { securityHeaders, studioHeaders } from './lib/security-headers'
 
 /** Redirecciones 301 desde las URLs del sitio WordPress anterior. */
 const legacyRedirects: [string, string][] = [
@@ -40,18 +41,9 @@ const nextConfig: NextConfig = {
   },
   async headers() {
     return [
-      {
-        source: '/:path*',
-        headers: [
-          { key: 'X-Content-Type-Options', value: 'nosniff' },
-          { key: 'Referrer-Policy', value: 'strict-origin-when-cross-origin' },
-          { key: 'X-Frame-Options', value: 'SAMEORIGIN' },
-          {
-            key: 'Permissions-Policy',
-            value: 'camera=(), microphone=(), geolocation=(), payment=()',
-          },
-        ],
-      },
+      // Todo el sitio salvo /studio (ver lib/security-headers.ts)
+      { source: '/((?!studio).*)', headers: securityHeaders },
+      { source: '/studio/:path*', headers: studioHeaders },
       {
         source: '/brand/:path*',
         headers: [{ key: 'Cache-Control', value: 'public, max-age=31536000, immutable' }],

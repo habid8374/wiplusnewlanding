@@ -56,5 +56,10 @@
   },
   "engines": {
     "node": "22.x"
+  },
+  "overrides": {
+    "adm-zip": "^0.6.1",
+    "smol-toml": "^1.9.0",
+    "js-yaml@<3.15.2": "^3.15.2"
   }
 }

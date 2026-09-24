@@ -28,13 +28,18 @@ export function rateLimit(key: string, limit = 8, windowMs = 10 * 60 * 1000) {
   return { ok: true as const }
 }
 
+/**
+ * IP del cliente según la plataforma (OWASP A01/A06): solo se confía en la cabecera que la
+ * plataforma sobrescribe. Leer otra (p. ej. cf-connecting-ip en Vercel) dejaría al atacante
+ * cambiar de "IP" en cada envío y saltarse el límite.
+ */
 export function clientIp(headers: Headers) {
-  return (
-    headers.get('cf-connecting-ip') ||
-    headers.get('x-real-ip') ||
-    headers.get('x-forwarded-for')?.split(',')[0]?.trim() ||
-    'desconocida'
-  )
+  const ip = process.env.VERCEL
+    ? headers.get('x-vercel-forwarded-for')?.split(',')[0] || headers.get('x-real-ip')
+    : headers.get('cf-connecting-ip') ||
+      headers.get('x-real-ip') ||
+      headers.get('x-forwarded-for')?.split(',')[0]
+  return ip?.trim() || 'desconocida'
 }
 
 /** Solo para pruebas. */

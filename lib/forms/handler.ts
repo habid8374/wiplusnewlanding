@@ -13,11 +13,45 @@ function responder(body: FormResponse, status = 200, headers?: HeadersInit) {
 }
 
 /** Lógica común de todos los formularios (route handlers en app/api/*). */
+/** Registro de eventos de seguridad sin datos personales (OWASP A09). */
+function logSeguridad(evento: string, tipo: FormType, extra: Record<string, unknown> = {}) {
+  console.warn(JSON.stringify({ seguridad: evento, formulario: tipo, ...extra }))
+}
+
+/**
+ * Solo se aceptan envíos del propio sitio (OWASP A01, falsificación de peticiones): JSON y, si el
+ * navegador informa el origen, que coincida con el host. Un formulario de otro sitio no puede
+ * mandar JSON sin preflight, y un text/plain se rechaza aquí.
+ */
+function origenValido(req: Request) {
+  const tipoContenido = req.headers.get('content-type') ?? ''
+  if (!tipoContenido.toLowerCase().startsWith('application/json')) return false
+  if (req.headers.get('sec-fetch-site') === 'cross-site') return false
+  const origen = req.headers.get('origin')
+  if (!origen) return true // clientes que no son navegadores (pruebas, monitoreo)
+  try {
+    return new URL(origen).host === new URL(req.url).host
+  } catch {
+    return false
+  }
+}
+
 export async function handleForm(tipo: FormType, req: Request) {
   const ip = clientIp(req.headers)
 
+  if (!origenValido(req)) {
+    logSeguridad('origen_rechazado', tipo)
+    return responder({ ok: false, mensaje: 'Solicitud inválida.' }, 403)
+  }
+
+  const largo = Number(req.headers.get('content-length') ?? 0)
+  if (largo > MAX_BODY) {
+    return responder({ ok: false, mensaje: 'La solicitud es demasiado grande.' }, 413)
+  }
+
   const limite = rateLimit(`${tipo}:${ip}`)
   if (!limite.ok) {
+    logSeguridad('limite_de_envios', tipo)
     return responder(
       {
         ok: false,
@@ -46,6 +80,7 @@ export async function handleForm(tipo: FormType, req: Request) {
     'sitioWeb' in raw &&
     (raw as { sitioWeb?: unknown }).sitioWeb
   ) {
+    logSeguridad('honeypot', tipo)
     return responder({ ok: true, mensaje: 'Gracias, te contactaremos pronto.' })
   }
 
@@ -60,6 +95,7 @@ export async function handleForm(tipo: FormType, req: Request) {
 
   const captcha = await verificarTurnstile(String(datos.turnstileToken ?? ''), ip)
   if (!captcha.ok) {
+    logSeguridad('turnstile_fallido', tipo)
     return responder(
       {
         ok: false,

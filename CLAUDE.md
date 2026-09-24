@@ -51,7 +51,10 @@ tests/e2e/         Playwright
    fotos preparadas con `npm run og:fotos`.
 8. Eventos GA4 con `track()` de `lib/analytics.ts` (solo se envían con consentimiento de cookies).
 9. Mantener liviano el Worker: medir con `npx opennextjs-cloudflare build && npx wrangler deploy --dry-run`.
-10. Next 16: `proxy.ts` (no `middleware.ts`), `params`/`searchParams` son Promises,
+10. Seguridad (OWASP Top 10, ver `SECURITY.md`): un servicio externo nuevo se agrega a la CSP de
+    `lib/security-headers.ts`; los enlaces del CMS pasan por `enlaceSeguro()`; los formularios usan
+    `handleForm`; los secretos nunca llevan prefijo `NEXT_PUBLIC_`.
+11. Next 16: `proxy.ts` (no `middleware.ts`), `params`/`searchParams` son Promises,
     `revalidateTag(tag, 'max')` requiere perfil. Consultar `node_modules/next/dist/docs/`.
 
 ## Comandos

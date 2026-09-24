@@ -7,6 +7,7 @@ import { useCallback, useEffect, useId, useRef, useState } from 'react'
 import { ExampleBadge } from '@/components/ui/ExampleBadge'
 import { track } from '@/lib/analytics'
 import { formatCOP } from '@/lib/phone'
+import { enlaceSeguro, esRutaInterna } from '@/lib/safe-url'
 import type { OfertaFlotante as Oferta, OfertaItem } from '@/lib/types'
 import { whatsappUrl } from '@/lib/whatsapp'
 import icono from '@/public/brand/wiplus-icono-app.png'
@@ -210,22 +211,17 @@ function Tarjeta({ item, whatsapp }: { item: OfertaItem; whatsapp: string }) {
   const clase =
     'block h-full rounded-2xl border border-line p-2 transition-colors hover:border-primary-300 hover:bg-primary-50'
   const alPulsar = () => track('oferta_flotante', { accion: 'click_item', item: item.titulo })
-  const enlace = item.enlace?.trim()
+  const enlace = enlaceSeguro(item.enlace)
 
-  if (enlace?.startsWith('/'))
+  if (enlace && esRutaInterna(enlace))
     return (
       <Link href={enlace} className={clase} onClick={alPulsar}>
         {contenido}
       </Link>
     )
-  const externo = enlace && /^https?:\/\//.test(enlace)
   return (
     <a
-      href={
-        externo
-          ? enlace
-          : whatsappUrl(whatsapp, `Hola WIPLUS, me interesa la oferta: ${item.titulo}`)
-      }
+      href={enlace ?? whatsappUrl(whatsapp, `Hola WIPLUS, me interesa la oferta: ${item.titulo}`)}
       target="_blank"
       rel="noopener noreferrer"
       className={clase}

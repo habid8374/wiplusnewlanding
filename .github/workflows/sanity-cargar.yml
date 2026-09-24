@@ -1,0 +1,27 @@
+name: Cargar contenido en Sanity
+
+# Botón manual (Actions › «Cargar contenido en Sanity» › Run workflow).
+# Copia el contenido de content/ al panel /studio. Requiere el secreto SANITY_WRITE_TOKEN
+# (token «Editor» creado en sanity.io/manage › API › Tokens).
+on:
+  workflow_dispatch:
+    inputs:
+      reemplazar:
+        description: 'Sobrescribir lo que ya exista en Sanity con el contenido de content/ (¡borra las ediciones hechas en el panel!)'
+        type: boolean
+        default: false
+
+jobs:
+  cargar:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      NEXT_PUBLIC_SANITY_PROJECT_ID: k3vbxtev
+      NEXT_PUBLIC_SANITY_DATASET: production
+      SANITY_WRITE_TOKEN: ${{ secrets.SANITY_WRITE_TOKEN }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: npx --yes tsx@4 scripts/sanity-cargar.ts ${{ inputs.reemplazar && '--reemplazar' || '' }}

@@ -5,8 +5,9 @@ import { useState } from 'react'
 import { buttonClasses } from '@/components/ui/button-styles'
 
 /**
- * Mapa con fachada: no carga el iframe (OpenStreetMap, sin cookies) hasta que el usuario lo pide.
- * Así no se penaliza el rendimiento ni se cargan terceros sin interacción.
+ * Mapa de Google Maps con fachada: no carga el iframe hasta que el usuario lo pide.
+ * Así no se penaliza el rendimiento ni se cargan terceros (ni sus cookies) sin interacción.
+ * Usa el mapa incrustable de Google sin API key (búsqueda por dirección o coordenadas).
  */
 export function MapEmbed({
   lat,
@@ -22,10 +23,9 @@ export function MapEmbed({
   direccion?: string
 }) {
   const [cargar, setCargar] = useState(false)
-  const d = 0.9 / 2 ** (zoom - 8)
-  const bbox = [lng - d, lat - d * 0.6, lng + d, lat + d * 0.6].map((n) => n.toFixed(5)).join('%2C')
-  const src = `https://www.openstreetmap.org/export/embed.html?bbox=${bbox}&layer=mapnik&marker=${lat}%2C${lng}`
-  const gmaps = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(direccion ?? `${lat},${lng}`)}`
+  const consulta = encodeURIComponent(direccion ?? `${lat},${lng}`)
+  const src = `https://www.google.com/maps?q=${consulta}&z=${zoom}&hl=es&output=embed`
+  const gmaps = `https://www.google.com/maps/search/?api=1&query=${consulta}`
 
   return (
     <div className="overflow-hidden rounded-3xl border border-line bg-surface shadow-card">
@@ -36,7 +36,8 @@ export function MapEmbed({
             src={src}
             className="absolute inset-0 size-full border-0"
             loading="lazy"
-            referrerPolicy="no-referrer"
+            referrerPolicy="no-referrer-when-downgrade"
+            allowFullScreen
           />
         ) : (
           <div className="absolute inset-0 flex flex-col items-center justify-center gap-3 bg-[radial-gradient(circle_at_center,var(--color-primary-100),var(--color-surface))] p-6 text-center">

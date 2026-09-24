@@ -17,6 +17,7 @@ export function MapEmbed({
   titulo,
   direccion,
   marcador = true,
+  enlace,
 }: {
   lat: number
   lng: number
@@ -24,13 +25,17 @@ export function MapEmbed({
   titulo: string
   direccion?: string
   marcador?: boolean
+  /** Enlace propio para «Cómo llegar» (p. ej. el de la ficha en Google Maps). */
+  enlace?: string
 }) {
   const [cargar, setCargar] = useState(false)
   const punto = `${lat},${lng}`
   const src = marcador
     ? `https://maps.google.com/maps?q=${punto}&z=${zoom}&hl=es&output=embed`
     : `https://maps.google.com/maps?ll=${punto}&z=${zoom}&hl=es&output=embed`
-  const gmaps = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(direccion ?? punto)}`
+  const gmaps =
+    enlace ??
+    `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(direccion ?? punto)}`
 
   return (
     <div className="overflow-hidden rounded-3xl border border-line bg-surface shadow-card">

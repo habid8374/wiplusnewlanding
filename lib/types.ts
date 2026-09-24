@@ -33,6 +33,8 @@ export type SiteSettings = {
     pais: string
   }
   geo: { lat: number; lng: number }
+  /** Enlace de Google Maps a la oficina (botón «Cómo llegar»). */
+  mapsUrl?: string
   horario: {
     texto: string // "8:00 a. m. – 6:00 p. m."
     dias: string // "Lunes a sábado"

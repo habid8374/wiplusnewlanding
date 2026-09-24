@@ -111,6 +111,7 @@ export default async function ContactoPage() {
                 marcador={false}
                 titulo="Ubicación de la oficina de WIPLUS en Sabanalarga"
                 direccion={`${direccion}, Colombia`}
+                enlace={sitio.mapsUrl}
               />
             </div>
           </div>

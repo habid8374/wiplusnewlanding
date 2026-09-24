@@ -18,7 +18,8 @@
     "cf-typegen": "wrangler types --env-interface CloudflareEnv cloudflare-env.d.ts",
     "build:web": "next build",
     "studio:build": "node scripts/build-studio.mjs",
-    "studio:dev": "sanity dev --port 3333"
+    "studio:dev": "sanity dev --port 3333",
+    "og:fotos": "node scripts/og-fotos.mjs"
   },
   "dependencies": {
     "@next/third-parties": "^16.3.6",

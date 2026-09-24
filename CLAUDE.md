@@ -46,10 +46,13 @@ tests/e2e/         Playwright
    respetar `prefers-reduced-motion`.
 6. Rendimiento: componentes de servidor por defecto; `"use client"` solo donde hay interacción.
    Sin librerías de carrusel. Imágenes con `next/image`.
-7. Eventos GA4 con `track()` de `lib/analytics.ts` (solo se envían con consentimiento de cookies).
-8. Mantener liviano el Worker: medir con `npx opennextjs-cloudflare build && npx wrangler deploy --dry-run`.
-9. Next 16: `proxy.ts` (no `middleware.ts`), `params`/`searchParams` son Promises,
-   `revalidateTag(tag, 'max')` requiere perfil. Consultar `node_modules/next/dist/docs/`.
+7. Tarjetas para compartir: inicio en `app/opengraph-image.tsx`; cada sección en `/og/<slug>`
+   (`app/og/[slug]/route.tsx`, textos en `lib/og-pages.ts`). Mantener cada PNG < 300 KB (WhatsApp);
+   fotos preparadas con `npm run og:fotos`.
+8. Eventos GA4 con `track()` de `lib/analytics.ts` (solo se envían con consentimiento de cookies).
+9. Mantener liviano el Worker: medir con `npx opennextjs-cloudflare build && npx wrangler deploy --dry-run`.
+10. Next 16: `proxy.ts` (no `middleware.ts`), `params`/`searchParams` son Promises,
+    `revalidateTag(tag, 'max')` requiere perfil. Consultar `node_modules/next/dist/docs/`.
 
 ## Comandos
 

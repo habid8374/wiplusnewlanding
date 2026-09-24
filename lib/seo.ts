@@ -2,15 +2,17 @@ import type { Metadata } from 'next'
 import { SITE_URL } from '@/lib/env'
 import { telE164 } from '@/lib/phone'
 import { OG_ALT } from '@/lib/og-alt'
+import { ogImagePath } from '@/lib/og-pages'
 import type { Faq, Plan, SiteSettings } from '@/lib/types'
 
-/** Tarjeta para compartir (generada por app/opengraph-image.tsx). */
-export const OG_IMAGE = {
-  url: '/opengraph-image',
-  width: 1200,
-  height: 630,
-  alt: OG_ALT,
-  type: 'image/png',
+/**
+ * Tarjeta para compartir de una ruta: la del inicio (app/opengraph-image.tsx) o la propia de su
+ * sección (/og/<slug>, ver lib/og-pages.ts).
+ */
+function ogImage(path: string, titulo: string) {
+  const url = ogImagePath(path)
+  const alt = url === '/opengraph-image' ? OG_ALT : `${titulo} — WIPLUS Comunicaciones`
+  return { url, width: 1200, height: 630, alt, type: 'image/png' }
 }
 
 export const absoluteUrl = (path = '/') => `${SITE_URL}${path === '/' ? '' : path}`
@@ -32,6 +34,7 @@ export function pageMetadata({
 }): Metadata {
   const url = absoluteUrl(path)
   const fullTitle = absoluteTitle ? title : `${title} | WIPLUS Comunicaciones`
+  const imagen = ogImage(path, title)
   return {
     title: absoluteTitle ? { absolute: title } : title,
     description,
@@ -44,13 +47,15 @@ export function pageMetadata({
       locale: 'es_CO',
       siteName: 'WIPLUS Comunicaciones',
       // Explícito: al definir openGraph por página, Next no hereda la imagen de app/opengraph-image.
-      images: [OG_IMAGE],
+      images: [imagen],
     },
     twitter: {
       card: 'summary_large_image',
       title: fullTitle,
       description,
-      images: [{ url: '/twitter-image', alt: OG_ALT }],
+      images: [
+        { url: imagen.url === '/opengraph-image' ? '/twitter-image' : imagen.url, alt: imagen.alt },
+      ],
     },
     ...(noIndex ? { robots: { index: false, follow: true } } : {}),
   }

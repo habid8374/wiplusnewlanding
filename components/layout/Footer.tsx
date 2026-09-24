@@ -1,4 +1,4 @@
-import { Clock, LockKeyhole, Mail, MapPin, Phone } from 'lucide-react'
+import { Clock, FileText, LockKeyhole, Mail, MapPin, Phone } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { CallLink, WhatsAppLink } from '@/components/analytics/TrackedLinks'
@@ -93,6 +93,13 @@ export function Footer({ sitio }: { sitio: SiteSettings }) {
           >
             WhatsApp
           </WhatsAppLink>
+          <Link
+            href="/usuario#radicar-pqr"
+            className="mt-3 flex w-fit items-center gap-2 rounded-full border border-white/25 px-4 py-2 text-sm font-semibold text-white hover:border-white/50 hover:bg-white/10"
+          >
+            <FileText className="size-4 text-accent-400" aria-hidden />
+            Radicar PQR
+          </Link>
         </div>
 
         <nav aria-label="Secciones del sitio">

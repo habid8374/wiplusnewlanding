@@ -141,9 +141,10 @@ test.describe('Formularios', () => {
   })
 
   test('la barra superior enlaza al formulario de PQR', async ({ page }) => {
-    test.skip((page.viewportSize()?.width ?? 1280) < 640, 'En móvil está en el menú')
     await page.goto('/')
-    await page.getByRole('link', { name: 'Radicar PQR' }).click()
+    await cerrarCookies(page)
+    // El primero es el de la barra superior (en móvil dice solo «PQR»); el pie tiene otro.
+    await page.locator('a[href="/usuario#radicar-pqr"]').first().click()
     await expect(page).toHaveURL(/\/usuario#radicar-pqr$/)
     await expect(page.getByTestId('form-pqr')).toBeVisible()
   })

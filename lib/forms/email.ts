@@ -84,25 +84,42 @@ ${ticket ? `<p style="font-size:16px">Tu número de ticket es <strong style="fon
 
 export type EmailResult = { ok: boolean; simulado?: boolean }
 
+type Correo = { from: string; to: string[]; subject: string; html: string; reply_to?: string }
+type Enviar = (correo: Correo) => Promise<{ error: string | null }>
+
+/**
+ * Proveedor de correo según las variables de entorno: Brevo (BREVO_API_KEY) o Resend
+ * (RESEND_API_KEY). Si están las dos, se usa Brevo. Sin ninguna, los correos se simulan.
+ */
+function proveedor(): Enviar | null {
+  const brevo = process.env.BREVO_API_KEY
+  if (brevo) return (c) => enviarBrevo(brevo, c)
+  const resend = process.env.RESEND_API_KEY
+  if (resend) return (c) => enviarResend(resend, c)
+  return null
+}
+
+export const hayProveedorCorreo = () => proveedor() !== null
+
 export async function enviarCorreos(
   tipo: FormType,
   datos: Record<string, unknown>,
   extra: { ticket?: string; ip?: string },
 ): Promise<EmailResult> {
-  const key = process.env.RESEND_API_KEY
+  const enviar = proveedor()
   const from = process.env.MAIL_FROM || 'WIPLUS Comunicaciones <no-responder@wiplus.com.co>'
   const to = process.env.MAIL_TO || 'atencionalcliente@wiplus.com.co'
   const emailUsuario = typeof datos.email === 'string' && datos.email ? datos.email : undefined
 
-  if (!key) {
-    console.info(`[formularios] RESEND_API_KEY no configurada: correo simulado (${tipo})`, {
+  if (!enviar) {
+    console.info(`[formularios] Sin proveedor de correo: correo simulado (${tipo})`, {
       ticket: extra.ticket,
     })
     return { ok: true, simulado: true }
   }
 
   const interno = correoInterno(tipo, datos, extra)
-  const { error } = await enviarResend(key, {
+  const { error } = await enviar({
     from,
     to: [to],
     subject: interno.subject,
@@ -115,7 +132,7 @@ export async function enviarCorreos(
   }
   if (emailUsuario) {
     const conf = correoConfirmacion(tipo, datos, extra.ticket)
-    const r = await enviarResend(key, {
+    const r = await enviar({
       from,
       to: [emailUsuario],
       subject: conf.subject,
@@ -128,10 +145,7 @@ export async function enviarCorreos(
 }
 
 /** Envío con la API REST de Resend (https://resend.com/docs/api-reference/emails/send-email). */
-async function enviarResend(
-  key: string,
-  body: { from: string; to: string[]; subject: string; html: string; reply_to?: string },
-): Promise<{ error: string | null }> {
+async function enviarResend(key: string, body: Correo): Promise<{ error: string | null }> {
   try {
     const res = await fetch('https://api.resend.com/emails', {
       method: 'POST',
@@ -139,6 +153,33 @@ async function enviarResend(
       body: JSON.stringify(body),
     })
     if (!res.ok) return { error: `Resend ${res.status}: ${(await res.text()).slice(0, 200)}` }
+    return { error: null }
+  } catch (e) {
+    return { error: String(e) }
+  }
+}
+
+/** "Nombre <correo@dominio>" → { name, email } (formato de Brevo). */
+function direccion(valor: string): { name?: string; email: string } {
+  const m = valor.match(/^\s*"?([^"<]*?)"?\s*<([^>]+)>\s*$/)
+  return m ? { ...(m[1] ? { name: m[1] } : {}), email: m[2].trim() } : { email: valor.trim() }
+}
+
+/** Envío con la API REST de Brevo (https://developers.brevo.com/reference/sendtransacemail). */
+async function enviarBrevo(key: string, c: Correo): Promise<{ error: string | null }> {
+  try {
+    const res = await fetch('https://api.brevo.com/v3/smtp/email', {
+      method: 'POST',
+      headers: { 'api-key': key, 'Content-Type': 'application/json', Accept: 'application/json' },
+      body: JSON.stringify({
+        sender: direccion(c.from),
+        to: c.to.map(direccion),
+        subject: c.subject,
+        htmlContent: c.html,
+        ...(c.reply_to ? { replyTo: direccion(c.reply_to) } : {}),
+      }),
+    })
+    if (!res.ok) return { error: `Brevo ${res.status}: ${(await res.text()).slice(0, 200)}` }
     return { error: null }
   } catch (e) {
     return { error: String(e) }

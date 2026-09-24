@@ -64,7 +64,14 @@ puede reemplazar desde el CMS (`/studio`) sin programador.
 ## Técnico / cuentas
 
 - [ ] Proyecto de Sanity (projectId, dataset) y token.
-- [ ] Cuenta de Resend y verificación del dominio wiplus.com.co (registros SPF/DKIM, sin tocar MX).
+- [ ] **Correo de los formularios (Brevo)**: crear la cuenta en brevo.com, autenticar el dominio
+      wiplus.com.co (DKIM/DMARC, sin tocar MX) o al menos verificar el remitente, crear la API key y
+      poner en Vercel `BREVO_API_KEY`, `MAIL_FROM` (remitente verificado) y `MAIL_TO` (buzón de WIPLUS
+      que recibe los formularios). Luego redeploy y prueba de envío. Mientras falte, los formularios
+      piden escribir por WhatsApp.
+- [ ] Servidor propio de test de velocidad (OpenSpeedTest, código abierto) dentro de la red de WIPLUS,
+      p. ej. `test.wiplus.com.co`, para que el cliente mida su plan sin pasar por Bogotá. Hoy se usa el
+      servidor público de openspeedtest.com (`components/sections/SpeedTest.tsx`).
 - [ ] Claves de Cloudflare Turnstile.
 - [ ] ID de Google Analytics 4.
 - [ ] Acceso a Cloudflare (zona wiplus.com.co) y Google Search Console.

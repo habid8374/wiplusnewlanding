@@ -66,7 +66,7 @@ Next.js funciona en Vercel sin configuración adicional. `wrangler.jsonc` y `ope
 | `NEXT_PUBLIC_WHATSAPP_NUMBER`                                                             | `573012133151`              | igual                       | Confirmar con WIPLUS                                         |
 | `NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION`                                                    | código de Search Console    | —                           | Paso 4 (opcional si se verifica por DNS)                     |
 | `NEXT_PUBLIC_GA_ID`                                                                       | `G-XXXXXXX`                 | —                           | Sin GA en previews                                           |
-| `RESEND_API_KEY`, `MAIL_FROM`                                                             | ✔                           | opcional                    | Sin clave en producción, los formularios piden usar WhatsApp |
+| `BREVO_API_KEY` (o `RESEND_API_KEY`), `MAIL_FROM`, `MAIL_TO`                              | ✔                           | opcional                    | Sin clave en producción, los formularios piden usar WhatsApp |
 | `NEXT_PUBLIC_TURNSTILE_SITE_KEY`, `TURNSTILE_SECRET_KEY`                                  | ✔                           | ✔                           | Agregar el dominio de Vercel en Turnstile                    |
 | `NEXT_PUBLIC_SANITY_PROJECT_ID`, `NEXT_PUBLIC_SANITY_DATASET`, `SANITY_REVALIDATE_SECRET` | ✔                           | ✔                           | Cuando exista el proyecto de Sanity                          |
 
@@ -177,7 +177,7 @@ NEXT_PUBLIC_GA_ID=G-XXXXXXXXXX
 Secretos del Worker:
 
 ```bash
-npx wrangler secret put RESEND_API_KEY
+npx wrangler secret put BREVO_API_KEY           # o RESEND_API_KEY
 npx wrangler secret put TURNSTILE_SECRET_KEY
 npx wrangler secret put SANITY_REVALIDATE_SECRET
 npx wrangler secret put SANITY_API_READ_TOKEN   # solo si el dataset es privado
@@ -211,14 +211,26 @@ Tamaño actual del Worker: ~2,9 MiB gzip (cabe en el plan gratuito, límite 3 Mi
 6. SSL/TLS en modo **Full (strict)** y _Always Use HTTPS_ activado.
 7. Verificar el correo después del cambio: enviar y recibir un mensaje en `atencionalcliente@wiplus.com.co`.
 
-### 6. Resend (correo de formularios)
+### 6. Correo de formularios (Brevo o Resend)
+
+`lib/forms/email.ts` usa **Brevo** si existe `BREVO_API_KEY`; si no, **Resend** con `RESEND_API_KEY`.
+`MAIL_TO` es el buzón que recibe los formularios y `MAIL_FROM` el remitente verificado.
+
+**Brevo (recomendado):**
+
+1. Crear cuenta en brevo.com › _Senders, Domains & Dedicated IPs_ › _Domains_ › `wiplus.com.co`
+   (registros TXT de verificación, DKIM y DMARC; **no tocan los MX**). Para empezar sin DNS basta con
+   verificar un remitente (_Senders_), aunque con dominio autenticado llegan menos correos a spam.
+2. _SMTP & API_ › _API Keys_ › crear clave → `BREVO_API_KEY`.
+
+**Resend (alternativa):**
 
 1. Crear cuenta en resend.com › _Domains_ › `wiplus.com.co`.
 2. Agregar en Cloudflare los registros que indica Resend (normalmente `TXT`/`MX` en el subdominio
    `send.wiplus.com.co` y DKIM `resend._domainkey`). **No reemplazan los MX del dominio raíz.**
 3. Crear una API key con permiso de envío → `wrangler secret put RESEND_API_KEY`.
 
-Sin `RESEND_API_KEY` en producción los formularios responden pidiendo usar WhatsApp (no se pierden en silencio).
+Sin `BREVO_API_KEY` ni `RESEND_API_KEY` en producción los formularios responden pidiendo usar WhatsApp (no se pierden en silencio).
 
 ### 7. Turnstile
 

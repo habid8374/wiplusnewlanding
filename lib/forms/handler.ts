@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server'
 import { IS_PRODUCTION_SITE } from '@/lib/env'
 import { clientIp, rateLimit } from '@/lib/rate-limit'
 import { erroresPorCampo, formSchemas, type FormResponse, type FormType } from '@/lib/schemas/forms'
-import { enviarCorreos } from './email'
+import { enviarCorreos, hayProveedorCorreo } from './email'
 import { generarTicket } from './ticket'
 import { verificarTurnstile } from './turnstile'
 
@@ -71,8 +71,8 @@ export async function handleForm(tipo: FormType, req: Request) {
 
   const ticket = tipo === 'falla' ? generarTicket() : undefined
 
-  if (!process.env.RESEND_API_KEY && IS_PRODUCTION_SITE) {
-    console.error('[formularios] RESEND_API_KEY falta en producción')
+  if (!hayProveedorCorreo() && IS_PRODUCTION_SITE) {
+    console.error('[formularios] Falta BREVO_API_KEY o RESEND_API_KEY en producción')
     return responder(
       {
         ok: false,

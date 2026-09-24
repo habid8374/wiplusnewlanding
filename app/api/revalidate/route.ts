@@ -14,13 +14,16 @@ export async function POST(req: NextRequest) {
   if (!secret) {
     return NextResponse.json(
       { message: 'SANITY_REVALIDATE_SECRET no configurado' },
-      { status: 500 },
+      { status: 500, headers: { 'Cache-Control': 'no-store' } },
     )
   }
   try {
     const { isValidSignature, body } = await parseBody<{ _type?: string }>(req, secret, true)
     if (!isValidSignature) {
-      return NextResponse.json({ message: 'Firma inválida' }, { status: 401 })
+      return NextResponse.json(
+        { message: 'Firma inválida' },
+        { status: 401, headers: { 'Cache-Control': 'no-store' } },
+      )
     }
     // Invalida inmediatamente (un webhook no puede usar updateTag).
     if (body?._type) revalidateTag(body._type, { expire: 0 })

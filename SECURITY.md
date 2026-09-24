@@ -41,3 +41,26 @@ Reportes de vulnerabilidades: `/.well-known/security.txt`.
   y `base-uri 'self'`.
 - Editores del panel: activar 2FA en sus cuentas de Sanity y quitar `http://localhost:3000` de los
   orígenes CORS cuando ya no se desarrolle en local.
+
+## OWASP ASVS 5.0 — Nivel 1
+
+Autoevaluación contra el [Application Security Verification Standard 5.0](https://owasp.org/www-project-application-security-verification-standard/),
+nivel 1 (el recomendado para un sitio público sin pagos ni cuentas de clientes). No es una
+certificación: es una verificación interna con evidencia en el código y en las pruebas e2e
+(`tests/e2e/seguridad.spec.ts`).
+
+| Capítulo                                      | Estado    | Evidencia                                                                                                                                                               |
+| --------------------------------------------- | --------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| V1 Codificación y saneamiento                 | Cumple    | `escapeHtml` en correos, JSON-LD escapado, `enlaceSeguro` para enlaces del CMS, sin `eval` ni HTML del usuario.                                                         |
+| V2 Validación y lógica de negocio             | Cumple    | Zod con listas cerradas y longitudes; límite de envíos, honeypot y Turnstile (token atado al host del sitio).                                                           |
+| V3 Seguridad del frontend web                 | Cumple    | CSP, `nosniff`, anti-framing, `Referrer-Policy`, COOP; enlaces externos con `noopener`; sin cookies propias.                                                            |
+| V4 API y servicios web                        | Cumple    | Solo `POST` (otros métodos → 405), solo JSON del mismo origen, cuerpo ≤ 16 KB, respuestas `no-store`, sin CORS abierto.                                                 |
+| V5 Manejo de archivos                         | No aplica | El sitio no recibe archivos (las imágenes del panel las gestiona Sanity).                                                                                               |
+| V6–V10 Autenticación, sesiones, tokens, OAuth | No aplica | Sin cuentas de clientes; el acceso al panel lo gestiona Sanity.                                                                                                         |
+| V11 Criptografía                              | Cumple    | Sin criptografía propia; aleatoriedad con `crypto.getRandomValues`; firma HMAC del webhook verificada por la librería.                                                  |
+| V12 Comunicación segura                       | Cumple    | HTTPS en todo el sitio y HSTS; conexiones salientes (Sanity, Brevo/Resend, Turnstile) solo por HTTPS.                                                                   |
+| V13 Configuración                             | Cumple    | Secretos solo en variables de entorno; sin `X-Powered-By` ni mapas de código en producción; `security.txt`.                                                             |
+| V14 Protección de datos                       | Cumple    | Datos personales solo por `POST`, no se almacenan en el sitio, respuestas `no-store`; analítica solo con consentimiento.                                                |
+| V15 Codificación y arquitectura segura        | Cumple    | Lockfile, `npm audit` en CI, SBOM CycloneDX por build (artefacto `sbom` del CI), `overrides` para parches.                                                              |
+| V16 Registro y manejo de errores              | Cumple    | Eventos de seguridad sin datos personales; errores de proveedores sin cuerpo de respuesta; páginas de error genéricas (`app/(site)/error.tsx`, `app/global-error.tsx`). |
+| V17 WebRTC                                    | No aplica | Sin WebRTC.                                                                                                                                                             |

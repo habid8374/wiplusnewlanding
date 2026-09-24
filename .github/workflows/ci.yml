@@ -20,6 +20,12 @@ jobs:
       - run: npm ci
       # Dependencias de producción sin vulnerabilidades altas o críticas (OWASP A03)
       - run: npm audit --omit=dev --audit-level=high
+      # Inventario de componentes (SBOM, formato CycloneDX) — ASVS V15
+      - run: npm sbom --omit=dev --sbom-format cyclonedx > sbom.cdx.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: sbom
+          path: sbom.cdx.json
       - run: npm run lint
       - run: npm run typecheck
       - run: npm run format:check

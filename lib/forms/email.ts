@@ -172,7 +172,7 @@ async function enviarResend(key: string, body: Correo): Promise<{ error: string 
       headers: { Authorization: `Bearer ${key}`, 'Content-Type': 'application/json' },
       body: JSON.stringify(body),
     })
-    if (!res.ok) return { error: `Resend ${res.status}: ${(await res.text()).slice(0, 200)}` }
+    if (!res.ok) return { error: `Resend respondió ${res.status}` }
     return { error: null }
   } catch (e) {
     return { error: String(e) }
@@ -199,7 +199,7 @@ async function enviarBrevo(key: string, c: Correo): Promise<{ error: string | nu
         ...(c.reply_to ? { replyTo: direccion(c.reply_to) } : {}),
       }),
     })
-    if (!res.ok) return { error: `Brevo ${res.status}: ${(await res.text()).slice(0, 200)}` }
+    if (!res.ok) return { error: `Brevo respondió ${res.status}` }
     return { error: null }
   } catch (e) {
     return { error: String(e) }

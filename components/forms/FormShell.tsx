@@ -189,6 +189,7 @@ export function FormShell({
               <Link
                 href="/politica-de-datos"
                 target="_blank"
+                rel="noopener"
                 className="font-semibold text-primary-700 underline"
               >
                 política de tratamiento de datos personales

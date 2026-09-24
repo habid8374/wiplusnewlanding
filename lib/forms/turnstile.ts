@@ -5,7 +5,7 @@ import { IS_PRODUCTION_SITE, TURNSTILE_SITE_KEY } from '@/lib/env'
  * producción con la clave pública configurada: ahí falta la mitad de la configuración y se
  * rechaza el envío en lugar de aceptarlo sin verificar (OWASP A02, fallar de forma segura).
  */
-export async function verificarTurnstile(token: string, ip?: string) {
+export async function verificarTurnstile(token: string, ip?: string, host?: string) {
   const secret = process.env.TURNSTILE_SECRET_KEY
   if (!secret) {
     if (IS_PRODUCTION_SITE && TURNSTILE_SITE_KEY) {
@@ -22,8 +22,14 @@ export async function verificarTurnstile(token: string, ip?: string) {
       method: 'POST',
       body,
     })
-    const data = (await res.json()) as { success: boolean; 'error-codes'?: string[] }
-    return { ok: data.success === true, errores: data['error-codes'] }
+    const data = (await res.json()) as {
+      success: boolean
+      hostname?: string
+      'error-codes'?: string[]
+    }
+    // El desafío debe haberse resuelto en este mismo sitio (un token de otro sitio no sirve).
+    const mismoSitio = !host || !data.hostname || data.hostname === host
+    return { ok: data.success === true && mismoSitio, errores: data['error-codes'] }
   } catch (error) {
     console.error('[turnstile] Error verificando token', error)
     return { ok: false }

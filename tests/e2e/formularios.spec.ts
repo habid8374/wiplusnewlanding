@@ -99,7 +99,10 @@ test.describe('Formularios', () => {
   }
 
   test('la API rechaza datos inválidos y aplica honeypot', async ({ request }) => {
-    const malo = await request.post('/api/contacto', { data: { nombre: 'A' } })
+    const malo = await request.post('/api/contacto', {
+      data: { nombre: 'A' },
+      headers: { 'x-real-ip': `10.8.0.${Math.floor(Math.random() * 250)}` },
+    })
     expect(malo.status()).toBe(400)
     const json = await malo.json()
     expect(json.errores).toHaveProperty('celular')

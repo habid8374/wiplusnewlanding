@@ -8,8 +8,11 @@ import { verificarTurnstile } from './turnstile'
 
 const MAX_BODY = 16_000
 
+/** Respuestas con datos del usuario: nunca en caché del navegador ni de intermediarios (ASVS V14). */
 function responder(body: FormResponse, status = 200, headers?: HeadersInit) {
-  return NextResponse.json(body, { status, headers })
+  const res = NextResponse.json(body, { status, headers })
+  res.headers.set('Cache-Control', 'no-store')
+  return res
 }
 
 /** Lógica común de todos los formularios (route handlers en app/api/*). */
@@ -93,7 +96,11 @@ export async function handleForm(tipo: FormType, req: Request) {
   }
   const datos = parsed.data as Record<string, unknown>
 
-  const captcha = await verificarTurnstile(String(datos.turnstileToken ?? ''), ip)
+  const captcha = await verificarTurnstile(
+    String(datos.turnstileToken ?? ''),
+    ip,
+    new URL(req.url).hostname,
+  )
   if (!captcha.ok) {
     logSeguridad('turnstile_fallido', tipo)
     return responder(

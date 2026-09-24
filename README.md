@@ -70,6 +70,11 @@ Next.js funciona en Vercel sin configuración adicional. `wrangler.jsonc` y `ope
 | `NEXT_PUBLIC_TURNSTILE_SITE_KEY`, `TURNSTILE_SECRET_KEY`                                  | ✔                           | ✔                           | Agregar el dominio de Vercel en Turnstile                    |
 | `NEXT_PUBLIC_SANITY_PROJECT_ID`, `NEXT_PUBLIC_SANITY_DATASET`, `SANITY_REVALIDATE_SECRET` | ✔                           | ✔                           | Cuando exista el proyecto de Sanity                          |
 
+> **Dominio mientras se prueba:** en Vercel, mientras el sitio de producción siga en `*.vercel.app`,
+> las canónicas, `og:url`, el sitemap y la tarjeta para compartir usan ese dominio (así WhatsApp y
+> Facebook muestran la tarjeta nueva y no la del WordPress). Al conectar `www.wiplus.com.co` cambian solas
+> a ese dominio; solo hay que volver a desplegar. Lógica en `lib/env.ts › siteUrl()`.
+
 Las `NEXT_PUBLIC_*` se incrustan en el build: después de cambiarlas, hay que **redesplegar**.
 
 ### 3. Dominio

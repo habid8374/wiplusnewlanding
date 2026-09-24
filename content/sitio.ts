@@ -19,7 +19,7 @@ export const sitio: SiteSettings = {
     pais: 'Colombia',
   },
   geo: { lat: 10.6297, lng: -74.916 },
-  mapsUrl: 'https://maps.app.goo.gl/jG5ZYKUFkNYdpsZk9',
+  mapsUrl: 'https://maps.app.goo.gl/i1Fo5RVo3neGZcT88',
   horario: {
     texto: '8:00 a. m. – 6:00 p. m.',
     // TODO(WIPLUS): confirmar días de atención (se asume lunes a sábado).

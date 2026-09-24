@@ -89,6 +89,7 @@ export function localBusinessJsonLd(s: SiteSettings) {
       addressCountry: 'CO',
     },
     geo: { '@type': 'GeoCoordinates', latitude: s.geo.lat, longitude: s.geo.lng },
+    ...(s.mapsUrl ? { hasMap: s.mapsUrl } : {}),
     openingHoursSpecification: [
       {
         '@type': 'OpeningHoursSpecification',

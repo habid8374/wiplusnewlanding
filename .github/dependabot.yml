@@ -1,15 +1,16 @@
-# Revisión semanal de dependencias (OWASP A03, cadena de suministro).
+# Dependabot solo para ACTUALIZACIONES DE SEGURIDAD (OWASP A03), sin PR de versiones nuevas.
+# open-pull-requests-limit: 0 desactiva las actualizaciones de versión; las alertas y PR de
+# seguridad siguen llegando si están activadas en Settings › Code security (Dependabot security updates).
+# Además, CI ejecuta `npm audit --omit=dev --audit-level=high` en cada cambio.
 version: 2
 updates:
   - package-ecosystem: npm
     directory: /
     schedule:
       interval: weekly
-    open-pull-requests-limit: 5
-    groups:
-      menores:
-        update-types: [minor, patch]
+    open-pull-requests-limit: 0
   - package-ecosystem: github-actions
     directory: /
     schedule:
       interval: monthly
+    open-pull-requests-limit: 0

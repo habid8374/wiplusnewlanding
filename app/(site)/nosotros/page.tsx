@@ -1,14 +1,16 @@
-import { Compass, Eye, MapPin, Target, Users } from 'lucide-react'
+import { CircleCheck, Eye, MapPin, Target, Wrench } from 'lucide-react'
 import type { Metadata } from 'next'
 import Image from 'next/image'
 import { Clients } from '@/components/sections/Clients'
 import { FinalCta } from '@/components/sections/FinalCta'
 import { Testimonials } from '@/components/sections/Testimonials'
+import { ButtonLink } from '@/components/ui/ButtonLink'
 import { PageHero } from '@/components/ui/PageHero'
 import { Section } from '@/components/ui/Section'
 import { getClientes, getFotos, getSiteSettings, getTestimonios } from '@/lib/content'
 import { pageMetadata } from '@/lib/seo'
 import { mensajesWhatsApp } from '@/lib/whatsapp'
+import equipo from '@/public/equipo/equipo-tecnico-wiplus.jpg'
 
 export const metadata: Metadata = pageMetadata({
   title: 'Nosotros: proveedor de internet en Sabanalarga',
@@ -84,15 +86,50 @@ export default async function NosotrosPage() {
         </div>
       </Section>
 
-      <Section id="equipo" title="Nuestro equipo" align="left">
-        <div className="flex flex-col gap-6 rounded-3xl border border-line p-8 sm:flex-row sm:items-center">
-          <Users className="size-12 shrink-0 text-primary-600" aria-hidden />
-          <p className="text-lg text-muted">
-            {/* TODO(WIPLUS): fotos y presentación del equipo. */}
-            Técnicos, asesores comerciales y personal de atención al cliente de la región,
-            comprometidos con que tu conexión funcione bien todos los días.
-          </p>
-          <Compass className="hidden size-12 shrink-0 text-accent-500 sm:block" aria-hidden />
+      <Section id="equipo" eyebrow="Equipo técnico" title="Nuestro equipo" align="left">
+        <div className="grid items-center gap-8 lg:grid-cols-[1.25fr_1fr] lg:gap-12">
+          <figure className="relative overflow-hidden rounded-3xl shadow-card-hover">
+            <Image
+              src={equipo}
+              alt="Equipo técnico de WIPLUS Comunicaciones: cinco técnicos con el uniforme azul de la empresa, uno de ellos con casco, haciendo el gesto de aprobación"
+              sizes="(min-width: 1024px) 55vw, 100vw"
+              placeholder="blur"
+              className="h-auto w-full"
+            />
+            <div
+              aria-hidden
+              className="absolute inset-x-0 bottom-0 h-2/5 bg-gradient-to-t from-primary-950/90 via-primary-950/50 to-transparent"
+            />
+            <figcaption className="absolute bottom-3 left-4 text-sm font-semibold text-white sm:bottom-4 sm:left-5">
+              Equipo técnico de WIPLUS en Sabanalarga
+            </figcaption>
+          </figure>
+          <div>
+            <p className="text-xl font-semibold text-pretty text-primary-900">
+              Contamos con profesionales altamente calificados, con gran sensibilidad y calidad
+              humana.
+            </p>
+            <p className="mt-4 text-lg text-muted">
+              Son técnicos de la región, identificados con el uniforme de WIPLUS, que instalan y
+              mantienen nuestra red de fibra óptica y te atienden cuando lo necesitas.
+            </p>
+            <ul className="mt-6 space-y-3">
+              {[
+                'Técnicos de Sabanalarga y la región',
+                'Uniformados e identificados con la marca',
+                'Atención por WhatsApp, teléfono y en nuestra oficina',
+              ].map((t) => (
+                <li key={t} className="flex gap-3">
+                  <CircleCheck className="mt-0.5 size-5 shrink-0 text-whatsapp-700" aria-hidden />
+                  <span>{t}</span>
+                </li>
+              ))}
+            </ul>
+            <ButtonLink href="/soporte" variant="outline" className="mt-8">
+              <Wrench className="size-5" aria-hidden />
+              ¿Necesitas soporte técnico?
+            </ButtonLink>
+          </div>
         </div>
       </Section>
 

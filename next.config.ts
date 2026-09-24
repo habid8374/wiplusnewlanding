@@ -37,6 +37,8 @@ const nextConfig: NextConfig = {
       })),
       // Cualquier otra URL con barra final → sin barra (301).
       { source: '/:path+/', destination: '/:path+', statusCode: 301 as const },
+      // Enlaces copiados con un signo al final (p. ej. «…/planes-hogar.» en un chat o en el panel).
+      { source: '/:path([\\w\\-/]+)\\.', destination: '/:path', statusCode: 301 as const },
     ]
   },
   async headers() {

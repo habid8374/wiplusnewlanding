@@ -39,4 +39,10 @@ test.describe('Redirecciones 301', () => {
       expect((await res.body()).length).toBeLessThan(300_000)
     }
   })
+
+  test('una URL con punto al final redirige a la página correcta', async ({ request }) => {
+    const res = await request.get('/planes-hogar.', { maxRedirects: 0 })
+    expect(res.status()).toBe(301)
+    expect(res.headers()['location']).toMatch(/\/planes-hogar$/)
+  })
 })

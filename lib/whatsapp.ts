@@ -36,7 +36,7 @@ export function mensajeParaRuta(pathname: string) {
   if (pathname.startsWith('/soporte')) return mensajesWhatsApp.soporte()
   if (pathname.startsWith('/cobertura')) return mensajesWhatsApp.cobertura()
   if (pathname.startsWith('/pagos')) return mensajesWhatsApp.pagos()
-  if (pathname.startsWith('/usuario')) return mensajesWhatsApp.pqr()
+  if (pathname.startsWith('/usuario') || pathname.startsWith('/pqr')) return mensajesWhatsApp.pqr()
   if (pathname.startsWith('/planes-hogar')) return mensajesWhatsApp.contratar()
   return mensajesWhatsApp.general()
 }

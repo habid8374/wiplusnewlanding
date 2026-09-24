@@ -92,7 +92,7 @@ export function MobileNav({ items, whatsapp }: { items: readonly Item[]; whatsap
             Contratar por WhatsApp
           </WhatsAppLink>
           <Link
-            href="/usuario#radicar-pqr"
+            href="/pqr"
             onClick={() => setOpen(false)}
             className="mt-4 block text-center font-semibold text-primary-700 underline underline-offset-2"
           >

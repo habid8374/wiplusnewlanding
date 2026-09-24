@@ -94,7 +94,7 @@ export function Footer({ sitio }: { sitio: SiteSettings }) {
             WhatsApp
           </WhatsAppLink>
           <Link
-            href="/usuario#radicar-pqr"
+            href="/pqr"
             className="mt-3 flex w-fit items-center gap-2 rounded-full border border-white/25 px-4 py-2 text-sm font-semibold text-white hover:border-white/50 hover:bg-white/10"
           >
             <FileText className="size-4 text-accent-400" aria-hidden />

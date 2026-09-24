@@ -19,7 +19,7 @@ export function TopBar({ sitio }: { sitio: SiteSettings }) {
         </p>
         <div className="flex items-center gap-3 sm:gap-4">
           <Link
-            href="/usuario#radicar-pqr"
+            href="/pqr"
             className="flex items-center gap-1 rounded-full bg-white/10 px-2 py-0.5 font-semibold text-white hover:bg-white/20 sm:gap-1.5 sm:px-2.5"
           >
             <FileText className="size-4 text-accent-400" aria-hidden />

@@ -2,7 +2,7 @@ import { FileDown } from 'lucide-react'
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { CallLink, WhatsAppLink } from '@/components/analytics/TrackedLinks'
-import { PqrForm } from '@/components/forms/Forms'
+import { ButtonLink } from '@/components/ui/ButtonLink'
 import { Container } from '@/components/ui/Container'
 import { LegalDraftNotice } from '@/components/ui/LegalDraftNotice'
 import { PageHero } from '@/components/ui/PageHero'
@@ -125,8 +125,8 @@ export default async function UsuarioPage() {
               .
             </li>
             <li>
-              <strong>Formulario web:</strong> <a href="#radicar-pqr">radica tu PQR aquí</a> y
-              recibe al instante un número de radicado. Para fallas técnicas usa el{' '}
+              <strong>Formulario web:</strong> <Link href="/pqr">radica tu PQR aquí</Link> y recibe
+              al instante un número de radicado. Para fallas técnicas usa el{' '}
               <Link href="/soporte#reportar-falla">reporte de fallas</Link>.
             </li>
           </ul>
@@ -144,8 +144,19 @@ export default async function UsuarioPage() {
             </li>
           </ol>
         </div>
-        <div id="radicar-pqr" className="mx-auto my-10 max-w-3xl scroll-mt-28">
-          <PqrForm />
+        <div
+          id="radicar-pqr"
+          className="mx-auto my-10 flex max-w-3xl flex-col items-start gap-4 rounded-3xl bg-primary-900 p-6 text-white sm:flex-row sm:items-center sm:justify-between sm:p-8"
+        >
+          <div>
+            <p className="text-xl font-extrabold">Radica tu PQR en línea</p>
+            <p className="mt-1 text-primary-100">
+              Recibe al instante tu número de radicado para hacer seguimiento.
+            </p>
+          </div>
+          <ButtonLink href="/pqr" variant="light" className="shrink-0">
+            Radicar PQR
+          </ButtonLink>
         </div>
         <div className="mx-auto prose-wiplus max-w-3xl">
           <h2 id="recursos">Recursos</h2>

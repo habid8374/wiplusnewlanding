@@ -125,7 +125,7 @@ test.describe('Formularios', () => {
   })
 
   test('PQR contra la API real muestra el número de radicado', async ({ page }) => {
-    await page.goto('/usuario#radicar-pqr')
+    await page.goto('/pqr')
     await cerrarCookies(page)
     const form = page.getByTestId('form-pqr')
     await form.getByLabel(/Tipo de PQR/).selectOption('Queja o reclamo')
@@ -144,8 +144,8 @@ test.describe('Formularios', () => {
     await page.goto('/')
     await cerrarCookies(page)
     // El primero es el de la barra superior (en móvil dice solo «PQR»); el pie tiene otro.
-    await page.locator('a[href="/usuario#radicar-pqr"]').first().click()
-    await expect(page).toHaveURL(/\/usuario#radicar-pqr$/)
+    await page.locator('a[href="/pqr"]').first().click()
+    await expect(page).toHaveURL(/\/pqr$/)
     await expect(page.getByTestId('form-pqr')).toBeVisible()
   })
 })

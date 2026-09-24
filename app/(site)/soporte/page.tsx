@@ -123,7 +123,7 @@ export default async function SoportePage() {
           <p className="mt-6 text-center text-muted">
             ¿Quieres presentar una queja, reclamo o recurso?{' '}
             <Link
-              href="/usuario#radicar-pqr"
+              href="/pqr"
               className="font-semibold text-primary-700 underline underline-offset-2"
             >
               Radica tu PQR

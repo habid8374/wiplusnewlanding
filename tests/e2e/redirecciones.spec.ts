@@ -33,7 +33,7 @@ test.describe('Redirecciones 301', () => {
     expect((await request.get('/robots.txt')).status()).toBe(200)
     expect((await request.get('/opengraph-image')).headers()['content-type']).toContain('image/png')
     // Tarjetas por sección: PNG de menos de 300 KB (límite práctico de WhatsApp)
-    for (const slug of ['nosotros', 'planes-hogar', 'cobertura', 'contacto']) {
+    for (const slug of ['nosotros', 'planes-hogar', 'cobertura', 'contacto', 'pqr']) {
       const res = await request.get(`/og/${slug}`)
       expect(res.headers()['content-type']).toContain('image/png')
       expect((await res.body()).length).toBeLessThan(300_000)

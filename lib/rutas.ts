@@ -61,6 +61,14 @@ export const RUTAS: Ruta[] = [
     frecuencia: 'monthly',
   },
   {
+    path: '/pqr',
+    titulo: 'Radicar PQR',
+    descripcion: 'Formulario para peticiones, quejas, reclamos y recursos, con número de radicado.',
+    grupo: 'Clientes',
+    prioridad: 0.5,
+    frecuencia: 'yearly',
+  },
+  {
     path: '/usuario',
     titulo: 'Protección al usuario y PQR',
     descripcion: 'Derechos, deberes y cómo presentar peticiones, quejas y recursos.',

@@ -9,6 +9,7 @@ export const PAGINAS = [
   { path: '/pagos', h1: /Paga tu servicio/ },
   { path: '/nosotros', h1: /Conectamos a Sabanalarga/ },
   { path: '/contacto', h1: /Hablemos/ },
+  { path: '/pqr', h1: /Radica tu PQR/ },
   { path: '/usuario', h1: /Protección al usuario/ },
   { path: '/politica-de-datos', h1: /Política de tratamiento de datos/ },
   { path: '/terminos', h1: /Términos y condiciones/ },

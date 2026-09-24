@@ -67,6 +67,13 @@ export const OG_PAGES: Record<string, OgPage> = {
     icono: 'phone',
     chips: sitio.telefonos.map((t) => t.numero),
   },
+  pqr: {
+    seccion: 'PQR',
+    titulo: 'Radica tu PQR en línea',
+    subtitulo: 'Peticiones, quejas, reclamos y recursos.',
+    icono: 'messageSquareText',
+    chips: ['Radicado al instante', 'Respuesta en 15 días hábiles'],
+  },
   usuario: {
     seccion: 'Protección al usuario',
     titulo: 'Tus derechos y cómo radicar una PQR',

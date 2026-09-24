@@ -24,11 +24,11 @@ export function Hero({ sitio, planes }: { sitio: SiteSettings; planes: Plan[] })
       {/* Capa de marca para contraste AA del texto: más densa a la izquierda, donde va el contenido */}
       <div
         aria-hidden
-        className="absolute inset-0 -z-10 bg-gradient-to-r from-primary-950/95 via-primary-900/85 to-primary-900/40 max-lg:via-primary-950/90 max-lg:to-primary-900/75"
+        className="absolute inset-0 -z-10 bg-gradient-to-r from-primary-950/85 via-primary-900/55 to-primary-900/10 max-lg:from-primary-950/80 max-lg:via-primary-950/65 max-lg:to-primary-900/45"
       />
       <div
         aria-hidden
-        className="absolute inset-x-0 bottom-0 -z-10 h-32 bg-gradient-to-t from-primary-950/80 to-transparent"
+        className="absolute inset-x-0 bottom-0 -z-10 h-32 bg-gradient-to-t from-primary-950/60 to-transparent"
       />
       <Container className="relative pt-8 pb-20 sm:py-16 lg:py-24">
         {/* Logo arriba a la derecha */}
@@ -38,7 +38,7 @@ export function Hero({ sitio, planes }: { sitio: SiteSettings; planes: Plan[] })
           sizes="(min-width: 1024px) 128px, (min-width: 640px) 96px, 56px"
           className="absolute top-8 right-4 size-14 rounded-2xl shadow-2xl ring-1 ring-white/20 sm:top-16 sm:right-6 sm:size-24 lg:top-24 lg:right-8 lg:size-32"
         />
-        <div className="max-w-2xl">
+        <div className="max-w-2xl [text-shadow:0_1px_2px_rgb(8_22_60/0.7),0_2px_16px_rgb(8_22_60/0.55)] [&_a]:[text-shadow:none]">
           <p className="mr-16 inline-flex items-center gap-2 rounded-full bg-white/10 px-3 py-1 text-sm font-semibold text-accent-300 ring-1 ring-white/20">
             <MapPin className="size-4" aria-hidden />
             {sitio.municipiosCobertura.join(' y ')}, Atlántico

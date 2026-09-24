@@ -132,8 +132,10 @@ export const getInfoPagos = cache(async (): Promise<InfoPagos> => {
   const data = cms ?? local.pagos
   return {
     ...data,
-    medios: visible(data.medios),
+    // Un documento recién creado en el Studio llega vacío: se completa con el respaldo local.
+    medios: visible(data.medios.length ? data.medios : local.pagos.medios),
     fechasCorte: data.fechasCorte || local.pagos.fechasCorte,
+    notas: data.notas.length ? data.notas : local.pagos.notas,
   }
 })
 

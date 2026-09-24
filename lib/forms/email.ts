@@ -19,6 +19,9 @@ const CAMPOS: Record<string, string> = {
   asunto: 'Asunto',
   descripcion: 'Descripción',
   mensaje: 'Mensaje',
+  tipoPqr: 'Tipo de PQR',
+  documento: 'Documento',
+  pretension: 'Lo que solicita',
 }
 
 const OMITIR = new Set(['aceptaPolitica', 'sitioWeb', 'turnstileToken'])
@@ -58,9 +61,10 @@ export function correoInterno(
   datos: Record<string, unknown>,
   extra: { ticket?: string; ip?: string; pagina?: string },
 ) {
-  const titulo = `${FORM_LABELS[tipo]}${extra.ticket ? ` · Ticket ${extra.ticket}` : ''}`
+  const etiqueta = tipo === 'pqr' ? 'Radicado' : 'Ticket'
+  const titulo = `${FORM_LABELS[tipo]}${extra.ticket ? ` · ${etiqueta} ${extra.ticket}` : ''}`
   const celular = String(datos.celular ?? '')
-  const cuerpo = `${extra.ticket ? `<p style="font-size:16px"><strong>Ticket:</strong> <span style="font-family:monospace;font-size:18px">${escapeHtml(extra.ticket)}</span></p>` : ''}
+  const cuerpo = `${extra.ticket ? `<p style="font-size:16px"><strong>${etiqueta}:</strong> <span style="font-family:monospace;font-size:18px">${escapeHtml(extra.ticket)}</span></p>` : ''}
 ${tabla(datos)}
 <p style="margin-top:20px"><a href="https://wa.me/57${escapeHtml(celular)}" style="background:#15803d;color:#fff;padding:10px 16px;border-radius:999px;text-decoration:none;font-weight:bold">Responder por WhatsApp</a></p>
 <p style="font-size:12px;color:#475569;margin-top:16px">Aceptó la política de tratamiento de datos: sí · Enviado: ${escapeHtml(new Date().toLocaleString('es-CO', { timeZone: 'America/Bogota' }))}</p>`
@@ -73,10 +77,18 @@ export function correoConfirmacion(
   ticket?: string,
 ) {
   const nombre = String(datos.nombre ?? datos.titular ?? datos.contacto ?? '')
-  const titulo = ticket ? `Recibimos tu reporte · Ticket ${ticket}` : 'Recibimos tu solicitud'
+  const pqr = tipo === 'pqr'
+  const titulo = pqr
+    ? `Radicamos tu PQR · ${ticket}`
+    : ticket
+      ? `Recibimos tu reporte · Ticket ${ticket}`
+      : 'Recibimos tu solicitud'
+  const intro = pqr
+    ? '<p>Recibimos tu petición, queja o recurso. Te responderemos dentro de los <strong>15 días hábiles</strong> siguientes, como lo establece el Régimen de Protección de los Usuarios de la CRC.</p>'
+    : `<p>Gracias por escribirnos. Recibimos tu ${escapeHtml(FORM_LABELS[tipo].toLowerCase())} y un asesor te contactará en nuestro horario de atención (8:00 a. m. – 6:00 p. m.).</p>`
   const cuerpo = `<p>Hola ${escapeHtml(nombre)},</p>
-<p>Gracias por escribirnos. Recibimos tu ${escapeHtml(FORM_LABELS[tipo].toLowerCase())} y un asesor te contactará en nuestro horario de atención (8:00 a. m. – 6:00 p. m.).</p>
-${ticket ? `<p style="font-size:16px">Tu número de ticket es <strong style="font-family:monospace">${escapeHtml(ticket)}</strong>. Guárdalo para hacer seguimiento.</p>` : ''}
+${intro}
+${ticket ? `<p style="font-size:16px">Tu número de ${pqr ? 'radicado' : 'ticket'} es <strong style="font-family:monospace">${escapeHtml(ticket)}</strong>. Guárdalo para hacer seguimiento.</p>` : ''}
 <p>Este es un resumen de lo que nos enviaste:</p>${tabla(datos)}
 <p style="margin-top:16px">Si necesitas algo más, respóndenos a este correo o escríbenos por WhatsApp.</p>`
   return { subject: `WIPLUS Comunicaciones: ${titulo}`, html: layout(titulo, cuerpo) }

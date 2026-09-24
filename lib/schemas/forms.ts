@@ -1,7 +1,7 @@
 import * as z from 'zod/mini'
-import { MUNICIPIOS, TIPOS_FALLA } from './constants'
+import { MUNICIPIOS, TIPOS_FALLA, TIPOS_PQR } from './constants'
 
-export { MUNICIPIOS, TIPOS_FALLA }
+export { MUNICIPIOS, TIPOS_FALLA, TIPOS_PQR }
 
 /**
  * Esquemas de formularios compartidos entre cliente (validación inmediata) y servidor (route handlers).
@@ -92,6 +92,19 @@ export const fallaSchema = z.object({
   ...comunes,
 })
 
+export const pqrSchema = z.object({
+  tipoPqr: z.enum(TIPOS_PQR, { error: 'Elige el tipo de PQR.' }),
+  titular: texto(3, 80, 'el nombre del titular'),
+  documento: texto(5, 20, 'el número de documento'),
+  contrato: textoOpcional(30),
+  celular: celularSchema,
+  email: emailOpcional,
+  municipio: z.enum(MUNICIPIOS, { error: 'Elige tu municipio.' }),
+  descripcion: texto(20, 3000, 'los hechos de tu PQR (mínimo 20 caracteres)'),
+  pretension: textoOpcional(1000),
+  ...comunes,
+})
+
 export const contactoSchema = z.object({
   nombre: texto(3, 80, 'tu nombre'),
   celular: celularSchema,
@@ -107,6 +120,7 @@ export const formSchemas = {
   cobertura: coberturaSchema,
   falla: fallaSchema,
   contacto: contactoSchema,
+  pqr: pqrSchema,
 } as const
 
 export type FormType = keyof typeof formSchemas
@@ -118,6 +132,7 @@ export const FORM_LABELS: Record<FormType, string> = {
   cobertura: 'Verificación de cobertura',
   falla: 'Reporte de falla',
   contacto: 'Contacto general',
+  pqr: 'PQR (petición, queja o recurso)',
 }
 
 /** Respuesta estándar de /api/formularios/* */

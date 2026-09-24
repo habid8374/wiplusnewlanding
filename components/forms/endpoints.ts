@@ -6,4 +6,5 @@ export const FORM_ENDPOINTS: Record<FormType, string> = {
   cobertura: '/api/cobertura',
   falla: '/api/falla',
   contacto: '/api/contacto',
+  pqr: '/api/pqr',
 }

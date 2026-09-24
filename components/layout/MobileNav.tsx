@@ -91,6 +91,13 @@ export function MobileNav({ items, whatsapp }: { items: readonly Item[]; whatsap
           >
             Contratar por WhatsApp
           </WhatsAppLink>
+          <Link
+            href="/usuario#radicar-pqr"
+            onClick={() => setOpen(false)}
+            className="mt-4 block text-center font-semibold text-primary-700 underline underline-offset-2"
+          >
+            Radicar una PQR (petición, queja o recurso)
+          </Link>
         </nav>
       </div>
     </div>

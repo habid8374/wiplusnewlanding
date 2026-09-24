@@ -69,7 +69,12 @@ export async function handleForm(tipo: FormType, req: Request) {
     )
   }
 
-  const ticket = tipo === 'falla' ? generarTicket() : undefined
+  const ticket =
+    tipo === 'falla'
+      ? generarTicket()
+      : tipo === 'pqr'
+        ? generarTicket(new Date(), 'PQR')
+        : undefined
 
   if (!hayProveedorCorreo() && IS_PRODUCTION_SITE) {
     console.error('[formularios] Falta BREVO_API_KEY o RESEND_API_KEY en producción')
@@ -108,8 +113,11 @@ export async function handleForm(tipo: FormType, req: Request) {
   return responder({
     ok: true,
     ticket,
-    mensaje: ticket
-      ? 'Nuestro equipo técnico revisará tu caso y te contactará por celular.'
-      : 'Un asesor te contactará pronto en nuestro horario de atención.',
+    mensaje:
+      tipo === 'pqr'
+        ? 'Radicamos tu PQR. Te responderemos dentro de los 15 días hábiles siguientes por el medio de contacto que nos diste.'
+        : ticket
+          ? 'Nuestro equipo técnico revisará tu caso y te contactará por celular.'
+          : 'Un asesor te contactará pronto en nuestro horario de atención.',
   })
 }

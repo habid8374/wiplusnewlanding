@@ -2,6 +2,7 @@ import { FileDown } from 'lucide-react'
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { CallLink, WhatsAppLink } from '@/components/analytics/TrackedLinks'
+import { PqrForm } from '@/components/forms/Forms'
 import { Container } from '@/components/ui/Container'
 import { LegalDraftNotice } from '@/components/ui/LegalDraftNotice'
 import { PageHero } from '@/components/ui/PageHero'
@@ -114,7 +115,7 @@ export default async function UsuarioPage() {
               <strong>WhatsApp:</strong>{' '}
               <WhatsAppLink
                 numero={sitio.whatsapp}
-                mensaje="Hola WIPLUS, quiero radicar una PQR. Mi número de contrato es: "
+                mensaje={mensajesWhatsApp.pqr()}
                 ubicacion="usuario_pqr"
                 variant="none"
                 icon={false}
@@ -124,9 +125,9 @@ export default async function UsuarioPage() {
               .
             </li>
             <li>
-              <strong>Formulario web:</strong> para fallas técnicas usa el{' '}
-              <Link href="/soporte#reportar-falla">reporte de fallas</Link>; para otros temas, el{' '}
-              <Link href="/contacto">formulario de contacto</Link>.
+              <strong>Formulario web:</strong> <a href="#radicar-pqr">radica tu PQR aquí</a> y
+              recibe al instante un número de radicado. Para fallas técnicas usa el{' '}
+              <Link href="/soporte#reportar-falla">reporte de fallas</Link>.
             </li>
           </ul>
           <ol>
@@ -134,14 +135,19 @@ export default async function UsuarioPage() {
               Indica tu nombre, número de documento o contrato, y describe claramente tu solicitud.
             </li>
             <li>
-              Recibirás un <strong>CUN</strong> (código único numérico) para hacer seguimiento.
+              Recibirás un <strong>CUN</strong> (código único numérico) para hacer seguimiento. Si
+              radicas por el formulario web, además recibes al instante un número de radicado.
             </li>
             <li>
               Te responderemos dentro de los <strong>15 días hábiles</strong> siguientes. Si no
               respondemos en ese plazo, opera el silencio administrativo positivo a tu favor.
             </li>
           </ol>
-
+        </div>
+        <div id="radicar-pqr" className="mx-auto my-10 max-w-3xl scroll-mt-28">
+          <PqrForm />
+        </div>
+        <div className="mx-auto prose-wiplus max-w-3xl">
           <h2 id="recursos">Recursos</h2>
           <p>
             Si no estás de acuerdo con la respuesta, puedes presentar{' '}

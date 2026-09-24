@@ -14,6 +14,7 @@ export const mensajesWhatsApp = {
       : 'Hola, quiero saber si tienen cobertura en mi barrio.',
   empresas: () => 'Hola, quiero una cotización de internet para mi empresa.',
   soporte: () => 'Hola, tengo una falla con mi servicio. Mi número de contrato es: ',
+  pqr: () => 'Hola WIPLUS, quiero radicar una PQR. Mi número de contrato es: ',
   pagos: () =>
     'Hola WIPLUS, quiero información sobre cómo pagar mi factura. Mi número de contrato es: ',
 } as const
@@ -35,6 +36,7 @@ export function mensajeParaRuta(pathname: string) {
   if (pathname.startsWith('/soporte')) return mensajesWhatsApp.soporte()
   if (pathname.startsWith('/cobertura')) return mensajesWhatsApp.cobertura()
   if (pathname.startsWith('/pagos')) return mensajesWhatsApp.pagos()
+  if (pathname.startsWith('/usuario')) return mensajesWhatsApp.pqr()
   if (pathname.startsWith('/planes-hogar')) return mensajesWhatsApp.contratar()
   return mensajesWhatsApp.general()
 }

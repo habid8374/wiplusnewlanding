@@ -29,6 +29,7 @@ export function FormShell({
   descripcion,
   submitLabel = 'Enviar',
   exitoTitulo = '¡Recibimos tu solicitud!',
+  etiquetaTicket = 'ticket',
   children,
   className,
 }: {
@@ -37,6 +38,8 @@ export function FormShell({
   descripcion?: ReactNode
   submitLabel?: string
   exitoTitulo?: string
+  /** Cómo se nombra el número que devuelve el servidor («ticket», «radicado»). */
+  etiquetaTicket?: string
   children: ReactNode
   className?: string
 }) {
@@ -120,7 +123,7 @@ export function FormShell({
         <p className="mt-3 text-2xl font-extrabold text-primary-950">{exitoTitulo}</p>
         {estado.ticket && (
           <p className="mt-3 text-lg">
-            Tu número de ticket es{' '}
+            Tu número de {etiquetaTicket} es{' '}
             <strong data-testid="ticket" className="font-mono text-primary-800">
               {estado.ticket}
             </strong>

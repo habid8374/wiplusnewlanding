@@ -123,4 +123,28 @@ test.describe('Formularios', () => {
     const json = await res.json()
     expect(json.ticket).toMatch(/^WP-\d{8}-[A-Z2-9]{4}$/)
   })
+
+  test('PQR contra la API real muestra el número de radicado', async ({ page }) => {
+    await page.goto('/usuario#radicar-pqr')
+    await cerrarCookies(page)
+    const form = page.getByTestId('form-pqr')
+    await form.getByLabel(/Tipo de PQR/).selectOption('Queja o reclamo')
+    await form.getByLabel(/Nombre del titular/).fill('Ana Pérez')
+    await form.getByLabel(/N.º de documento/).fill('1234567890')
+    await form.getByLabel(/Celular de contacto/).fill('3012133151')
+    await form.getByLabel(/Municipio/).selectOption('Sabanalarga')
+    await form.getByLabel(/Hechos/).fill('Me cobraron dos veces la factura de este mes.')
+    await aceptar(page, form)
+    await form.getByRole('button', { name: 'Radicar PQR' }).click()
+    await expect(page.getByTestId('form-pqr-exito')).toBeVisible()
+    await expect(page.getByTestId('ticket')).toHaveText(/^PQR-\d{8}-[A-Z2-9]{4}$/)
+  })
+
+  test('la barra superior enlaza al formulario de PQR', async ({ page }) => {
+    test.skip((page.viewportSize()?.width ?? 1280) < 640, 'En móvil está en el menú')
+    await page.goto('/')
+    await page.getByRole('link', { name: 'Radicar PQR' }).click()
+    await expect(page).toHaveURL(/\/usuario#radicar-pqr$/)
+    await expect(page.getByTestId('form-pqr')).toBeVisible()
+  })
 })

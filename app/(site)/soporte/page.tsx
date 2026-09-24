@@ -1,5 +1,6 @@
 import { Cable, Clock, Lightbulb, Power, RefreshCw, Router, Wifi } from 'lucide-react'
 import type { Metadata } from 'next'
+import Link from 'next/link'
 import { CallLink, WhatsAppLink } from '@/components/analytics/TrackedLinks'
 import { FallaForm } from '@/components/forms/Forms'
 import { FaqList } from '@/components/sections/FaqList'
@@ -119,6 +120,15 @@ export default async function SoportePage() {
       >
         <div className="mx-auto max-w-3xl">
           <FallaForm />
+          <p className="mt-6 text-center text-muted">
+            ¿Quieres presentar una queja, reclamo o recurso?{' '}
+            <Link
+              href="/usuario#radicar-pqr"
+              className="font-semibold text-primary-700 underline underline-offset-2"
+            >
+              Radica tu PQR
+            </Link>
+          </p>
         </div>
       </Section>
 

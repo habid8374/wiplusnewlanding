@@ -1,6 +1,6 @@
 'use client'
 
-import { MUNICIPIOS, TIPOS_FALLA } from '@/lib/schemas/constants'
+import { MUNICIPIOS, TIPOS_FALLA, TIPOS_PQR } from '@/lib/schemas/constants'
 import { SelectField, TextAreaField, TextField } from './fields'
 import { FormShell } from './FormShell'
 
@@ -186,6 +186,59 @@ export function ContactoForm() {
       <TextField name="email" label="Correo electrónico" type="email" autoComplete="email" />
       <TextField name="asunto" label="Asunto" required />
       <TextAreaField name="mensaje" label="Mensaje" required className={full} />
+    </FormShell>
+  )
+}
+
+export function PqrForm() {
+  return (
+    <FormShell
+      tipo="pqr"
+      titulo="Radica tu PQR"
+      descripcion="Peticiones, quejas, reclamos y recursos. Te damos un número de radicado para hacer seguimiento."
+      submitLabel="Radicar PQR"
+      exitoTitulo="¡PQR radicada!"
+      etiquetaTicket="radicado"
+    >
+      <SelectField
+        name="tipoPqr"
+        label="Tipo de PQR"
+        required
+        options={TIPOS_PQR}
+        className={full}
+      />
+      <TextField name="titular" label="Nombre del titular" required autoComplete="name" />
+      <TextField name="documento" label="N.º de documento" required inputMode="numeric" />
+      <TextField name="contrato" label="N.º de contrato" hint="Si lo tienes a mano." />
+      <TextField
+        name="celular"
+        label="Celular de contacto"
+        required
+        type="tel"
+        inputMode="tel"
+        autoComplete="tel-national"
+      />
+      <TextField
+        name="email"
+        label="Correo electrónico"
+        type="email"
+        autoComplete="email"
+        hint="Te enviamos el número de radicado."
+      />
+      <SelectField name="municipio" label="Municipio" required options={MUNICIPIOS} />
+      <TextAreaField
+        name="descripcion"
+        label="Hechos"
+        required
+        className={full}
+        placeholder="Cuéntanos qué pasó, desde cuándo y, si aplica, el número de factura."
+      />
+      <TextAreaField
+        name="pretension"
+        label="¿Qué solicitas?"
+        className={full}
+        placeholder="Ej.: ajuste en la factura, visita técnica, cambio de plan…"
+      />
     </FormShell>
   )
 }

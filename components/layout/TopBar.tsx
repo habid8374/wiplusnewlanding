@@ -1,4 +1,5 @@
-import { Clock, Phone } from 'lucide-react'
+import { Clock, FileText, Phone } from 'lucide-react'
+import Link from 'next/link'
 import { CallLink } from '@/components/analytics/TrackedLinks'
 import { FacebookIcon } from '@/components/icons/brands'
 import { Container } from '@/components/ui/Container'
@@ -17,6 +18,13 @@ export function TopBar({ sitio }: { sitio: SiteSettings }) {
           </span>
         </p>
         <div className="flex items-center gap-3 sm:gap-4">
+          <Link
+            href="/usuario#radicar-pqr"
+            className="hidden items-center gap-1.5 hover:text-white hover:underline sm:flex"
+          >
+            <FileText className="size-4 text-accent-400" aria-hidden />
+            Radicar PQR
+          </Link>
           {tel && (
             <CallLink
               numero={tel.numero}

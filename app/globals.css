@@ -167,3 +167,34 @@
     opacity: 1;
   }
 }
+
+/* Aviso promocional: destello que cruza la franja cada pocos segundos */
+.aviso-brillo {
+  position: absolute;
+  inset-block: 0;
+  left: 0;
+  z-index: -1;
+  width: 40%;
+  background: linear-gradient(
+    100deg,
+    transparent 0%,
+    rgb(255 255 255 / 0.22) 50%,
+    transparent 100%
+  );
+  transform: translateX(-120%);
+  animation: aviso-brillo 5s ease-in-out infinite;
+}
+@keyframes aviso-brillo {
+  0%,
+  45% {
+    transform: translateX(-120%);
+  }
+  100% {
+    transform: translateX(320%);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .aviso-brillo {
+    display: none;
+  }
+}

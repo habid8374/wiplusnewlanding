@@ -8,6 +8,10 @@ export type AnalyticsEvent =
   | { name: 'click_llamada'; params: { ubicacion: string; numero: string; pagina?: string } }
   | { name: 'form_submit'; params: { tipo: string; pagina?: string } }
   | { name: 'ver_plan'; params: { plan: string; ubicacion: string } }
+  | {
+      name: 'oferta_flotante'
+      params: { accion: 'abrir' | 'cerrar' | 'click_item'; item?: string }
+    }
 
 type Gtag = (command: 'event', name: string, params?: Record<string, unknown>) => void
 

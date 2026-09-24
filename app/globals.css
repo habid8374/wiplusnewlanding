@@ -198,3 +198,22 @@
     display: none;
   }
 }
+
+/* Logo flotante de ofertas: flota suavemente */
+.oferta-flota {
+  animation: oferta-flota 3.2s ease-in-out infinite;
+}
+@keyframes oferta-flota {
+  0%,
+  100% {
+    translate: 0 0;
+  }
+  50% {
+    translate: 0 -5px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .oferta-flota {
+    animation: none;
+  }
+}

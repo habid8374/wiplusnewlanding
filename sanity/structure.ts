@@ -11,6 +11,7 @@ export const structure: StructureResolver = (S) =>
       S.divider(),
       S.documentTypeListItem('plan').title('Planes hogar'),
       S.documentTypeListItem('aviso').title('Avisos y promociones'),
+      singleton(S, 'ofertaFlotante', 'Oferta flotante (burbuja)'),
       singleton(S, 'ofertaEmpresarial', 'Oferta empresarial'),
       S.documentTypeListItem('municipio').title('Cobertura'),
       S.divider(),

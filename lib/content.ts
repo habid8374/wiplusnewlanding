@@ -5,6 +5,7 @@ import * as local from '@/content'
 import { SHOW_EXAMPLES, WHATSAPP_OVERRIDE } from '@/lib/env'
 import type {
   Aviso,
+  OfertaFlotante,
   ClienteEmpresarial,
   Faq,
   FaqCategoria,
@@ -106,6 +107,25 @@ export const getCobertura = cache(async (): Promise<Municipio[]> => {
     'municipio',
   )
   return (cms ?? local.cobertura).map((m) => ({ ...m, barrios: visible(m.barrios) }))
+})
+
+/** Burbuja flotante de ofertas: solo si está activa, dentro de sus fechas y con al menos una oferta. */
+export const getOfertaFlotante = cache(async (): Promise<OfertaFlotante | null> => {
+  const cms = await fromSanity<OfertaFlotante>(
+    `*[_id == "ofertaFlotante" && activo == true][0]{"version": _rev, "insignia": coalesce(insignia, "¡Ofertas!"), mensaje, "titulo": coalesce(titulo, "Oferta destacada"), pie, desde, hasta, ejemplo, "items": coalesce(items[defined(titulo)]{"id": _key, titulo, precio, detallePrecio, enlace, "imagen": select(defined(imagen.asset) => {"src": imagen.asset->url, "alt": coalesce(imagen.alt, titulo), "width": imagen.asset->metadata.dimensions.width, "height": imagen.asset->metadata.dimensions.height}, null)}, [])}`,
+    'ofertaFlotante',
+  )
+  const oferta = cms ?? local.ofertaFlotante
+  const now = Date.now()
+  if (
+    !oferta ||
+    oferta.items.length === 0 ||
+    (oferta.ejemplo && !SHOW_EXAMPLES) ||
+    (oferta.desde && Date.parse(oferta.desde) > now) ||
+    (oferta.hasta && Date.parse(oferta.hasta) < now)
+  )
+    return null
+  return oferta
 })
 
 export const getAvisoActivo = cache(async (): Promise<Aviso | null> => {

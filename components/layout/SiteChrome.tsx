@@ -1,17 +1,22 @@
 import { ConsentAndAnalytics } from '@/components/analytics/ConsentAndAnalytics'
 import { JsonLd } from '@/components/seo/JsonLd'
-import { getAvisoActivo, getSiteSettings } from '@/lib/content'
+import { getAvisoActivo, getOfertaFlotante, getSiteSettings } from '@/lib/content'
 import { GA_ID } from '@/lib/env'
 import { localBusinessJsonLd, websiteJsonLd } from '@/lib/seo'
 import { AnnouncementBar } from './AnnouncementBar'
 import { FloatingWhatsApp } from './FloatingWhatsApp'
 import { Footer } from './Footer'
 import { Header } from './Header'
+import { OfertaFlotante } from './OfertaFlotante'
 import { TopBar } from './TopBar'
 
 /** Estructura común de las páginas públicas (también la usa la página 404). */
 export async function SiteChrome({ children }: { children: React.ReactNode }) {
-  const [sitio, aviso] = await Promise.all([getSiteSettings(), getAvisoActivo()])
+  const [sitio, aviso, oferta] = await Promise.all([
+    getSiteSettings(),
+    getAvisoActivo(),
+    getOfertaFlotante(),
+  ])
   return (
     <>
       <a
@@ -28,6 +33,7 @@ export async function SiteChrome({ children }: { children: React.ReactNode }) {
         {children}
       </main>
       <Footer sitio={sitio} />
+      {oferta && <OfertaFlotante oferta={oferta} whatsapp={sitio.whatsapp} />}
       <FloatingWhatsApp numero={sitio.whatsapp} />
       <ConsentAndAnalytics gaId={GA_ID} />
     </>

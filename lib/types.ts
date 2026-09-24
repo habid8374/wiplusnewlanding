@@ -141,3 +141,30 @@ export type OfertaEmpresarial = {
 }
 
 export type Foto = Imagen & { id: string; ejemplo?: boolean }
+
+/** Producto u oferta dentro de la burbuja flotante. */
+export type OfertaItem = {
+  id: string
+  titulo: string
+  imagen?: Imagen | null
+  /** Precio en COP. null ⇒ «Consulta el precio». */
+  precio?: number | null
+  /** Texto junto al precio, p. ej. «/mes». */
+  detallePrecio?: string | null
+  /** Ruta o URL. Vacío ⇒ WhatsApp con el nombre de la oferta. */
+  enlace?: string | null
+}
+
+/** Burbuja flotante con el logo de WIPLUS que abre un panel de ofertas (CMS › Oferta flotante). */
+export type OfertaFlotante = {
+  /** Cambia con cada publicación: al cambiar, la burbuja vuelve a mostrarse aunque se haya cerrado. */
+  version: string
+  insignia: string
+  mensaje?: string | null
+  titulo: string
+  pie?: string | null
+  items: OfertaItem[]
+  desde?: string | null
+  hasta?: string | null
+  ejemplo?: boolean
+}

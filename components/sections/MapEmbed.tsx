@@ -7,7 +7,8 @@ import { buttonClasses } from '@/components/ui/button-styles'
 /**
  * Mapa de Google Maps con fachada: no carga el iframe hasta que el usuario lo pide.
  * Así no se penaliza el rendimiento ni se cargan terceros (ni sus cookies) sin interacción.
- * Usa el mapa incrustable de Google sin API key (búsqueda por dirección o coordenadas).
+ * Usa el mapa incrustable de Google sin API key, centrado por coordenadas (buscar por texto
+ * ubicaba mal los municipios). `marcador={false}` centra el mapa sin poner pin.
  */
 export function MapEmbed({
   lat,
@@ -15,17 +16,21 @@ export function MapEmbed({
   zoom = 15,
   titulo,
   direccion,
+  marcador = true,
 }: {
   lat: number
   lng: number
   zoom?: number
   titulo: string
   direccion?: string
+  marcador?: boolean
 }) {
   const [cargar, setCargar] = useState(false)
-  const consulta = encodeURIComponent(direccion ?? `${lat},${lng}`)
-  const src = `https://www.google.com/maps?q=${consulta}&z=${zoom}&hl=es&output=embed`
-  const gmaps = `https://www.google.com/maps/search/?api=1&query=${consulta}`
+  const punto = `${lat},${lng}`
+  const src = marcador
+    ? `https://maps.google.com/maps?q=${punto}&z=${zoom}&hl=es&output=embed`
+    : `https://maps.google.com/maps?ll=${punto}&z=${zoom}&hl=es&output=embed`
+  const gmaps = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(direccion ?? punto)}`
 
   return (
     <div className="overflow-hidden rounded-3xl border border-line bg-surface shadow-card">

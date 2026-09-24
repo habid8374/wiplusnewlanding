@@ -20,6 +20,8 @@ puede reemplazar desde el CMS (`/studio`) sin programador.
 
 - [ ] **Número de WhatsApp**: ¿301 213 3151 o 300 788 8808? (por defecto: 301 213 3151,
       configurable en `NEXT_PUBLIC_WHATSAPP_NUMBER` o CMS › Datos de contacto).
+- [ ] **Ubicación exacta de la oficina** (enlace de Google Maps o, mejor, el perfil de empresa en
+      Google). Hoy el mapa de /contacto se centra en Sabanalarga sin pin. → `content/sitio.ts` › `geo`.
 - [ ] Días de atención (hoy solo se conoce el horario 8:00 a. m. – 6:00 p. m.; se asume lunes a sábado).
 - [ ] Horario de soporte técnico si es distinto.
 - [ ] Otras redes sociales (Instagram, TikTok…).

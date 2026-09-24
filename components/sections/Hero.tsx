@@ -1,11 +1,13 @@
 import { ArrowRight, Gauge, Headset, MapPin } from 'lucide-react'
+import Image from 'next/image'
 import { WhatsAppLink } from '@/components/analytics/TrackedLinks'
 import { ButtonLink } from '@/components/ui/ButtonLink'
 import { Container } from '@/components/ui/Container'
 import { formatCOP } from '@/lib/phone'
 import type { Plan, SiteSettings } from '@/lib/types'
 import { mensajesWhatsApp } from '@/lib/whatsapp'
-import { FiberIllustration } from './FiberIllustration'
+import icono from '@/public/brand/wiplus-icono-app.png'
+import fondo from '@/public/hero/switch-red-internet.jpg'
 
 export function Hero({ sitio, planes }: { sitio: SiteSettings; planes: Plan[] }) {
   const maxMb = Math.max(...planes.map((p) => p.velocidadMb), 100)
@@ -15,25 +17,43 @@ export function Hero({ sitio, planes }: { sitio: SiteSettings; planes: Plan[] })
   return (
     <section
       aria-labelledby="hero-titulo"
-      className="relative isolate overflow-hidden bg-gradient-to-br from-primary-950 via-primary-900 to-primary-700 text-white"
+      className="relative isolate overflow-hidden bg-primary-950 text-white"
     >
+      {/* Foto de fondo (decorativa) */}
+      <Image
+        src={fondo}
+        alt=""
+        fill
+        priority
+        placeholder="blur"
+        sizes="100vw"
+        className="-z-20 object-cover object-[70%_center]"
+      />
+      {/* Capa de marca para contraste AA del texto: más densa a la izquierda, donde va el contenido */}
       <div
         aria-hidden
-        className="pointer-events-none absolute -top-32 -right-32 -z-10 size-[28rem] rounded-full bg-accent-500/25 blur-3xl"
+        className="absolute inset-0 -z-10 bg-gradient-to-r from-primary-950/95 via-primary-900/85 to-primary-900/40 max-lg:via-primary-950/90 max-lg:to-primary-900/75"
       />
       <div
         aria-hidden
-        className="pointer-events-none absolute -bottom-40 -left-24 -z-10 size-[26rem] rounded-full bg-primary-500/30 blur-3xl"
+        className="absolute inset-x-0 bottom-0 -z-10 h-32 bg-gradient-to-t from-primary-950/80 to-transparent"
       />
-      <Container className="grid items-center gap-10 py-8 sm:py-16 lg:grid-cols-[1.15fr_1fr] lg:py-24">
-        <div>
-          <p className="inline-flex items-center gap-2 rounded-full bg-white/10 px-3 py-1 text-sm font-semibold text-accent-300 ring-1 ring-white/20">
+      <Container className="relative py-8 sm:py-16 lg:py-24">
+        {/* Logo arriba a la derecha */}
+        <Image
+          src={icono}
+          alt="WIPLUS Comunicaciones"
+          sizes="(min-width: 1024px) 128px, (min-width: 640px) 96px, 56px"
+          className="absolute top-8 right-4 size-14 rounded-2xl shadow-2xl ring-1 ring-white/20 sm:top-16 sm:right-6 sm:size-24 lg:top-24 lg:right-8 lg:size-32"
+        />
+        <div className="max-w-2xl">
+          <p className="mr-16 inline-flex items-center gap-2 rounded-full bg-white/10 px-3 py-1 text-sm font-semibold text-accent-300 ring-1 ring-white/20">
             <MapPin className="size-4" aria-hidden />
             {sitio.municipiosCobertura.join(' y ')}, Atlántico
           </p>
           <h1
             id="hero-titulo"
-            className="mt-4 text-[2.15rem] leading-[1.08] font-extrabold tracking-tight text-balance sm:text-5xl lg:text-6xl"
+            className="mt-4 pr-14 text-[2.15rem] leading-[1.08] font-extrabold tracking-tight text-balance sm:pr-28 sm:text-5xl lg:pr-0 lg:text-6xl"
           >
             Internet por fibra óptica en <span className="text-accent-400">Sabanalarga</span> y{' '}
             <span className="text-accent-400">Luruaco</span>
@@ -89,7 +109,6 @@ export function Hero({ sitio, planes }: { sitio: SiteSettings; planes: Plan[] })
             </li>
           </ul>
         </div>
-        <FiberIllustration className="mx-auto hidden w-full max-w-md sm:block" />
       </Container>
     </section>
   )

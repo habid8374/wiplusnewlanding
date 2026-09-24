@@ -1,4 +1,4 @@
-import { Clock, Mail, MapPin, Phone } from 'lucide-react'
+import { Clock, LockKeyhole, Mail, MapPin, Phone } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { CallLink, WhatsAppLink } from '@/components/analytics/TrackedLinks'
@@ -143,10 +143,22 @@ export function Footer({ sitio }: { sitio: SiteSettings }) {
       </Container>
       <div className="border-t border-white/10">
         <Container className="flex flex-col gap-2 pt-6 pb-24 text-xs text-primary-200 sm:flex-row sm:items-center sm:justify-between">
-          <p>
-            © {year} {sitio.razonSocial ?? sitio.nombre}
-            {sitio.nit ? ` · NIT ${sitio.nit}` : ''}. Todos los derechos reservados.
-          </p>
+          <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:gap-4">
+            <p>
+              © {year} {sitio.razonSocial ?? sitio.nombre}
+              {sitio.nit ? ` · NIT ${sitio.nit}` : ''}. Todos los derechos reservados.
+            </p>
+            {/* Panel de contenido (Sanity Studio). <a> y no <Link>: /studio es una SPA aparte. */}
+            {/* eslint-disable-next-line @next/next/no-html-link-for-pages */}
+            <a
+              href="/studio"
+              rel="nofollow"
+              className="inline-flex items-center gap-1.5 self-start rounded-full border border-white/20 px-3 py-1 font-semibold text-primary-100 hover:border-white/40 hover:text-white"
+            >
+              <LockKeyhole className="size-3.5" aria-hidden />
+              Administrar contenido
+            </a>
+          </div>
           <p className="inline-flex items-center gap-2">
             Powered by
             <span className="inline-flex items-center gap-1.5 font-semibold text-white">

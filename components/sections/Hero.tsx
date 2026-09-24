@@ -6,8 +6,8 @@ import { Container } from '@/components/ui/Container'
 import { formatCOP } from '@/lib/phone'
 import type { Plan, SiteSettings } from '@/lib/types'
 import { mensajesWhatsApp } from '@/lib/whatsapp'
+import { HeroBackground } from './HeroBackground'
 import icono from '@/public/brand/wiplus-icono-app.png'
-import fondo from '@/public/hero/switch-red-internet.jpg'
 
 export function Hero({ sitio, planes }: { sitio: SiteSettings; planes: Plan[] }) {
   const maxMb = Math.max(...planes.map((p) => p.velocidadMb), 100)
@@ -19,16 +19,8 @@ export function Hero({ sitio, planes }: { sitio: SiteSettings; planes: Plan[] })
       aria-labelledby="hero-titulo"
       className="relative isolate overflow-hidden bg-primary-950 text-white"
     >
-      {/* Foto de fondo (decorativa) */}
-      <Image
-        src={fondo}
-        alt=""
-        fill
-        priority
-        placeholder="blur"
-        sizes="100vw"
-        className="-z-20 object-cover object-[70%_center]"
-      />
+      {/* Fotos de fondo (decorativas, rotativas) */}
+      <HeroBackground />
       {/* Capa de marca para contraste AA del texto: más densa a la izquierda, donde va el contenido */}
       <div
         aria-hidden
@@ -38,7 +30,7 @@ export function Hero({ sitio, planes }: { sitio: SiteSettings; planes: Plan[] })
         aria-hidden
         className="absolute inset-x-0 bottom-0 -z-10 h-32 bg-gradient-to-t from-primary-950/80 to-transparent"
       />
-      <Container className="relative py-8 sm:py-16 lg:py-24">
+      <Container className="relative pt-8 pb-20 sm:py-16 lg:py-24">
         {/* Logo arriba a la derecha */}
         <Image
           src={icono}

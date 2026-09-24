@@ -23,6 +23,8 @@ const nextConfig: NextConfig = {
   skipTrailingSlashRedirect: true,
   images: {
     formats: ['image/avif', 'image/webp'],
+    // 50: fotos de fondo del hero (van bajo una capa de color, la compresión no se nota)
+    qualities: [50, 75],
     remotePatterns: [{ protocol: 'https', hostname: 'cdn.sanity.io' }],
   },
   async redirects() {

@@ -133,3 +133,37 @@
     @apply font-semibold;
   }
 }
+
+/* Fondo rotativo del hero (3 fotos, 18 s por ciclo, fundido cruzado) */
+@keyframes hero-fade {
+  0% {
+    opacity: 0;
+  }
+  6% {
+    opacity: 1;
+  }
+  33% {
+    opacity: 1;
+  }
+  39% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+.hero-slide {
+  opacity: 0;
+  animation: hero-fade 18s linear infinite both;
+}
+.hero-slides[data-paused] .hero-slide {
+  animation-play-state: paused;
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero-slide {
+    animation: none;
+  }
+  .hero-slide:first-child {
+    opacity: 1;
+  }
+}

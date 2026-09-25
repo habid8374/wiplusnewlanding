@@ -81,3 +81,13 @@ puede reemplazar desde el CMS (`/studio`) sin programador.
 - [ ] Acceso a Cloudflare (zona wiplus.com.co) y Google Search Console.
 - [ ] Crear en Cloudflare el bucket R2 y la base D1 y poner el `database_id` real en `wrangler.jsonc`
       (ver README › Despliegue).
+
+## Entrega final (Axentia)
+
+- [ ] **Manual de uso del sistema** al cerrar el proyecto (PDF, lenguaje sencillo, con capturas),
+      sobre todo del panel de Sanity (`/studio`), un capítulo por módulo:
+      entrar al panel y publicar (borrador vs. publicado) · Datos de contacto y empresa · Planes hogar ·
+      Avisos y promociones · Oferta flotante · Oferta empresarial · Cobertura (municipios, barrios,
+      Importar barrios desde Excel, solicitudes y su gestión, configuración) · Preguntas frecuentes ·
+      Testimonios · Clientes empresariales · Pagos. Además: formularios y a dónde llegan (tickets,
+      radicados de PQR), tarjetas para compartir, qué hacer si algo falla y a quién llamar.

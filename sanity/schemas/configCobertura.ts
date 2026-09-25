@@ -35,6 +35,14 @@ export const configCobertura = defineType({
     }),
     defineField({ name: 'msgNoAparece', title: 'Mensaje: el barrio no aparece', type: 'string' }),
     defineField({
+      name: 'mostrarMuestras',
+      title: 'Mostrar los barrios de muestra en el sitio publicado',
+      description:
+        'Solo para pruebas o demostraciones. Se ven con el aviso «Datos de muestra». Apágalo al cargar la lista real.',
+      type: 'boolean',
+      initialValue: false,
+    }),
+    defineField({
       name: 'mostrarAvisoDemo',
       title: 'Mostrar el aviso «Datos de muestra»',
       description: 'Solo aparece si el municipio tiene barrios marcados como muestra.',

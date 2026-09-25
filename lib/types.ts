@@ -124,6 +124,8 @@ export type ConfigCobertura = {
   titulo: string
   mensajes: Record<EstadoCobertura | 'noAparece', string>
   mostrarAvisoDemo: boolean
+  /** Publica también los barrios de muestra (pruebas/demostraciones). */
+  mostrarMuestras: boolean
 }
 
 export type Aviso = {

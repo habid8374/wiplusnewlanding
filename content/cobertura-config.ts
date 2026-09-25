@@ -11,4 +11,5 @@ export const configCobertura: ConfigCobertura = {
     noAparece: 'Cuéntanos dónde estás y te confirmamos.',
   },
   mostrarAvisoDemo: true,
+  mostrarMuestras: false,
 }

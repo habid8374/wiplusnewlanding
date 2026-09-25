@@ -112,18 +112,19 @@ export const getCobertura = cache(async (): Promise<Municipio[]> => {
     `*[_type == "municipio" && coalesce(activo, true)] | order(orden asc){"id": _id, "slug": coalesce(slug.current, ""), nombre, "departamento": coalesce(departamento, "Atlántico"), "geo": select(defined(geo.lat) => {"lat": geo.lat, "lng": geo.lng}, null), whatsapp, "barrios": *[_type == "barrio" && municipio._ref == ^._id && defined(estado)] | order(nombre asc){"id": _id, "slug": coalesce(slug.current, ""), nombre, "tipo": coalesce(tipo, "barrio"), estado, "alias": coalesce(alias, []), notaPublica, "demo": coalesce(demo, false)}}`,
     'barrio',
   )
+  const { mostrarMuestras } = await getConfigCobertura()
   return (cms ?? local.cobertura).map((m) => ({
     ...m,
     slug: m.slug || slugify(m.nombre),
     barrios: m.barrios
-      .filter((b) => SHOW_EXAMPLES || !b.demo)
+      .filter((b) => SHOW_EXAMPLES || mostrarMuestras || !b.demo)
       .map((b) => ({ ...b, slug: b.slug || slugify(b.nombre) })),
   }))
 })
 
 export const getConfigCobertura = cache(async (): Promise<ConfigCobertura> => {
   const cms = await fromSanity<Record<string, string | boolean | null>>(
-    `*[_id == "configCobertura"][0]{titulo, msgCubierto, msgParcial, msgProximamente, msgSinCobertura, msgNoAparece, mostrarAvisoDemo}`,
+    `*[_id == "configCobertura"][0]{titulo, msgCubierto, msgParcial, msgProximamente, msgSinCobertura, msgNoAparece, mostrarAvisoDemo, mostrarMuestras}`,
     'configCobertura',
   )
   const base = local.configCobertura
@@ -139,6 +140,7 @@ export const getConfigCobertura = cache(async (): Promise<ConfigCobertura> => {
     },
     mostrarAvisoDemo:
       typeof cms?.mostrarAvisoDemo === 'boolean' ? cms.mostrarAvisoDemo : base.mostrarAvisoDemo,
+    mostrarMuestras: cms?.mostrarMuestras === true,
   }
 })
 

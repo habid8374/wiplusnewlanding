@@ -46,6 +46,39 @@ marcado `ejemplo: true`. Se ve con la etiqueta **[EJEMPLO]** mientras `NEXT_PUBL
 
 ---
 
+## Cobertura por barrio
+
+El verificador de `/cobertura` (y su versión compacta en el inicio) busca el barrio dentro del
+municipio elegido, tolera tildes, prefijos («B.», «Urb.») y errores de tipeo, y muestra uno de cuatro
+estados: **cubierto**, **parcial**, **próximamente** o **sin cobertura**. Si el barrio no aparece,
+el cliente deja sus datos; las solicitudes llegan por correo y quedan en _Studio › Cobertura ›
+Solicitudes_ (requiere `SANITY_WRITE_TOKEN` en el servidor).
+
+Formato de la lista (`data/barrios-cobertura.csv`, UTF-8):
+
+```
+municipio,barrio,tipo,estado,alias,nota_publica,demo
+Sabanalarga,Centro,barrio,cubierto,El Centro|Centro Histórico,,no
+```
+
+- `tipo`: barrio · urbanizacion · sector · vereda · corregimiento
+- `estado`: cubierto · parcial · proximamente · sin_cobertura
+- `alias`: otros nombres separados con `|`; `demo`: si / no (los de muestra no se publican)
+
+Tres formas de actualizarla:
+
+1. **Desde el panel, pegando desde Excel** (recomendada para WIPLUS): _Studio › Importar barrios_.
+   Se copian las filas en Excel o Google Sheets y se pegan; hay vista previa con errores por fila y la
+   opción de borrar antes los barrios de muestra.
+2. **Barrio por barrio en el panel**: _Studio › Cobertura › Barrios por municipio_.
+3. **Desde el CSV del proyecto**: reemplazar `data/barrios-cobertura.csv` y ejecutar _GitHub ›
+   Actions › «Importar cobertura en Sanity» › Run workflow_ (o
+   `npm run cobertura:importar -- --reemplazar-demo` con `SANITY_WRITE_TOKEN`). Sin Sanity:
+   `npm run cobertura:importar -- --local` regenera el respaldo `content/cobertura.ts`.
+
+Los IDs son determinísticos (`barrio-<municipio>-<barrio>`): importar de nuevo actualiza sin
+duplicar y conserva la nota interna escrita en el panel. En Excel, guardar como **CSV UTF-8**.
+
 ## Despliegue en Vercel (recomendado para empezar)
 
 Next.js funciona en Vercel sin configuración adicional. `wrangler.jsonc` y `open-next.config.ts` se ignoran.

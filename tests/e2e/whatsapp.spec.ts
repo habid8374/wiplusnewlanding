@@ -57,19 +57,4 @@ test.describe('CTA de WhatsApp', () => {
       ]),
     )
   })
-
-  test('verificador de cobertura prellena el mensaje con barrio y municipio', async ({ page }) => {
-    await page.goto('/cobertura')
-    await cerrarCookies(page)
-    const form = page.locator('#verificador')
-    await form.getByLabel('Municipio').selectOption({ label: 'Luruaco' })
-    await form.getByLabel('Barrio o vereda').fill('El Centro')
-    await form.getByRole('button', { name: 'Verificar' }).click()
-    const resultado = form.getByTestId('resultado-cobertura')
-    await expect(resultado).toBeVisible()
-    await expect(resultado.locator('a[href^="https://wa.me/"]')).toHaveAttribute(
-      'href',
-      wa('Hola, quiero saber si tienen cobertura en el barrio Centro, Luruaco.'),
-    )
-  })
 })

@@ -26,8 +26,12 @@ puede reemplazar desde el CMS (`/studio`) sin programador.
 
 ## Cobertura
 
-- [ ] **Barrios y veredas con servicio** en Sabanalarga y Luruaco (hoy son de ejemplo).
-- [ ] Barrios “próximamente”.
+- [ ] **Recibir del cliente la lista real de barrios por municipio con su estado** (cubierto, parcial,
+      próximamente, sin cobertura) → reemplazar `data/barrios-cobertura.csv` y ejecutar
+      `npm run cobertura:importar -- --reemplazar-demo`, o pegarla en _Studio › Importar barrios_
+      marcando «Borrar antes los barrios de muestra». Hoy son de muestra (no se publican).
+- [ ] Poner `SANITY_WRITE_TOKEN` (tipo Secret) en Vercel para guardar las solicitudes de cobertura en
+      el panel (sin él solo llegan por correo).
 
 ## Prueba social
 

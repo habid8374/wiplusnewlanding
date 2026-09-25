@@ -22,9 +22,17 @@ const CAMPOS: Record<string, string> = {
   tipoPqr: 'Tipo de PQR',
   documento: 'Documento',
   pretension: 'Lo que solicita',
+  motivo: 'Solicitud',
 }
 
-const OMITIR = new Set(['aceptaPolitica', 'sitioWeb', 'turnstileToken'])
+const OMITIR = new Set(['aceptaPolitica', 'sitioWeb', 'turnstileToken', 'barrioId'])
+
+const MOTIVOS: Record<string, string> = {
+  barrio_no_aparece: 'Su barrio no aparece',
+  avisame: 'Avísame cuando lleguen',
+  parcial_confirmar: 'Confirmar dirección (cobertura parcial)',
+  quiero_contratar: 'Quiere contratar',
+}
 
 export function escapeHtml(v: unknown) {
   return String(v ?? '')
@@ -61,6 +69,13 @@ export function correoInterno(
   datos: Record<string, unknown>,
   extra: { ticket?: string; ip?: string; pagina?: string },
 ) {
+  if (tipo === 'solicitudCobertura') {
+    const motivo = MOTIVOS[String(datos.motivo)] ?? String(datos.motivo)
+    datos = { ...datos, motivo }
+    const titulo = `[Cobertura] ${motivo} – ${datos.barrio}, ${datos.municipio}`
+    const wa = `<p style="margin-top:20px"><a href="https://wa.me/57${escapeHtml(String(datos.celular ?? ''))}" style="background:#15803d;color:#fff;padding:10px 16px;border-radius:999px;text-decoration:none;font-weight:bold">Responder por WhatsApp</a></p>`
+    return { subject: titulo, html: layout(titulo, tabla(datos) + wa) }
+  }
   const etiqueta = tipo === 'pqr' ? 'Radicado' : 'Ticket'
   const titulo = `${FORM_LABELS[tipo]}${extra.ticket ? ` · ${etiqueta} ${extra.ticket}` : ''}`
   const celular = String(datos.celular ?? '')

@@ -14,6 +14,7 @@ import { Section } from '@/components/ui/Section'
 import {
   getClientes,
   getCobertura,
+  getConfigCobertura,
   getFaqs,
   getPlanes,
   getSiteSettings,
@@ -41,14 +42,16 @@ function planesDestacados(planes: Plan[], n = 4) {
 }
 
 export default async function HomePage() {
-  const [sitio, planes, municipios, clientes, testimonios, faqs] = await Promise.all([
-    getSiteSettings(),
-    getPlanes(),
-    getCobertura(),
-    getClientes(),
-    getTestimonios(),
-    getFaqs('general'),
-  ])
+  const [sitio, planes, municipios, clientes, testimonios, faqs, configCobertura] =
+    await Promise.all([
+      getSiteSettings(),
+      getPlanes(),
+      getCobertura(),
+      getClientes(),
+      getTestimonios(),
+      getFaqs('general'),
+      getConfigCobertura(),
+    ])
   const destacados = planesDestacados(planes)
 
   return (
@@ -79,7 +82,7 @@ export default async function HomePage() {
 
       <Benefits anios={sitio.experienciaAnios} />
 
-      <CoverageTeaser municipios={municipios} whatsapp={sitio.whatsapp} />
+      <CoverageTeaser municipios={municipios} config={configCobertura} whatsapp={sitio.whatsapp} />
 
       {(clientes.length > 0 || testimonios.length > 0) && (
         <Section

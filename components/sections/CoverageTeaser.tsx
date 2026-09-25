@@ -1,14 +1,16 @@
 import { ArrowRight, MapPin } from 'lucide-react'
 import { ButtonLink } from '@/components/ui/ButtonLink'
 import { Section } from '@/components/ui/Section'
-import type { Municipio } from '@/lib/types'
-import { CoverageChecker } from './CoverageChecker'
+import type { ConfigCobertura, Municipio } from '@/lib/types'
+import { VerificadorCobertura } from './VerificadorCobertura'
 
 export function CoverageTeaser({
   municipios,
+  config,
   whatsapp,
 }: {
   municipios: Municipio[]
+  config: ConfigCobertura
   whatsapp: string
 }) {
   return (
@@ -41,7 +43,12 @@ export function CoverageTeaser({
             <ArrowRight className="size-5" aria-hidden />
           </ButtonLink>
         </div>
-        <CoverageChecker municipios={municipios} whatsapp={whatsapp} />
+        <VerificadorCobertura
+          municipios={municipios}
+          config={config}
+          whatsapp={whatsapp}
+          variante="compacto"
+        />
       </div>
     </Section>
   )

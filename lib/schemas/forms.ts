@@ -1,7 +1,7 @@
 import * as z from 'zod/mini'
-import { MUNICIPIOS, TIPOS_FALLA, TIPOS_PQR } from './constants'
+import { MOTIVOS_COBERTURA, MUNICIPIOS, TIPOS_FALLA, TIPOS_PQR } from './constants'
 
-export { MUNICIPIOS, TIPOS_FALLA, TIPOS_PQR }
+export { MOTIVOS_COBERTURA, MUNICIPIOS, TIPOS_FALLA, TIPOS_PQR }
 
 /**
  * Esquemas de formularios compartidos entre cliente (validación inmediata) y servidor (route handlers).
@@ -72,16 +72,6 @@ export const empresasSchema = z.object({
   ...comunes,
 })
 
-export const coberturaSchema = z.object({
-  nombre: texto(3, 80, 'tu nombre'),
-  celular: celularSchema,
-  email: emailOpcional,
-  municipio: z.enum(MUNICIPIOS, { error: 'Elige tu municipio.' }),
-  barrio: texto(2, 80, 'tu barrio o vereda'),
-  direccion: texto(5, 120, 'tu dirección'),
-  ...comunes,
-})
-
 export const fallaSchema = z.object({
   titular: texto(3, 80, 'el nombre del titular'),
   contrato: texto(3, 30, 'el número de contrato o documento'),
@@ -105,6 +95,22 @@ export const pqrSchema = z.object({
   ...comunes,
 })
 
+/** Solicitud desde el verificador de cobertura (se guarda en Sanity y se envía por correo). */
+export const solicitudCoberturaSchema = z.object({
+  motivo: z.enum(MOTIVOS_COBERTURA, { error: 'Solicitud inválida.' }),
+  nombre: texto(3, 80, 'tu nombre'),
+  celular: celularSchema,
+  email: emailOpcional,
+  municipio: texto(2, 60, 'tu municipio'),
+  barrio: texto(2, 80, 'tu barrio o vereda'),
+  barrioId: z._default(
+    z.optional(z.string().check(z.regex(/^(barrio-[a-z0-9-]{1,100})?$/, 'Barrio inválido.'))),
+    '',
+  ),
+  direccion: textoOpcional(120),
+  ...comunes,
+})
+
 export const contactoSchema = z.object({
   nombre: texto(3, 80, 'tu nombre'),
   celular: celularSchema,
@@ -117,10 +123,10 @@ export const contactoSchema = z.object({
 export const formSchemas = {
   solicitud: solicitudSchema,
   empresas: empresasSchema,
-  cobertura: coberturaSchema,
   falla: fallaSchema,
   contacto: contactoSchema,
   pqr: pqrSchema,
+  solicitudCobertura: solicitudCoberturaSchema,
 } as const
 
 export type FormType = keyof typeof formSchemas
@@ -129,10 +135,10 @@ export type FormValues<T extends FormType> = z.output<(typeof formSchemas)[T]>
 export const FORM_LABELS: Record<FormType, string> = {
   solicitud: 'Solicitud de servicio',
   empresas: 'Cotización empresarial',
-  cobertura: 'Verificación de cobertura',
   falla: 'Reporte de falla',
   contacto: 'Contacto general',
   pqr: 'PQR (petición, queja o recurso)',
+  solicitudCobertura: 'Solicitud de cobertura',
 }
 
 /** Respuesta estándar de /api/formularios/* */

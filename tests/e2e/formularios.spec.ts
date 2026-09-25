@@ -66,7 +66,6 @@ test.describe('Formularios', () => {
 
   const casos = [
     { path: '/planes-empresas', tipo: 'empresas', api: '**/api/cotizacion' },
-    { path: '/cobertura', tipo: 'cobertura', api: '**/api/cobertura' },
     { path: '/contacto', tipo: 'contacto', api: '**/api/contacto' },
   ]
   for (const c of casos) {

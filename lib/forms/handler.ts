@@ -3,6 +3,7 @@ import { IS_PRODUCTION_SITE } from '@/lib/env'
 import { clientIp, rateLimit } from '@/lib/rate-limit'
 import { erroresPorCampo, formSchemas, type FormResponse, type FormType } from '@/lib/schemas/forms'
 import { enviarCorreos, hayProveedorCorreo } from './email'
+import { guardarSolicitudCobertura } from './guardar-solicitud'
 import { generarTicket } from './ticket'
 import { verificarTurnstile } from './turnstile'
 
@@ -119,7 +120,10 @@ export async function handleForm(tipo: FormType, req: Request) {
         ? generarTicket(new Date(), 'PQR')
         : undefined
 
-  if (!hayProveedorCorreo() && IS_PRODUCTION_SITE) {
+  // Las solicitudes de cobertura quedan además en Sanity (CMS › Cobertura › Solicitudes).
+  const guardada = tipo === 'solicitudCobertura' && (await guardarSolicitudCobertura(datos))
+
+  if (!hayProveedorCorreo() && IS_PRODUCTION_SITE && !guardada) {
     console.error('[formularios] Falta BREVO_API_KEY o RESEND_API_KEY en producción')
     return responder(
       {
@@ -133,7 +137,8 @@ export async function handleForm(tipo: FormType, req: Request) {
 
   try {
     const envio = await enviarCorreos(tipo, datos, { ticket, ip })
-    if (!envio.ok) {
+    // Si ya quedó guardada en Sanity, un fallo del correo no se la hace perder al cliente.
+    if (!envio.ok && !guardada) {
       return responder(
         {
           ok: false,
@@ -157,10 +162,14 @@ export async function handleForm(tipo: FormType, req: Request) {
     ok: true,
     ticket,
     mensaje:
-      tipo === 'pqr'
-        ? 'Radicamos tu PQR. Te responderemos dentro de los 15 días hábiles siguientes por el medio de contacto que nos diste.'
-        : ticket
-          ? 'Nuestro equipo técnico revisará tu caso y te contactará por celular.'
-          : 'Un asesor te contactará pronto en nuestro horario de atención.',
+      tipo === 'solicitudCobertura'
+        ? datos.motivo === 'avisame'
+          ? 'Listo. Te avisaremos por celular cuando lleguemos a tu barrio.'
+          : 'Recibimos tus datos. Un asesor te contactará para confirmar la cobertura en tu dirección.'
+        : tipo === 'pqr'
+          ? 'Radicamos tu PQR. Te responderemos dentro de los 15 días hábiles siguientes por el medio de contacto que nos diste.'
+          : ticket
+            ? 'Nuestro equipo técnico revisará tu caso y te contactará por celular.'
+            : 'Un asesor te contactará pronto en nuestro horario de atención.',
   })
 }

@@ -30,6 +30,8 @@ export function FormShell({
   submitLabel = 'Enviar',
   exitoTitulo = '¡Recibimos tu solicitud!',
   etiquetaTicket = 'ticket',
+  tituloComo: Titulo = 'h2',
+  onEnviado,
   children,
   className,
 }: {
@@ -40,6 +42,10 @@ export function FormShell({
   exitoTitulo?: string
   /** Cómo se nombra el número que devuelve el servidor («ticket», «radicado»). */
   etiquetaTicket?: string
+  /** Nivel del título (h3 si el formulario va dentro de otra sección). */
+  tituloComo?: 'h2' | 'h3'
+  /** Se llama tras un envío exitoso (p. ej. para analítica propia). */
+  onEnviado?: () => void
   children: ReactNode
   className?: string
 }) {
@@ -102,6 +108,7 @@ export function FormShell({
         return
       }
       track('form_submit', { tipo })
+      onEnviado?.()
       form.reset()
       setEstado({ tipo: 'exito', mensaje: json.mensaje, ticket: json.ticket })
     } catch {
@@ -157,9 +164,16 @@ export function FormShell({
         className={className ?? 'rounded-3xl border border-line bg-white p-5 shadow-card sm:p-8'}
       >
         {titulo && (
-          <h2 id={`${id}-titulo`} className="text-2xl font-extrabold text-primary-900">
+          <Titulo
+            id={`${id}-titulo`}
+            className={
+              Titulo === 'h2'
+                ? 'text-2xl font-extrabold text-primary-900'
+                : 'text-lg font-extrabold text-primary-900'
+            }
+          >
             {titulo}
-          </h2>
+          </Titulo>
         )}
         {descripcion && <p className="mt-2 text-muted">{descripcion}</p>}
         <p className="mt-2 text-xs text-muted">

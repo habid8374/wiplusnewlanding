@@ -9,6 +9,12 @@ export type AnalyticsEvent =
   | { name: 'form_submit'; params: { tipo: string; pagina?: string } }
   | { name: 'ver_plan'; params: { plan: string; ubicacion: string } }
   | {
+      name: 'verificar_cobertura'
+      params: { municipio: string; barrio: string; estado: string }
+    }
+  | { name: 'cobertura_no_aparece'; params: { municipio: string; texto_buscado: string } }
+  | { name: 'cobertura_solicitud'; params: { tipo: string } }
+  | {
       name: 'oferta_flotante'
       params: { accion: 'abrir' | 'cerrar' | 'click_item'; item?: string }
     }

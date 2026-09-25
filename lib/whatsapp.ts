@@ -12,6 +12,10 @@ export const mensajesWhatsApp = {
     barrio && municipio
       ? `Hola, quiero saber si tienen cobertura en el barrio ${barrio}, ${municipio}.`
       : 'Hola, quiero saber si tienen cobertura en mi barrio.',
+  coberturaContratar: (barrio: string, municipio: string) =>
+    `Hola WIPLUS, estoy en el barrio ${barrio}, ${municipio} y quiero contratar internet.`,
+  coberturaParcial: (barrio: string, municipio: string) =>
+    `Hola WIPLUS, estoy en el barrio ${barrio}, ${municipio}. Quiero confirmar si llegan a mi dirección: `,
   empresas: () => 'Hola, quiero una cotización de internet para mi empresa.',
   soporte: () => 'Hola, tengo una falla con mi servicio. Mi número de contrato es: ',
   pqr: () => 'Hola WIPLUS, quiero radicar una PQR. Mi número de contrato es: ',

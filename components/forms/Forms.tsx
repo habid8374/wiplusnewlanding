@@ -89,44 +89,6 @@ export function EmpresasForm({ velocidades }: { velocidades: string[] }) {
   )
 }
 
-export function CoberturaForm() {
-  return (
-    <FormShell
-      tipo="cobertura"
-      titulo="¿Llegamos a tu casa?"
-      descripcion="Si no encontraste tu barrio, déjanos tu dirección y te confirmamos."
-      submitLabel="Verificar mi dirección"
-      exitoTitulo="¡Recibimos tu dirección!"
-    >
-      <TextField name="nombre" label="Nombre completo" required autoComplete="name" />
-      <TextField
-        name="celular"
-        label="Celular"
-        required
-        type="tel"
-        inputMode="tel"
-        autoComplete="tel-national"
-      />
-      <SelectField name="municipio" label="Municipio" required options={MUNICIPIOS} />
-      <TextField name="barrio" label="Barrio o vereda" required />
-      <TextField
-        name="direccion"
-        label="Dirección"
-        required
-        autoComplete="street-address"
-        className={full}
-      />
-      <TextField
-        name="email"
-        label="Correo electrónico"
-        type="email"
-        autoComplete="email"
-        className={full}
-      />
-    </FormShell>
-  )
-}
-
 export function FallaForm() {
   return (
     <FormShell

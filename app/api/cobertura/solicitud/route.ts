@@ -1,5 +1,5 @@
 import { handleForm } from '@/lib/forms/handler'
 
 export async function POST(req: Request) {
-  return handleForm('cobertura', req)
+  return handleForm('solicitudCobertura', req)
 }

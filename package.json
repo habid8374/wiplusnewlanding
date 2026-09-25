@@ -20,7 +20,8 @@
     "studio:build": "node scripts/build-studio.mjs",
     "studio:dev": "sanity dev --port 3333",
     "og:fotos": "node scripts/og-fotos.mjs",
-    "cobertura:importar": "tsx scripts/importar-cobertura.ts"
+    "cobertura:importar": "tsx scripts/importar-cobertura.ts",
+    "test:unit": "vitest run"
   },
   "dependencies": {
     "@next/third-parties": "^16.3.6",
@@ -28,6 +29,7 @@
     "@sanity/ui": "^4.2.4",
     "@sanity/vision": "^6.16.0",
     "clsx": "^2.1.1",
+    "fuse.js": "^7.5.0",
     "lucide-react": "^1.47.0",
     "next": "16.3.6",
     "next-sanity": "^13.3.4",
@@ -56,6 +58,7 @@
     "tailwindcss": "^4",
     "tsx": "^4.23.15",
     "typescript": "^5",
+    "vitest": "^3.2.7",
     "wrangler": "^4.137.0"
   },
   "engines": {

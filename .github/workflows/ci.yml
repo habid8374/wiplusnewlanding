@@ -28,6 +28,7 @@ jobs:
           path: ${{ runner.temp }}/sbom.cdx.json
       - run: npm run lint
       - run: npm run typecheck
+      - run: npm run test:unit
       - run: npm run format:check
       - run: npm run build
       - run: npx playwright install --with-deps chromium

@@ -7,6 +7,7 @@ import { structureTool } from 'sanity/structure'
 import { apiVersion, dataset, projectId } from './sanity/env'
 import { schemaTypes, singletonTypes } from './sanity/schemas'
 import { structure } from './sanity/structure'
+import { importarBarriosTool } from './sanity/tools/ImportarBarrios'
 
 export default defineConfig({
   basePath: '/studio',
@@ -42,4 +43,5 @@ export default defineConfig({
         : input,
   },
   plugins: [structureTool({ structure }), visionTool({ defaultApiVersion: apiVersion })],
+  tools: (anteriores) => [...anteriores, importarBarriosTool],
 })

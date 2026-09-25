@@ -1,0 +1,29 @@
+name: Importar cobertura en Sanity
+
+# Botón manual (Actions › «Importar cobertura en Sanity» › Run workflow).
+# Carga data/barrios-cobertura.csv en Sanity. Requiere el secreto SANITY_WRITE_TOKEN.
+# Alternativa sin GitHub: panel /studio › «Importar barrios» (pegar desde Excel).
+on:
+  workflow_dispatch:
+    inputs:
+      reemplazar_demo:
+        description: 'Borrar antes los barrios de muestra (al cargar la lista real)'
+        type: boolean
+        default: false
+
+jobs:
+  importar:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      NEXT_PUBLIC_SANITY_PROJECT_ID: k3vbxtev
+      NEXT_PUBLIC_SANITY_DATASET: production
+      SANITY_WRITE_TOKEN: ${{ secrets.SANITY_WRITE_TOKEN }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm run cobertura:importar -- ${{ inputs.reemplazar_demo && '--reemplazar-demo' || '' }}

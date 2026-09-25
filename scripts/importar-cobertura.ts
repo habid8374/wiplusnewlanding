@@ -12,13 +12,8 @@
 import { readFileSync, writeFileSync } from 'node:fs'
 import { join } from 'node:path'
 import { municipiosBase } from '../content/municipios'
-import {
-  idBarrio,
-  idMunicipio,
-  leerCobertura,
-  slugify,
-  type FilaCobertura,
-} from '../lib/cobertura/csv'
+import { idBarrio, idMunicipio, leerCobertura, slugify } from '../lib/cobertura/csv'
+import { enLotes, mutacionesBarrio, mutacionesMunicipios } from '../lib/cobertura/mutaciones'
 
 const args = process.argv.slice(2)
 const local = args.includes('--local')
@@ -109,48 +104,13 @@ async function importarSanity() {
   }
 
   const existentes = new Set(await q<string[]>('*[_type == "barrio"]._id'))
-  const mutations: unknown[] = []
-  municipios.forEach((nombre, i) => {
-    const b = base(nombre)
-    mutations.push({
-      createIfNotExists: {
-        _id: idMunicipio(nombre),
-        _type: 'municipio',
-        nombre: b?.nombre ?? nombre,
-        slug: { _type: 'slug', current: slugify(nombre) },
-        departamento: b?.departamento ?? 'Atlántico',
-        activo: true,
-        orden: i + 1,
-        ...(b?.geo ? { geo: { _type: 'geopoint', ...b.geo } } : {}),
-      },
-    })
-  })
-  for (const f of filas) mutations.push(...upsertBarrio(f))
-  await mutar(mutations)
+  const mutations = [...mutacionesMunicipios(filas), ...filas.flatMap(mutacionesBarrio)]
+  for (const lote of enLotes(mutations)) await mutar(lote)
 
   const creados = filas.filter((f) => !existentes.has(idBarrio(f.municipio, f.barrio))).length
   console.log(
     `[cobertura] Sanity ${projectId}/${dataset}: ${creados} creados, ${filas.length - creados} actualizados, ${errores.length} con error.`,
   )
-}
-
-function upsertBarrio(f: FilaCobertura) {
-  const _id = idBarrio(f.municipio, f.barrio)
-  const campos = {
-    nombre: f.barrio,
-    slug: { _type: 'slug', current: slugify(f.barrio) },
-    municipio: { _type: 'reference', _ref: idMunicipio(f.municipio) },
-    tipo: f.tipo,
-    estado: f.estado,
-    alias: f.alias,
-    demo: f.demo,
-    ...(f.notaPublica ? { notaPublica: f.notaPublica } : {}),
-  }
-  return [
-    { createIfNotExists: { _id, _type: 'barrio', ...campos } },
-    // set y no replace: conserva la nota interna escrita en el Studio.
-    { patch: { id: _id, set: campos, ...(f.notaPublica ? {} : { unset: ['notaPublica'] }) } },
-  ]
 }
 
 async function main() {

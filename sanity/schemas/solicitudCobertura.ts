@@ -45,6 +45,8 @@ export const solicitudCobertura = defineType({
       title: 'Barrio (registro)',
       type: 'reference',
       to: [{ type: 'barrio' }],
+      // Débil: borrar un barrio (p. ej. los de muestra) no queda bloqueado por sus solicitudes.
+      weak: true,
       readOnly: true,
     }),
     defineField({ name: 'direccion', title: 'Dirección', type: 'string', readOnly: true }),

@@ -1,6 +1,7 @@
 export { sitio } from './sitio'
 export { planes } from './planes'
 export { cobertura } from './cobertura'
+export { configCobertura } from './cobertura-config'
 export { faqs } from './faqs'
 export { testimonios } from './testimonios'
 export { clientes } from './clientes'

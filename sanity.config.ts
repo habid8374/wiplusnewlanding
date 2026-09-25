@@ -17,7 +17,21 @@ export default defineConfig({
   schema: {
     types: schemaTypes,
     // Los documentos únicos no se pueden crear desde "Nuevo documento"
-    templates: (templates) => templates.filter(({ schemaType }) => !singletonTypes.has(schemaType)),
+    templates: (templates) => [
+      ...templates.filter(({ schemaType }) => !singletonTypes.has(schemaType)),
+      // «Nuevo barrio» desde la lista de un municipio: el municipio queda elegido.
+      {
+        id: 'barrio-en-municipio',
+        title: 'Barrio en este municipio',
+        schemaType: 'barrio',
+        parameters: [{ name: 'municipioId', type: 'string' }],
+        value: ({ municipioId }: { municipioId: string }) => ({
+          municipio: { _type: 'reference', _ref: municipioId },
+          estado: 'cubierto',
+          tipo: 'barrio',
+        }),
+      },
+    ],
   },
   document: {
     actions: (input, context) =>

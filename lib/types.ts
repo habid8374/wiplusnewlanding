@@ -92,20 +92,38 @@ export type ClienteEmpresarial = {
   ejemplo?: boolean
 }
 
-export type EstadoBarrio = 'disponible' | 'proximamente'
+export type EstadoCobertura = 'cubierto' | 'parcial' | 'proximamente' | 'sin_cobertura'
+export type TipoZona = 'barrio' | 'urbanizacion' | 'sector' | 'vereda' | 'corregimiento'
 
+/** Barrio tal como llega al navegador (sin notaInterna ni campos internos). */
 export type Barrio = {
+  id: string
+  slug: string
   nombre: string
-  estado: EstadoBarrio
-  ejemplo?: boolean
+  tipo: TipoZona
+  estado: EstadoCobertura
+  alias: string[]
+  notaPublica?: string | null
+  /** Dato de muestra: se oculta en producción y muestra el aviso «Datos de muestra». */
+  demo?: boolean
 }
 
 export type Municipio = {
   id: string
+  slug: string
   nombre: string
   departamento: string
-  geo: { lat: number; lng: number }
+  geo?: { lat: number; lng: number } | null
+  /** WhatsApp propio del municipio; vacío = el general del sitio. */
+  whatsapp?: string | null
   barrios: Barrio[]
+}
+
+/** Textos del verificador (CMS › Cobertura › Configuración). {barrio} y {municipio} se reemplazan. */
+export type ConfigCobertura = {
+  titulo: string
+  mensajes: Record<EstadoCobertura | 'noAparece', string>
+  mostrarAvisoDemo: boolean
 }
 
 export type Aviso = {

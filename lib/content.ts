@@ -5,6 +5,7 @@ import * as local from '@/content'
 import { SHOW_EXAMPLES, WHATSAPP_OVERRIDE } from '@/lib/env'
 import type {
   Aviso,
+  ConfigCobertura,
   OfertaFlotante,
   ClienteEmpresarial,
   Faq,
@@ -17,6 +18,7 @@ import type {
   SiteSettings,
   Testimonio,
 } from '@/lib/types'
+import { slugify } from '@/lib/cobertura/csv'
 import { sanityFetch } from '@/sanity/client'
 import { isSanityConfigured } from '@/sanity/env'
 
@@ -101,12 +103,43 @@ export const getClientes = cache(async (): Promise<ClienteEmpresarial[]> => {
   return visible(cms ?? local.clientes)
 })
 
+/**
+ * Municipios activos con sus barrios. Solo campos públicos: notaInterna, geometría y cajas NAP
+ * nunca se consultan (no llegan al navegador). Los barrios de muestra se ocultan en producción.
+ */
 export const getCobertura = cache(async (): Promise<Municipio[]> => {
   const cms = await fromSanity<Municipio[]>(
-    `*[_type == "municipio"] | order(orden asc){"id": _id, nombre, "departamento": coalesce(departamento, "Atlántico"), "geo": {"lat": geo.lat, "lng": geo.lng}, "barrios": coalesce(barrios[]{nombre, "estado": coalesce(estado, "disponible"), ejemplo}, [])}`,
-    'municipio',
+    `*[_type == "municipio" && coalesce(activo, true)] | order(orden asc){"id": _id, "slug": coalesce(slug.current, ""), nombre, "departamento": coalesce(departamento, "Atlántico"), "geo": select(defined(geo.lat) => {"lat": geo.lat, "lng": geo.lng}, null), whatsapp, "barrios": *[_type == "barrio" && municipio._ref == ^._id && defined(estado)] | order(nombre asc){"id": _id, "slug": coalesce(slug.current, ""), nombre, "tipo": coalesce(tipo, "barrio"), estado, "alias": coalesce(alias, []), notaPublica, "demo": coalesce(demo, false)}}`,
+    'barrio',
   )
-  return (cms ?? local.cobertura).map((m) => ({ ...m, barrios: visible(m.barrios) }))
+  return (cms ?? local.cobertura).map((m) => ({
+    ...m,
+    slug: m.slug || slugify(m.nombre),
+    barrios: m.barrios
+      .filter((b) => SHOW_EXAMPLES || !b.demo)
+      .map((b) => ({ ...b, slug: b.slug || slugify(b.nombre) })),
+  }))
+})
+
+export const getConfigCobertura = cache(async (): Promise<ConfigCobertura> => {
+  const cms = await fromSanity<Record<string, string | boolean | null>>(
+    `*[_id == "configCobertura"][0]{titulo, msgCubierto, msgParcial, msgProximamente, msgSinCobertura, msgNoAparece, mostrarAvisoDemo}`,
+    'configCobertura',
+  )
+  const base = local.configCobertura
+  const texto = (v: unknown, d: string) => (typeof v === 'string' && v.trim() ? v : d)
+  return {
+    titulo: texto(cms?.titulo, base.titulo),
+    mensajes: {
+      cubierto: texto(cms?.msgCubierto, base.mensajes.cubierto),
+      parcial: texto(cms?.msgParcial, base.mensajes.parcial),
+      proximamente: texto(cms?.msgProximamente, base.mensajes.proximamente),
+      sin_cobertura: texto(cms?.msgSinCobertura, base.mensajes.sin_cobertura),
+      noAparece: texto(cms?.msgNoAparece, base.mensajes.noAparece),
+    },
+    mostrarAvisoDemo:
+      typeof cms?.mostrarAvisoDemo === 'boolean' ? cms.mostrarAvisoDemo : base.mostrarAvisoDemo,
+  }
 })
 
 /** Burbuja flotante de ofertas: solo si está activa, dentro de sus fechas y con al menos una oferta. */

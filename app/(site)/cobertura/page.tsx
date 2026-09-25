@@ -41,7 +41,9 @@ export default async function CoberturaPage() {
       <Section id="municipios" title="Municipios y barrios con servicio" tone="surface">
         <div className="grid gap-8 lg:grid-cols-2">
           {municipios.map((m) => {
-            const disponibles = m.barrios.filter((b) => b.estado === 'disponible')
+            const disponibles = m.barrios.filter(
+              (b) => b.estado === 'cubierto' || b.estado === 'parcial',
+            )
             const pronto = m.barrios.filter((b) => b.estado === 'proximamente')
             return (
               <article
@@ -74,7 +76,7 @@ export default async function CoberturaPage() {
                               key={b.nombre}
                               className="rounded-full bg-green-50 px-3 py-1 text-sm ring-1 ring-green-200"
                             >
-                              {b.nombre} <ExampleBadge show={b.ejemplo} />
+                              {b.nombre} <ExampleBadge show={b.demo} />
                             </li>
                           ))}
                         </ul>
@@ -91,7 +93,7 @@ export default async function CoberturaPage() {
                               key={b.nombre}
                               className="rounded-full bg-amber-50 px-3 py-1 text-sm ring-1 ring-amber-200"
                             >
-                              {b.nombre} <ExampleBadge show={b.ejemplo} />
+                              {b.nombre} <ExampleBadge show={b.demo} />
                             </li>
                           ))}
                         </ul>
@@ -100,13 +102,15 @@ export default async function CoberturaPage() {
                   </>
                 )}
                 <div className="mt-6">
-                  <MapEmbed
-                    lat={m.geo.lat}
-                    lng={m.geo.lng}
-                    zoom={14}
-                    titulo={`Mapa de cobertura en ${m.nombre}`}
-                    direccion={`${m.nombre}, ${m.departamento}, Colombia`}
-                  />
+                  {m.geo && (
+                    <MapEmbed
+                      lat={m.geo.lat}
+                      lng={m.geo.lng}
+                      zoom={14}
+                      titulo={`Mapa de cobertura en ${m.nombre}`}
+                      direccion={`${m.nombre}, ${m.departamento}, Colombia`}
+                    />
+                  )}
                 </div>
               </article>
             )

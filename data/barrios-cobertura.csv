@@ -1,0 +1,9 @@
+municipio,barrio,tipo,estado,alias,nota_publica,demo
+Sabanalarga,Centro,barrio,cubierto,Centro Histórico|El Centro,,si
+Sabanalarga,REEMPLAZAR - barrio 2,barrio,cubierto,,,si
+Sabanalarga,REEMPLAZAR - barrio 3,barrio,parcial,,Tenemos red en algunas calles. Te confirmamos por WhatsApp.,si
+Sabanalarga,REEMPLAZAR - barrio 4,urbanizacion,proximamente,,Estamos ampliando la red en esta zona.,si
+Sabanalarga,REEMPLAZAR - barrio 5,barrio,sin_cobertura,,,si
+Luruaco,Centro,barrio,cubierto,El Centro,,si
+Luruaco,REEMPLAZAR - barrio 2,barrio,parcial,,,si
+Luruaco,REEMPLAZAR - vereda 1,vereda,sin_cobertura,,,si

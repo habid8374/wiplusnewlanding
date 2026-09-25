@@ -69,7 +69,7 @@ test.describe('CTA de WhatsApp', () => {
     await expect(resultado).toBeVisible()
     await expect(resultado.locator('a[href^="https://wa.me/"]')).toHaveAttribute(
       'href',
-      wa('Hola, quiero saber si tienen cobertura en el barrio El Centro, Luruaco.'),
+      wa('Hola, quiero saber si tienen cobertura en el barrio Centro, Luruaco.'),
     )
   })
 })

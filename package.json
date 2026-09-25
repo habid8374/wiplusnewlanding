@@ -19,7 +19,8 @@
     "build:web": "next build",
     "studio:build": "node scripts/build-studio.mjs",
     "studio:dev": "sanity dev --port 3333",
-    "og:fotos": "node scripts/og-fotos.mjs"
+    "og:fotos": "node scripts/og-fotos.mjs",
+    "cobertura:importar": "tsx scripts/importar-cobertura.ts"
   },
   "dependencies": {
     "@next/third-parties": "^16.3.6",
@@ -51,6 +52,7 @@
     "prettier-plugin-tailwindcss": "^0.8.1",
     "sharp": "^0.35.4",
     "tailwindcss": "^4",
+    "tsx": "^4.23.15",
     "typescript": "^5",
     "wrangler": "^4.137.0"
   },

@@ -1,30 +1,112 @@
+// ARCHIVO GENERADO por `npm run cobertura:importar -- --local` desde data/barrios-cobertura.csv. No editar a mano.
+// TODO(WIPLUS): la lista real de barrios reemplaza los datos de muestra (demo: true).
 import type { Municipio } from '@/lib/types'
 
-/**
- * Cobertura. Municipios reales: Sabanalarga y Luruaco.
- * TODO(WIPLUS): lista real de barrios/veredas con servicio. Los barrios actuales son de EJEMPLO
- * (no se muestran en producción). Mientras tanto, cualquier búsqueda responde "consúltanos".
- */
 export const cobertura: Municipio[] = [
   {
-    id: 'sabanalarga',
+    id: 'municipio-sabanalarga',
+    slug: 'sabanalarga',
     nombre: 'Sabanalarga',
     departamento: 'Atlántico',
-    geo: { lat: 10.6297, lng: -74.916 },
+    geo: {
+      lat: 10.6297,
+      lng: -74.916,
+    },
+    whatsapp: null,
     barrios: [
-      { nombre: 'Barrio de ejemplo 1', estado: 'disponible', ejemplo: true },
-      { nombre: 'Barrio de ejemplo 2', estado: 'disponible', ejemplo: true },
-      { nombre: 'Barrio de ejemplo 3', estado: 'proximamente', ejemplo: true },
+      {
+        id: 'barrio-sabanalarga-centro',
+        slug: 'centro',
+        nombre: 'Centro',
+        tipo: 'barrio',
+        estado: 'cubierto',
+        alias: ['Centro Histórico', 'El Centro'],
+        notaPublica: null,
+        demo: true,
+      },
+      {
+        id: 'barrio-sabanalarga-reemplazar-barrio-2',
+        slug: 'reemplazar-barrio-2',
+        nombre: 'REEMPLAZAR - barrio 2',
+        tipo: 'barrio',
+        estado: 'cubierto',
+        alias: [],
+        notaPublica: null,
+        demo: true,
+      },
+      {
+        id: 'barrio-sabanalarga-reemplazar-barrio-3',
+        slug: 'reemplazar-barrio-3',
+        nombre: 'REEMPLAZAR - barrio 3',
+        tipo: 'barrio',
+        estado: 'parcial',
+        alias: [],
+        notaPublica: 'Tenemos red en algunas calles. Te confirmamos por WhatsApp.',
+        demo: true,
+      },
+      {
+        id: 'barrio-sabanalarga-reemplazar-barrio-4',
+        slug: 'reemplazar-barrio-4',
+        nombre: 'REEMPLAZAR - barrio 4',
+        tipo: 'urbanizacion',
+        estado: 'proximamente',
+        alias: [],
+        notaPublica: 'Estamos ampliando la red en esta zona.',
+        demo: true,
+      },
+      {
+        id: 'barrio-sabanalarga-reemplazar-barrio-5',
+        slug: 'reemplazar-barrio-5',
+        nombre: 'REEMPLAZAR - barrio 5',
+        tipo: 'barrio',
+        estado: 'sin_cobertura',
+        alias: [],
+        notaPublica: null,
+        demo: true,
+      },
     ],
   },
   {
-    id: 'luruaco',
+    id: 'municipio-luruaco',
+    slug: 'luruaco',
     nombre: 'Luruaco',
     departamento: 'Atlántico',
-    geo: { lat: 10.6103, lng: -75.142 },
+    geo: {
+      lat: 10.6103,
+      lng: -75.142,
+    },
+    whatsapp: null,
     barrios: [
-      { nombre: 'Barrio de ejemplo 4', estado: 'disponible', ejemplo: true },
-      { nombre: 'Vereda de ejemplo 5', estado: 'proximamente', ejemplo: true },
+      {
+        id: 'barrio-luruaco-centro',
+        slug: 'centro',
+        nombre: 'Centro',
+        tipo: 'barrio',
+        estado: 'cubierto',
+        alias: ['El Centro'],
+        notaPublica: null,
+        demo: true,
+      },
+      {
+        id: 'barrio-luruaco-reemplazar-barrio-2',
+        slug: 'reemplazar-barrio-2',
+        nombre: 'REEMPLAZAR - barrio 2',
+        tipo: 'barrio',
+        estado: 'parcial',
+        alias: [],
+        notaPublica: null,
+        demo: true,
+      },
+      {
+        id: 'barrio-luruaco-reemplazar-vereda-1',
+        slug: 'reemplazar-vereda-1',
+        nombre: 'REEMPLAZAR - vereda 1',
+        tipo: 'vereda',
+        estado: 'sin_cobertura',
+        alias: [],
+        notaPublica: null,
+        demo: true,
+      },
     ],
   },
 ]

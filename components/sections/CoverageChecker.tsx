@@ -53,7 +53,16 @@ export function CoverageChecker({
     })
     setResultado(
       match
-        ? { tipo: match.estado, barrio: match.nombre, municipio: municipio.nombre }
+        ? {
+            tipo:
+              match.estado === 'proximamente'
+                ? 'proximamente'
+                : match.estado === 'cubierto'
+                  ? 'disponible'
+                  : 'consultar',
+            barrio: match.nombre,
+            municipio: municipio.nombre,
+          }
         : { tipo: 'consultar', barrio: barrio.trim(), municipio: municipio.nombre },
     )
   }

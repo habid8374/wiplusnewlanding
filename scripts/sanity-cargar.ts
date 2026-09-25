@@ -93,12 +93,14 @@ const docs: Doc[] = [
     velocidades: ofertaEmpresarial.velocidades,
   },
   ...cobertura.map((m, n) => ({
-    _id: `municipio-${m.id}`,
+    _id: m.id,
     _type: 'municipio',
     nombre: m.nombre,
     departamento: m.departamento,
-    geo: { _type: 'geopoint', lat: m.geo.lat, lng: m.geo.lng },
-    barrios: conKeys(m.barrios, (b) => b.nombre),
+    slug: { _type: 'slug', current: m.slug },
+    activo: true,
+    ...(m.geo ? { geo: { _type: 'geopoint', lat: m.geo.lat, lng: m.geo.lng } } : {}),
+    // Los barrios son documentos aparte: se cargan con `npm run cobertura:importar`.
     orden: n + 1,
   })),
   ...faqs.map((f, n) => ({

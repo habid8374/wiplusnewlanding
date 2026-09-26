@@ -36,7 +36,7 @@ export const OG_PAGES: Record<string, OgPage> = {
   cobertura: {
     seccion: 'Cobertura',
     titulo: '¿Llegamos a tu barrio?',
-    subtitulo: `${sitio.municipiosCobertura.join(' y ')}, Atlántico. Verifica tu dirección en segundos.`,
+    subtitulo: `${sitio.municipiosCobertura.length} zonas del Atlántico: ${sitio.municipiosCobertura.slice(0, 2).join(', ')} y más. Verifica tu barrio.`,
     icono: 'mapPin',
     foto: 'fibra-luz',
   },

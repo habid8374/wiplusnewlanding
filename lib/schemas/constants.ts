@@ -1,5 +1,14 @@
 /** Constantes de formularios sin dependencias (para no cargar Zod en el bundle inicial). */
-export const MUNICIPIOS = ['Sabanalarga', 'Luruaco', 'Otro'] as const
+export const MUNICIPIOS = [
+  'Sabanalarga',
+  'Luruaco',
+  'La Peña',
+  'Aguada de Pablo',
+  'Hibácharo',
+  'Leña',
+  'Palmar de Candelaria',
+  'Otro',
+] as const
 export const TIPOS_FALLA = ['Sin servicio', 'Internet lento', 'Intermitente', 'Otro'] as const
 /** Motivos de una solicitud desde el verificador de cobertura. */
 export const MOTIVOS_COBERTURA = [

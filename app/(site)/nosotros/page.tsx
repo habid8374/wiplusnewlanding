@@ -9,6 +9,7 @@ import { PageHero } from '@/components/ui/PageHero'
 import { Section } from '@/components/ui/Section'
 import { getClientes, getFotos, getSiteSettings, getTestimonios } from '@/lib/content'
 import { pageMetadata } from '@/lib/seo'
+import { listaNatural } from '@/lib/texto'
 import { mensajesWhatsApp } from '@/lib/whatsapp'
 import equipo from '@/public/equipo/equipo-tecnico-wiplus.jpg'
 
@@ -45,7 +46,7 @@ export default async function NosotrosPage() {
             </p>
             <p>
               Hoy llevamos más de {sitio.experienciaAnios} años en el sector y nuestra red de fibra
-              óptica llega a {sitio.municipiosCobertura.join(' y ')}. Nuestro equipo técnico es de
+              óptica llega a {listaNatural(sitio.municipiosCobertura)}. Nuestro equipo técnico es de
               la región: conocemos las calles, los barrios y a nuestros clientes.
             </p>
           </div>
@@ -55,7 +56,7 @@ export default async function NosotrosPage() {
               <dd className="mt-1 text-3xl font-extrabold">+{sitio.experienciaAnios} años</dd>
             </div>
             <div className="rounded-2xl bg-primary-900 p-5 text-white">
-              <dt className="text-sm text-primary-200">Municipios</dt>
+              <dt className="text-sm text-primary-200">Zonas con cobertura</dt>
               <dd className="mt-1 text-3xl font-extrabold">{sitio.municipiosCobertura.length}</dd>
             </div>
             <div className="col-span-2 rounded-2xl border border-line p-5">

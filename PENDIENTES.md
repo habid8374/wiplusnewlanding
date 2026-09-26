@@ -33,6 +33,10 @@ puede reemplazar desde el CMS (`/studio`) sin programador.
 - [ ] Poner `SANITY_WRITE_TOKEN` (tipo Secret) en Vercel para guardar las solicitudes de cobertura en
       el panel (sin él solo llegan por correo).
 
+- [ ] Coordenadas (centro del mapa) de La Peña, Aguada de Pablo, Hibácharo, Leña y Palmar de
+      Candelaria, para mostrar su mapa en /cobertura (`content/municipios.ts` o CMS › Cobertura ›
+      Municipios › Ubicación). Confirmar si se nombran como municipios o corregimientos.
+
 ## Prueba social
 
 - [ ] **Nombres de las empresas cliente** de cada logo (image10 a image18 del sitio actual) y

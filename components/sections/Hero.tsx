@@ -41,7 +41,10 @@ export function Hero({ sitio, planes }: { sitio: SiteSettings; planes: Plan[] })
         <div className="max-w-2xl [text-shadow:0_1px_2px_rgb(8_22_60/0.7),0_2px_16px_rgb(8_22_60/0.55)] [&_a]:[text-shadow:none]">
           <p className="mr-16 inline-flex items-center gap-2 rounded-full bg-white/10 px-3 py-1 text-sm font-semibold text-accent-300 ring-1 ring-white/20">
             <MapPin className="size-4" aria-hidden />
-            {sitio.municipiosCobertura.join(' y ')}, Atlántico
+            {sitio.municipiosCobertura.length > 2
+              ? `${sitio.municipiosCobertura.slice(0, 2).join(', ')} y ${sitio.municipiosCobertura.length - 2} zonas más`
+              : sitio.municipiosCobertura.join(' y ')}
+            , Atlántico
           </p>
           <h1
             id="hero-titulo"

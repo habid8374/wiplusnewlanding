@@ -32,7 +32,16 @@ export const sitio: SiteSettings = {
     facebook: 'https://www.facebook.com/wipluscomunicaciones',
   },
   experienciaAnios: 7,
-  municipiosCobertura: ['Sabanalarga', 'Luruaco'],
+  // Zonas con cobertura confirmadas por WIPLUS.
+  municipiosCobertura: [
+    'Sabanalarga',
+    'Luruaco',
+    'La Peña',
+    'Aguada de Pablo',
+    'Hibácharo',
+    'Leña',
+    'Palmar de Candelaria',
+  ],
   mision:
     'Estamos comprometidos con llevar conectividad a los hogares y empresas de Sabanalarga y sus alrededores, con un servicio de internet óptimo y de primera calidad a precios accesibles.',
   vision:

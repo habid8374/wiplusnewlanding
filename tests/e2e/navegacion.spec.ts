@@ -158,3 +158,16 @@ test('«Powered by» enlaza a Axentia Technologies', async ({ page }) => {
   await expect(link).toContainText('Axentia Technologies')
   await expect(link).toHaveAttribute('target', '_blank')
 })
+
+test('barra superior: número 300 788 8808 e Instagram', async ({ page }) => {
+  await page.goto('/')
+  const barra = page
+    .locator('body > div')
+    .filter({ has: page.getByText('Mi factura') })
+    .first()
+  await expect(barra.locator('a[href="tel:+573007888808"]')).toContainText('300 788 8808')
+  await expect(barra.locator('a[href="tel:+573012133151"]')).toHaveCount(0)
+  await expect(
+    barra.locator('a[href="https://www.instagram.com/wipluscomunicaciones1"]'),
+  ).toBeAttached()
+})

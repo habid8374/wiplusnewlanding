@@ -1,12 +1,14 @@
 import { Clock, FileText, Phone, ReceiptText } from 'lucide-react'
 import Link from 'next/link'
 import { CallLink, PortalClientesLink } from '@/components/analytics/TrackedLinks'
-import { FacebookIcon } from '@/components/icons/brands'
+import { FacebookIcon, InstagramIcon } from '@/components/icons/brands'
 import { Container } from '@/components/ui/Container'
 import type { SiteSettings } from '@/lib/types'
 
 export function TopBar({ sitio }: { sitio: SiteSettings }) {
-  const tel = sitio.telefonos[0]
+  // El número de la barra superior es el mismo del WhatsApp (300 788 8808); si no está en la lista, el primero.
+  const wa = sitio.whatsapp.replace(/^57/, '')
+  const tel = sitio.telefonos.find((t) => t.numero.replace(/\D/g, '') === wa) ?? sitio.telefonos[0]
   return (
     <div className="bg-primary-950 text-xs text-primary-100 sm:text-sm">
       <Container className="flex min-h-9 flex-wrap items-center justify-between gap-x-3 gap-y-0.5 py-1 whitespace-nowrap sm:gap-x-4">
@@ -56,6 +58,17 @@ export function TopBar({ sitio }: { sitio: SiteSettings }) {
             >
               <FacebookIcon className="size-4" />
               <span className="sr-only">Facebook de WIPLUS (abre en una nueva pestaña)</span>
+            </a>
+          )}
+          {sitio.redes.instagram && (
+            <a
+              href={sitio.redes.instagram}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hidden size-9 items-center justify-center rounded-full hover:bg-white/10 hover:text-white sm:inline-flex"
+            >
+              <InstagramIcon className="size-4" />
+              <span className="sr-only">Instagram de WIPLUS (abre en una nueva pestaña)</span>
             </a>
           )}
         </div>

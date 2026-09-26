@@ -23,5 +23,5 @@ export const ofertaEmpresarial: OfertaEmpresarial = {
       descripcion: 'Compromisos de disponibilidad y tiempos de respuesta definidos en el contrato.',
     },
   ],
-  velocidades: ['50 Mb', '100 Mb', '200 Mb', '300 Mb o más', 'No estoy seguro'],
+  velocidades: ['100 Mb', '200 Mb', '300 Mb', 'Más de 300 Mb', 'No estoy seguro'],
 }

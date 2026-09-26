@@ -23,7 +23,7 @@ export const RUTAS: Ruta[] = [
   {
     path: '/planes-hogar',
     titulo: 'Planes hogar',
-    descripcion: 'Planes de 30 a 100 Mb, comparativo y contratación por WhatsApp.',
+    descripcion: 'Planes de 100 a 300 Mb desde $60.000, comparativo y contratación por WhatsApp.',
     grupo: 'Servicios',
     prioridad: 0.9,
     frecuencia: 'weekly',

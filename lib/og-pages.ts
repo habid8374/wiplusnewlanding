@@ -1,5 +1,6 @@
 import { planes, sitio } from '@/content'
 import type { OgIconName } from './og-icons'
+import { formatCOP } from './phone'
 
 /**
  * Contenido de la tarjeta para compartir de cada página (Open Graph / WhatsApp / Facebook / X).
@@ -16,12 +17,14 @@ export type OgPage = {
 }
 
 const velocidades = [...new Set(planes.map((p) => p.velocidadMb))].sort((a, b) => a - b)
+const precios = planes.flatMap((p) => (p.precio != null ? [p.precio] : []))
+const desde = precios.length ? ` Desde ${formatCOP(Math.min(...precios))} al mes.` : ''
 
 export const OG_PAGES: Record<string, OgPage> = {
   'planes-hogar': {
     seccion: 'Planes hogar',
     titulo: `Internet por fibra de ${velocidades[0]} a ${velocidades.at(-1)} Mb`,
-    subtitulo: 'Elige tu velocidad y contrata por WhatsApp.',
+    subtitulo: `Elige tu velocidad y contrata por WhatsApp.${desde}`,
     icono: 'gauge',
     foto: 'fibra-puntas',
     chips: velocidades.map((v) => `${v} Mb`),

@@ -6,23 +6,26 @@ puede reemplazar desde el CMS (`/studio`) sin programador.
 
 ## Comercial
 
-- [ ] **Precios de los planes hogar** (30, 40, 50, 80 y 100 Mb). Los precios actuales solo están en
-      imágenes del sitio viejo (`/wp-content/uploads/2024/06/30.png`, etc.) y no se pudieron descargar
-      desde el entorno de desarrollo (acceso bloqueado). Mientras tanto se muestra “Consulta el precio”.
-      → `content/planes.ts` o CMS › Planes.
-- [ ] Qué incluye cada plan (instalación, router/ONT, soporte, permanencia, etc.).
-- [ ] Confirmar el plan destacado como “Más elegido” (hoy: 100 Mb).
+- [x] Planes y precios (volante oficial): 100 Mb $60.000 · 150 Mb $70.000 · 200 Mb $90.000 ·
+      250 Mb $120.000 · 300 Mb $140.000.
+- [ ] **Valor de la suscripción (instalación)**: en el volante está en blanco.
+- [ ] Qué incluye cada plan (router/ONT, soporte, permanencia, etc.).
+- [ ] Confirmar el plan destacado (hoy: 200 Mb, etiqueta «Recomendado»).
 - [ ] Promociones vigentes y condiciones (si las hay).
 - [ ] Oferta empresarial: confirmar textos (canal dedicado, IP fija, soporte prioritario, SLA) y
       velocidades disponibles.
 
 ## Contacto
 
-- [ ] **Número de WhatsApp**: ¿301 213 3151 o 300 788 8808? (por defecto: 301 213 3151,
-      configurable en `NEXT_PUBLIC_WHATSAPP_NUMBER` o CMS › Datos de contacto).
+- [x] WhatsApp general 300 788 8808; llamadas 301 213 3151; ventas empresariales por WhatsApp
+      301 213 3151 (CMS › Datos de contacto). Si en Vercel existe `NEXT_PUBLIC_WHATSAPP_NUMBER` con el
+      número anterior, cambiarlo a 573007888808 o borrarlo.
+- [x] Correo público: wipluscomunicaciones@gmail.com. Confirmar si los formularios también deben
+      llegar ahí (variable `MAIL_TO` en Vercel).
 - [ ] Días de atención (hoy solo se conoce el horario 8:00 a. m. – 6:00 p. m.; se asume lunes a sábado).
 - [ ] Horario de soporte técnico si es distinto.
-- [ ] Otras redes sociales (Instagram, TikTok…).
+- [x] Instagram: @wipluscomunicaciones1.
+- [ ] TikTok u otras redes (si las hay).
 
 ## Cobertura
 
@@ -39,10 +42,10 @@ puede reemplazar desde el CMS (`/studio`) sin programador.
 
 ## Prueba social
 
-- [ ] **Nombres de las empresas cliente** de cada logo (image10 a image18 del sitio actual) y
-      autorización para publicarlos.
-- [ ] **Logos de clientes**: no se pudieron descargar del sitio actual desde el entorno de
-      desarrollo; subirlos al CMS o a `public/clientes/`.
+- [x] Clientes corporativos: Supergiros, Lewis, Olmos Drill, Berboj Salub, Colegio Howard,
+      Inversiones Noreña, Elecnor y Deltec.
+- [ ] Confirmar la escritura de «Berboj Salub».
+- [ ] **Logos de clientes**: subirlos en CMS › Clientes empresariales (hoy se muestra el nombre).
 - [ ] Testimonios reales (nombre, barrio/empresa, texto y autorización). Hoy son de ejemplo.
 - [ ] Cifras (número de usuarios, km de fibra, etc.) si se quieren publicar.
 
@@ -53,7 +56,8 @@ puede reemplazar desde el CMS (`/studio`) sin programador.
 
 ## Empresa
 
-- [ ] Razón social, NIT y registro TIC (MinTIC) para el pie de página y textos legales.
+- [x] Razón social WIPLUS COMUNICACIONES DE COLOMBIA SAS, NIT 901194958-0.
+- [ ] Registro TIC (MinTIC) para los textos legales.
 - [ ] Historia de la empresa (año de fundación, fundadores).
 - [ ] Foto original en alta resolución del equipo técnico (la de /nosotros se recortó del flyer
       «Conoce nuestro equipo técnico 2023» de Facebook) y autorización de las personas que aparecen.

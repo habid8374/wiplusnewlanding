@@ -10,6 +10,10 @@ on:
         description: 'Sobrescribir lo que ya exista en Sanity con el contenido de content/ (¡borra las ediciones hechas en el panel!)'
         type: boolean
         default: false
+      datos_reales:
+        description: 'Solo aplicar los datos reales del volante (planes y precios, clientes, WhatsApp, NIT, redes) sin tocar lo demás'
+        type: boolean
+        default: false
 
 jobs:
   cargar:
@@ -24,4 +28,7 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 22
-      - run: npx --yes tsx@4 scripts/sanity-cargar.ts ${{ inputs.reemplazar && '--reemplazar' || '' }}
+      - if: ${{ !inputs.datos_reales }}
+        run: npx --yes tsx@4 scripts/sanity-cargar.ts ${{ inputs.reemplazar && '--reemplazar' || '' }}
+      - if: ${{ inputs.datos_reales }}
+        run: npx --yes tsx@4 scripts/sanity-datos-reales.ts

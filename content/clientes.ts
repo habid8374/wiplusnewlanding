@@ -1,14 +1,31 @@
 import type { ClienteEmpresarial } from '@/lib/types'
 
 /**
- * Clientes empresariales. El sitio anterior muestra 9 logos (image10-1.jpeg … image18-1.png) sin nombre.
- * TODO(WIPLUS): nombres de cada empresa, autorización para publicarlos y archivos de los logos
- * (no se pudieron descargar desde el entorno de desarrollo). Subirlos en CMS › Clientes empresariales.
+ * Clientes corporativos (lista enviada por WIPLUS).
+ * TODO(WIPLUS): confirmar la escritura exacta de «Berboj Salub» y enviar los logos
+ * (se suben en CMS › Clientes empresariales; mientras tanto se muestra el nombre).
  */
-export const clientes: ClienteEmpresarial[] = Array.from({ length: 9 }, (_, i) => ({
-  id: `cliente-${i + 1}`,
-  nombre: `Empresa cliente ${i + 1}`,
+const nombres = [
+  'Supergiros',
+  'Lewis',
+  'Olmos Drill',
+  'Berboj Salub',
+  'Colegio Howard',
+  'Inversiones Noreña',
+  'Elecnor',
+  'Deltec',
+]
+
+const slug = (s: string) =>
+  s
+    .normalize('NFD')
+    .replace(/[̀-ͯ]/g, '')
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '-')
+
+export const clientes: ClienteEmpresarial[] = nombres.map((nombre) => ({
+  id: slug(nombre),
+  nombre,
   sector: null,
   logo: null,
-  ejemplo: true,
 }))

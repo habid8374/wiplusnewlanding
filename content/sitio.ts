@@ -1,17 +1,19 @@
 import type { SiteSettings } from '@/lib/types'
 
-/** Datos reales del negocio (fuente: brief del cliente). */
+/** Datos reales del negocio (fuente: brief y volante oficial del cliente). */
 export const sitio: SiteSettings = {
   nombre: 'WIPLUS Comunicaciones',
-  eslogan: 'Internet por fibra óptica en Sabanalarga y Luruaco',
+  eslogan: 'La mejor fibra óptica. En Wiplus tenemos planes para todos',
   dominio: 'https://www.wiplus.com.co',
   telefonos: [
-    { numero: '301 213 3151', etiqueta: 'Ventas y atención' },
-    { numero: '300 788 8808', etiqueta: 'Atención al cliente' },
+    { numero: '301 213 3151', etiqueta: 'Llamadas y ventas empresariales' },
+    { numero: '300 788 8808', etiqueta: 'WhatsApp' },
   ],
-  // TODO(WIPLUS): confirmar cuál número es WhatsApp. Se puede sobrescribir con NEXT_PUBLIC_WHATSAPP_NUMBER o desde el CMS.
-  whatsapp: '573012133151',
-  correo: 'atencionalcliente@wiplus.com.co',
+  // WhatsApp según el volante oficial. Se puede sobrescribir con NEXT_PUBLIC_WHATSAPP_NUMBER o desde el CMS.
+  whatsapp: '573007888808',
+  // Ventas de planes empresariales (indicado por WIPLUS).
+  whatsappEmpresas: '573012133151',
+  correo: 'wipluscomunicaciones@gmail.com',
   direccion: {
     calle: 'Calle 13 #17-04',
     municipio: 'Sabanalarga',
@@ -30,6 +32,7 @@ export const sitio: SiteSettings = {
   },
   redes: {
     facebook: 'https://www.facebook.com/wipluscomunicaciones',
+    instagram: 'https://www.instagram.com/wipluscomunicaciones1',
   },
   experienciaAnios: 7,
   // Zonas con cobertura confirmadas por WIPLUS.
@@ -46,7 +49,6 @@ export const sitio: SiteSettings = {
     'Estamos comprometidos con llevar conectividad a los hogares y empresas de Sabanalarga y sus alrededores, con un servicio de internet óptimo y de primera calidad a precios accesibles.',
   vision:
     'Ser la empresa número uno en telecomunicaciones de la región del Atlántico, llegando a todos sus municipios con la mejor calidad en conectividad y los mejores precios.',
-  // TODO(WIPLUS): razón social y NIT para el pie de página y los textos legales.
-  razonSocial: null,
-  nit: null,
+  razonSocial: 'WIPLUS COMUNICACIONES DE COLOMBIA SAS',
+  nit: '901194958-0',
 }

@@ -16,7 +16,8 @@ export const PAGINAS = [
   { path: '/mapa-del-sitio', h1: /Mapa del sitio/ },
 ] as const
 
-export const WHATSAPP = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || '573012133151'
+export const WHATSAPP = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || '573007888808'
+export const WHATSAPP_EMPRESAS = '573012133151'
 
 /** Acepta/rechaza el aviso de cookies para que no tape elementos. */
 export async function cerrarCookies(page: Page) {

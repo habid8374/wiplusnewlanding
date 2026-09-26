@@ -44,14 +44,14 @@ export const faqs: Faq[] = [
     id: 'cobertura',
     pregunta: '¿Tienen cobertura en mi barrio?',
     respuesta:
-      'Tenemos servicio en Sabanalarga y Luruaco (Atlántico) y seguimos ampliando la red. Busca tu barrio en la página de Cobertura o envíanos tu dirección por WhatsApp y te confirmamos.',
+      'Tenemos servicio en Sabanalarga, Luruaco, La Peña, Aguada de Pablo, Hibácharo, Leña y Palmar de Candelaria (Atlántico) y seguimos ampliando la red. Busca tu barrio en la página de Cobertura o envíanos tu dirección por WhatsApp y te confirmamos.',
     categorias: ['general', 'cobertura'],
   },
   {
     id: 'velocidad',
     pregunta: '¿Qué velocidad necesito?',
     respuesta:
-      'Depende de cuántas personas y dispositivos se conectan a la vez. Para navegar y redes sociales, 30 o 40 Mb suelen ser suficientes; para familias con TV inteligente, estudio y teletrabajo, recomendamos 80 o 100 Mb.',
+      'Depende de cuántas personas y dispositivos se conectan a la vez. Para navegar, redes sociales y series, 100 o 150 Mb son suficientes; para familias con teletrabajo, juegos en línea y varias pantallas en 4K, recomendamos 200 Mb o más.',
     categorias: ['planes'],
   },
   {

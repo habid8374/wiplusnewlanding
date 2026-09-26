@@ -2,7 +2,7 @@ import { Clock, Mail, MapPin, Phone } from 'lucide-react'
 import type { Metadata } from 'next'
 import { CallLink, WhatsAppLink } from '@/components/analytics/TrackedLinks'
 import { ContactoForm } from '@/components/forms/Forms'
-import { FacebookIcon } from '@/components/icons/brands'
+import { FacebookIcon, InstagramIcon } from '@/components/icons/brands'
 import { MapEmbed } from '@/components/sections/MapEmbed'
 import { PageHero } from '@/components/ui/PageHero'
 import { Section } from '@/components/ui/Section'
@@ -13,7 +13,7 @@ import { mensajesWhatsApp } from '@/lib/whatsapp'
 export const metadata: Metadata = pageMetadata({
   title: 'Contacto: teléfonos, WhatsApp y oficina en Sabanalarga',
   description:
-    'Contacta a WIPLUS Comunicaciones: WhatsApp, teléfonos 301 213 3151 y 300 788 8808, correo y oficina en la Calle 13 #17-04, Sabanalarga, Atlántico.',
+    'Contacta a WIPLUS Comunicaciones: WhatsApp 300 788 8808, teléfono 301 213 3151, correo y oficina en la Calle 13 #17-04, Sabanalarga, Atlántico.',
   path: '/contacto',
 })
 
@@ -97,6 +97,20 @@ export default async function ContactoPage() {
                     <FacebookIcon className="size-5" />
                     facebook.com/wipluscomunicaciones
                     <span className="sr-only"> (abre en una nueva pestaña)</span>
+                  </a>
+                </li>
+              )}
+              {sitio.redes.instagram && (
+                <li>
+                  <a
+                    href={sitio.redes.instagram}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex max-w-full items-center gap-2 font-bold [overflow-wrap:anywhere] text-primary-700 hover:underline"
+                  >
+                    <InstagramIcon className="size-5" />@
+                    {sitio.redes.instagram.replace(/\/+$/, '').split('/').pop()}
+                    <span className="sr-only"> en Instagram (abre en una nueva pestaña)</span>
                   </a>
                 </li>
               )}

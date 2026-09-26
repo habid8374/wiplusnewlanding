@@ -34,7 +34,7 @@ export async function SiteChrome({ children }: { children: React.ReactNode }) {
       </main>
       <Footer sitio={sitio} />
       {oferta && <OfertaFlotante oferta={oferta} whatsapp={sitio.whatsapp} />}
-      <FloatingWhatsApp numero={sitio.whatsapp} />
+      <FloatingWhatsApp numero={sitio.whatsapp} numeroEmpresas={sitio.whatsappEmpresas} />
       <ConsentAndAnalytics gaId={GA_ID} />
     </>
   )

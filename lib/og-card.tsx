@@ -2,7 +2,7 @@
 import { readFile } from 'node:fs/promises'
 import { join } from 'node:path'
 import { ImageResponse } from 'next/og'
-import { sitio } from '@/content'
+import { planes, sitio } from '@/content'
 import { WHATSAPP_OVERRIDE } from '@/lib/env'
 import { OG_ICONS, type IconNode } from './og-icons'
 import type { OgPage } from './og-pages'
@@ -29,7 +29,7 @@ export async function renderOgCard() {
   const wa = (WHATSAPP_OVERRIDE || sitio.whatsapp).replace(/^57/, '')
   const whatsapp = `${wa.slice(0, 3)} ${wa.slice(3, 6)} ${wa.slice(6)}`
   const chips = [
-    'Hasta 100 Mb',
+    `Hasta ${Math.max(...planes.map((p) => p.velocidadMb))} Mb`,
     'Soporte técnico local',
     `+${sitio.experienciaAnios} años de experiencia`,
   ]

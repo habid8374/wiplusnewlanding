@@ -54,7 +54,7 @@ const visible = <T extends { ejemplo?: boolean }>(items: T[]) =>
 
 export const getSiteSettings = cache(async (): Promise<SiteSettings> => {
   const cms = await fromSanity<Partial<SiteSettings>>(
-    `*[_id == "siteSettings"][0]{nombre, eslogan, telefonos[]{numero, etiqueta}, whatsapp, correo, direccion, horario{texto, dias, abre, cierra}, redes, experienciaAnios, mision, vision, razonSocial, nit}`,
+    `*[_id == "siteSettings"][0]{nombre, eslogan, telefonos[]{numero, etiqueta}, whatsapp, whatsappEmpresas, correo, direccion, horario{texto, dias, abre, cierra}, redes, experienciaAnios, mision, vision, razonSocial, nit}`,
     'siteSettings',
   )
   const merged: SiteSettings = {

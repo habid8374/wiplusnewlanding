@@ -1,10 +1,11 @@
 import { expect, test } from '@playwright/test'
-import { cerrarCookies, WHATSAPP } from './helpers'
+import { cerrarCookies, WHATSAPP, WHATSAPP_EMPRESAS } from './helpers'
 
-const wa = (msg: string) => `https://wa.me/${WHATSAPP}?text=${encodeURIComponent(msg)}`
+const wa = (msg: string, numero = WHATSAPP) =>
+  `https://wa.me/${numero}?text=${encodeURIComponent(msg)}`
 
 test.describe('CTA de WhatsApp', () => {
-  for (const mb of [30, 40, 50, 80, 100]) {
+  for (const mb of [100, 150, 200, 250, 300]) {
     test(`“Lo quiero” del plan ${mb} Mb abre WhatsApp con el mensaje correcto`, async ({
       page,
     }) => {
@@ -19,21 +20,27 @@ test.describe('CTA de WhatsApp', () => {
     })
   }
 
-  test('el plan destacado dice “Más elegido”', async ({ page }) => {
+  test('el plan destacado dice “Recomendado” y muestra su precio', async ({ page }) => {
     await page.goto('/planes-hogar')
-    await expect(page.locator('#plan-100')).toContainText('Más elegido')
+    await expect(page.locator('#plan-200')).toContainText('Recomendado')
+    await expect(page.locator('#plan-200')).toContainText(/90\.000/)
   })
 
-  const flotante: [string, string][] = [
+  const flotante: [string, string, string?][] = [
     ['/', 'Hola WIPLUS, quiero información sobre sus planes de internet.'],
-    ['/planes-empresas', 'Hola, quiero una cotización de internet para mi empresa.'],
+    // Ventas empresariales van a su propio WhatsApp.
+    [
+      '/planes-empresas',
+      'Hola, quiero una cotización de internet para mi empresa.',
+      WHATSAPP_EMPRESAS,
+    ],
     ['/soporte', 'Hola, tengo una falla con mi servicio. Mi número de contrato es: '],
     ['/cobertura', 'Hola, quiero saber si tienen cobertura en mi barrio.'],
   ]
-  for (const [path, msg] of flotante) {
+  for (const [path, msg, numero] of flotante) {
     test(`botón flotante en ${path}`, async ({ page }) => {
       await page.goto(path)
-      await expect(page.getByTestId('whatsapp-flotante')).toHaveAttribute('href', wa(msg))
+      await expect(page.getByTestId('whatsapp-flotante')).toHaveAttribute('href', wa(msg, numero))
     })
   }
 
@@ -45,14 +52,14 @@ test.describe('CTA de WhatsApp', () => {
     await page.goto('/planes-hogar')
     await cerrarCookies(page)
     const popup = page.waitForEvent('popup')
-    await page.locator('#planes a[data-plan="50"]').click()
+    await page.locator('#planes a[data-plan="150"]').click()
     await (await popup).close()
     const eventos = await page.evaluate(() => window.__wiplusEvents ?? [])
     expect(eventos).toEqual(
       expect.arrayContaining([
         expect.objectContaining({
           name: 'click_whatsapp',
-          params: expect.objectContaining({ plan: '50 Mb', ubicacion: 'planes_hogar' }),
+          params: expect.objectContaining({ plan: '150 Mb', ubicacion: 'planes_hogar' }),
         }),
       ]),
     )

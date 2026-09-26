@@ -2,7 +2,7 @@ import { Clock, FileText, LockKeyhole, Mail, MapPin, Phone } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { CallLink, WhatsAppLink } from '@/components/analytics/TrackedLinks'
-import { FacebookIcon } from '@/components/icons/brands'
+import { FacebookIcon, InstagramIcon } from '@/components/icons/brands'
 import { Container } from '@/components/ui/Container'
 import { legalNav, mainNav } from '@/lib/nav'
 import type { SiteSettings } from '@/lib/types'
@@ -33,18 +33,32 @@ export function Footer({ sitio }: { sitio: SiteSettings }) {
             Internet por fibra óptica para hogares y empresas en Sabanalarga y Luruaco, Atlántico.
             Más de {sitio.experienciaAnios} años conectando la región.
           </p>
-          {sitio.redes.facebook && (
-            <a
-              href={sitio.redes.facebook}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="mt-4 inline-flex items-center gap-2 font-semibold text-white hover:underline"
-            >
-              <FacebookIcon className="size-5" />
-              Síguenos en Facebook
-              <span className="sr-only"> (abre en una nueva pestaña)</span>
-            </a>
-          )}
+          <div className="mt-4 flex flex-col items-start gap-2">
+            {sitio.redes.facebook && (
+              <a
+                href={sitio.redes.facebook}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 font-semibold text-white hover:underline"
+              >
+                <FacebookIcon className="size-5" />
+                Síguenos en Facebook
+                <span className="sr-only"> (abre en una nueva pestaña)</span>
+              </a>
+            )}
+            {sitio.redes.instagram && (
+              <a
+                href={sitio.redes.instagram}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 font-semibold text-white hover:underline"
+              >
+                <InstagramIcon className="size-5" />
+                Síguenos en Instagram
+                <span className="sr-only"> (abre en una nueva pestaña)</span>
+              </a>
+            )}
+          </div>
         </div>
 
         <div>

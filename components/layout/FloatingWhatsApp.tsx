@@ -6,11 +6,19 @@ import { WhatsAppIcon } from '@/components/icons/brands'
 import { mensajeParaRuta } from '@/lib/whatsapp'
 
 /** Botón flotante propio (sin plugins) con mensaje según la página. */
-export function FloatingWhatsApp({ numero }: { numero: string }) {
+export function FloatingWhatsApp({
+  numero,
+  numeroEmpresas,
+}: {
+  numero: string
+  /** En la página de empresas se usa el WhatsApp de ventas empresariales. */
+  numeroEmpresas?: string | null
+}) {
   const pathname = usePathname()
+  const empresas = pathname.startsWith('/planes-empresas') && numeroEmpresas
   return (
     <WhatsAppLink
-      numero={numero}
+      numero={empresas ? numeroEmpresas : numero}
       mensaje={mensajeParaRuta(pathname)}
       ubicacion="boton_flotante"
       variant="none"

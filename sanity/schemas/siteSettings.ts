@@ -38,6 +38,13 @@ export const siteSettings = defineType({
       type: 'string',
       validation: (r) => r.regex(/^57\d{10}$/, { name: 'número colombiano' }),
     }),
+    defineField({
+      name: 'whatsappEmpresas',
+      title: 'WhatsApp de ventas empresariales (solo dígitos con 57)',
+      description: 'Botones de la página Empresas. Vacío = el WhatsApp general.',
+      type: 'string',
+      validation: (r) => r.regex(/^57\d{10}$/, { name: 'número colombiano' }),
+    }),
     defineField({ name: 'correo', title: 'Correo', type: 'string' }),
     defineField({
       name: 'direccion',

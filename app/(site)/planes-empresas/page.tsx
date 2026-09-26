@@ -26,6 +26,7 @@ export default async function PlanesEmpresasPage() {
     getClientes(),
     getFaqs('empresas'),
   ])
+  const whatsappEmpresas = sitio.whatsappEmpresas || sitio.whatsapp
 
   return (
     <>
@@ -42,7 +43,7 @@ export default async function PlanesEmpresasPage() {
             Solicitar cotización
           </a>
           <WhatsAppLink
-            numero={sitio.whatsapp}
+            numero={whatsappEmpresas}
             mensaje={mensajesWhatsApp.empresas()}
             ubicacion="empresas_hero"
           >
@@ -97,10 +98,11 @@ export default async function PlanesEmpresasPage() {
             <Building2 className="size-10 text-accent-400" aria-hidden />
             <h3 className="mt-3 text-xl font-bold">¿Prefieres hablar con un asesor?</h3>
             <p className="mt-2 text-primary-100">
-              Te atendemos por WhatsApp de {sitio.horario.texto}.
+              Nuestro equipo de ventas empresariales te atiende por WhatsApp de{' '}
+              {sitio.horario.texto}.
             </p>
             <WhatsAppLink
-              numero={sitio.whatsapp}
+              numero={whatsappEmpresas}
               mensaje={mensajesWhatsApp.empresas()}
               ubicacion="empresas_aside"
               className="mt-5 w-full"

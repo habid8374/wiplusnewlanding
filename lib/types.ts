@@ -23,8 +23,10 @@ export type SiteSettings = {
   eslogan: string
   dominio: string
   telefonos: Telefono[]
-  /** Solo dígitos con indicativo, p. ej. 573012133151 */
+  /** Solo dígitos con indicativo, p. ej. 573007888808 */
   whatsapp: string
+  /** WhatsApp de ventas empresariales (planes para empresas). Vacío = el general. */
+  whatsappEmpresas?: string | null
   correo: string
   direccion: {
     calle: string

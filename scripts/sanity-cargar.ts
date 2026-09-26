@@ -48,6 +48,7 @@ const docs: Doc[] = [
       eslogan: sitio.eslogan,
       telefonos: conKeys(sitio.telefonos, (t) => t.numero),
       whatsapp: sitio.whatsapp,
+      whatsappEmpresas: sitio.whatsappEmpresas,
       correo: sitio.correo,
       direccion: sitio.direccion,
       horario: {

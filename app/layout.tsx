@@ -21,7 +21,7 @@ export const metadata: Metadata = {
     template: '%s | WIPLUS Comunicaciones',
   },
   description:
-    'Internet por fibra óptica para hogares y empresas en Sabanalarga y Luruaco, Atlántico. Planes hasta 100 Mb, soporte local y contratación por WhatsApp.',
+    'Internet por fibra óptica para hogares y empresas en Sabanalarga y Luruaco, Atlántico. Planes hasta 300 Mb, soporte local y contratación por WhatsApp.',
   applicationName: 'WIPLUS Comunicaciones',
   keywords: [
     'internet fibra óptica Sabanalarga',

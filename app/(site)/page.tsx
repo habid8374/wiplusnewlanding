@@ -27,7 +27,7 @@ import { mensajesWhatsApp } from '@/lib/whatsapp'
 export const metadata: Metadata = pageMetadata({
   title: 'Internet por fibra óptica en Sabanalarga y Luruaco | WIPLUS Comunicaciones',
   description:
-    'Internet por fibra óptica en Sabanalarga y Luruaco, Atlántico. Planes hogar hasta 100 Mb, soporte técnico local y contratación inmediata por WhatsApp.',
+    'Internet por fibra óptica en Sabanalarga y Luruaco, Atlántico. Planes hogar de 100 a 300 Mb desde $60.000, soporte técnico local y contratación inmediata por WhatsApp.',
   path: '/',
   absoluteTitle: true,
 })

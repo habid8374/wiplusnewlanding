@@ -42,10 +42,11 @@ puede reemplazar desde el CMS (`/studio`) sin programador.
 
 ## Prueba social
 
-- [x] Clientes corporativos: Supergiros, Lewis, Olmos Drill, Berboj Salub, Colegio Howard,
-      Inversiones Noreña, Elecnor y Deltec.
-- [ ] Confirmar la escritura de «Berboj Salub».
-- [ ] **Logos de clientes**: subirlos en CMS › Clientes empresariales (hoy se muestra el nombre).
+- [x] Clientes corporativos: SuperGIROS, Lewis Energy Group, Olmos Drill, Berboj Salud IPS,
+      Howard Gardner Bilingual School, Inversiones Noreña, Elecnor y Deltec S.A.
+- [x] Logos de SuperGIROS, Lewis Energy Group, Berboj Salud IPS, Howard Gardner, Inversiones Noreña,
+      Deltec y Elecnor. Los de Berboj e Inversiones Noreña se redibujaron: reemplazarlos si envían el original.
+- [ ] **Logo de Olmos Drill**: subirlo en CMS › Clientes empresariales (hoy se muestra el nombre).
 - [ ] Testimonios reales (nombre, barrio/empresa, texto y autorización). Hoy son de ejemplo.
 - [ ] Cifras (número de usuarios, km de fibra, etc.) si se quieren publicar.
 

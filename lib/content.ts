@@ -100,7 +100,10 @@ export const getClientes = cache(async (): Promise<ClienteEmpresarial[]> => {
     `*[_type == "clienteEmpresarial"] | order(orden asc){"id": _id, nombre, sector, "logo": select(defined(logo.asset) => {"src": logo.asset->url, "alt": coalesce(logo.alt, "Logo de " + nombre), "width": logo.asset->metadata.dimensions.width, "height": logo.asset->metadata.dimensions.height}, null), ejemplo}`,
     'clienteEmpresarial',
   )
-  return visible(cms ?? local.clientes)
+  if (!cms) return visible(local.clientes)
+  // Sin logo en el CMS ⇒ se usa el de public/clientes/ (content/clientes.ts), si existe.
+  const logos = new Map(local.clientes.map((c) => [`cliente-${c.id}`, c.logo]))
+  return visible(cms.map((c) => ({ ...c, logo: c.logo ?? logos.get(c.id) ?? null })))
 })
 
 /**

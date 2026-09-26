@@ -56,7 +56,8 @@ puede reemplazar desde el CMS (`/studio`) sin programador.
 - [ ] Confirmar la dirección exacta del portal de clientes de WIPLUS en WispHub (hoy: https://wisphub.net).
       Se cambia en CMS › Datos de contacto › Portal de clientes.
 
-- [ ] **Medios de pago** aceptados (oficina, corresponsales, Nequi, Daviplata, transferencia…).
+- [x] Cuenta de ahorros Bancolombia 12096593587 (Wiplus Comunicaciones), comprobante por WhatsApp.
+- [ ] **Otros medios de pago** aceptados (oficina, corresponsales, Nequi, Daviplata, transferencia…).
 - [ ] Fechas de corte, fechas límite de pago y política de suspensión/reconexión.
 
 ## Enlaces de interés

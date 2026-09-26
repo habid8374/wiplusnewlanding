@@ -16,6 +16,18 @@ export const infoPagos = defineType({
           fields: [
             defineField({ name: 'nombre', type: 'string', validation: (r) => r.required() }),
             defineField({ name: 'descripcion', type: 'text', rows: 2 }),
+            defineField({
+              name: 'cuenta',
+              title: 'Cuenta bancaria (opcional)',
+              description: 'Se muestra destacada, con botón para copiar el número.',
+              type: 'object',
+              fields: [
+                defineField({ name: 'banco', type: 'string' }),
+                defineField({ name: 'tipo', title: 'Tipo (Ahorros / Corriente)', type: 'string' }),
+                defineField({ name: 'numero', title: 'Número de cuenta', type: 'string' }),
+                defineField({ name: 'titular', type: 'string' }),
+              ],
+            }),
             defineField({ name: 'ejemplo', type: 'boolean', initialValue: false }),
           ],
         }),

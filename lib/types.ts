@@ -154,6 +154,8 @@ export type MedioPago = {
   id: string
   nombre: string
   descripcion: string
+  /** Cuenta bancaria para transferencias o consignaciones (opcional). */
+  cuenta?: { banco: string; tipo: string; numero: string; titular: string } | null
   ejemplo?: boolean
 }
 

@@ -7,6 +7,7 @@ export type AnalyticsEvent =
   | { name: 'click_whatsapp'; params: { ubicacion: string; plan?: string; pagina?: string } }
   | { name: 'click_llamada'; params: { ubicacion: string; numero: string; pagina?: string } }
   | { name: 'click_portal_clientes'; params: { ubicacion: string; pagina?: string } }
+  | { name: 'copiar_cuenta'; params: { banco: string } }
   | { name: 'form_submit'; params: { tipo: string; pagina?: string } }
   | { name: 'ver_plan'; params: { plan: string; ubicacion: string } }
   | {

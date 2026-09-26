@@ -1,6 +1,6 @@
 /**
  * Actualización dirigida de Sanity con los datos reales enviados por WIPLUS (volante oficial):
- * planes y precios, clientes corporativos y datos de la empresa (WhatsApp, correo, NIT, redes).
+ * planes y precios, clientes corporativos, cuentas de pago y datos de la empresa (WhatsApp, correo, NIT, redes).
  *
  *   SANITY_WRITE_TOKEN=… npx tsx scripts/sanity-datos-reales.ts
  *
@@ -9,7 +9,7 @@
  * (planes de 30–80 Mb y «Empresa cliente 1…9»).
  * Se ejecuta desde GitHub Actions › «Cargar contenido en Sanity» con «datos_reales».
  */
-import { clientes, planes, sitio } from '../content'
+import { clientes, pagos, planes, sitio } from '../content'
 
 const projectId = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID || process.env.SANITY_STUDIO_PROJECT_ID
 const dataset = process.env.NEXT_PUBLIC_SANITY_DATASET || 'production'
@@ -22,6 +22,8 @@ if (!projectId || !token) {
 
 const planesViejos = ['plan-hogar-30', 'plan-hogar-40', 'plan-hogar-50', 'plan-hogar-80']
 const clientesDeEjemplo = Array.from({ length: 9 }, (_, i) => `cliente-cliente-${i + 1}`)
+
+const cuentas = pagos.medios.filter((m) => m.cuenta)
 
 const mutations = [
   ...[...planesViejos, ...clientesDeEjemplo].map((id) => ({ delete: { id } })),
@@ -65,6 +67,30 @@ const mutations = [
       },
     },
   },
+  // Pagos: reemplaza el medio de ejemplo «transferencia» por las cuentas bancarias reales.
+  { createIfNotExists: { _id: 'infoPagos', _type: 'infoPagos' } },
+  { patch: { id: 'infoPagos', setIfMissing: { medios: [] } } },
+  {
+    patch: {
+      id: 'infoPagos',
+      unset: ['medios[_key=="transferencia"]', ...cuentas.map((m) => `medios[_key=="${m.id}"]`)],
+    },
+  },
+  {
+    patch: {
+      id: 'infoPagos',
+      insert: {
+        after: 'medios[-1]',
+        items: cuentas.map(({ id, cuenta, ...m }) => ({
+          _key: id,
+          _type: 'medioPago',
+          nombre: m.nombre,
+          descripcion: m.descripcion,
+          cuenta: { ...cuenta },
+        })),
+      },
+    },
+  },
 ]
 
 async function main() {
@@ -84,7 +110,7 @@ async function main() {
   }
   console.log(
     `[sanity] Datos reales aplicados en ${projectId}/${dataset}: ${planes.length} planes, ` +
-      `${clientes.length} clientes y datos de la empresa.`,
+      `${clientes.length} clientes, ${cuentas.length} cuenta(s) de pago y datos de la empresa.`,
   )
 }
 

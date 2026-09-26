@@ -187,7 +187,7 @@ export const getAvisoActivo = cache(async (): Promise<Aviso | null> => {
 
 export const getInfoPagos = cache(async (): Promise<InfoPagos> => {
   const cms = await fromSanity<InfoPagos>(
-    `*[_id == "infoPagos"][0]{"medios": coalesce(medios[]{"id": _key, nombre, "descripcion": coalesce(descripcion, ""), ejemplo}, []), fechasCorte, "notas": coalesce(notas, [])}`,
+    `*[_id == "infoPagos"][0]{"medios": coalesce(medios[]{"id": _key, nombre, "descripcion": coalesce(descripcion, ""), "cuenta": select(defined(cuenta.numero) => cuenta{banco, tipo, numero, titular}, null), ejemplo}, []), fechasCorte, "notas": coalesce(notas, [])}`,
     'infoPagos',
   )
   const data = cms ?? local.pagos

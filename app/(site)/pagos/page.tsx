@@ -1,7 +1,16 @@
-import { CalendarClock, FileSearch, Info, ReceiptText, ShieldCheck, Wallet } from 'lucide-react'
+import {
+  CalendarClock,
+  FileSearch,
+  Info,
+  Landmark,
+  ReceiptText,
+  ShieldCheck,
+  Wallet,
+} from 'lucide-react'
 import type { Metadata } from 'next'
 import { PortalClientesLink, WhatsAppLink } from '@/components/analytics/TrackedLinks'
 import { FaqList } from '@/components/sections/FaqList'
+import { CopiarTexto } from '@/components/ui/CopiarTexto'
 import { ExampleBadge } from '@/components/ui/ExampleBadge'
 import { PageHero } from '@/components/ui/PageHero'
 import { Section } from '@/components/ui/Section'
@@ -86,30 +95,76 @@ export default async function PagosPage() {
 
       <Section id="medios" title="Otros medios de pago" tone="surface" align="left">
         {pagos.medios.length > 0 ? (
-          <ul className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-            {pagos.medios.map((m) => (
-              <li key={m.id} className="rounded-2xl border border-line bg-white p-6 shadow-card">
-                <Wallet className="size-8 text-primary-600" aria-hidden />
-                <h3 className="mt-3 text-lg font-bold text-primary-900">
-                  {m.nombre} <ExampleBadge show={m.ejemplo} />
-                </h3>
-                <p className="mt-2 text-muted">{m.descripcion}</p>
-              </li>
-            ))}
+          <ul className="grid gap-5 lg:grid-cols-2">
+            {pagos.medios.map((m) =>
+              m.cuenta ? (
+                <li
+                  key={m.id}
+                  className="rounded-3xl border-2 border-primary-200 bg-white p-6 shadow-card sm:p-8 lg:col-span-2"
+                >
+                  <div className="flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
+                    <div className="min-w-0">
+                      <p className="flex items-center gap-2 text-sm font-bold tracking-wider text-primary-600 uppercase">
+                        <Landmark className="size-5" aria-hidden />
+                        {m.nombre}
+                      </p>
+                      <dl className="mt-4 grid gap-x-8 gap-y-3 sm:grid-cols-2">
+                        <div>
+                          <dt className="text-sm text-muted">Banco</dt>
+                          <dd className="text-lg font-bold text-primary-900">{m.cuenta.banco}</dd>
+                        </div>
+                        <div>
+                          <dt className="text-sm text-muted">Tipo de cuenta</dt>
+                          <dd className="text-lg font-bold text-primary-900">{m.cuenta.tipo}</dd>
+                        </div>
+                        <div>
+                          <dt className="text-sm text-muted">Número de cuenta</dt>
+                          <dd
+                            className="text-3xl font-extrabold tracking-wide text-primary-900 tabular-nums"
+                            data-testid="numero-cuenta"
+                          >
+                            {m.cuenta.numero}
+                          </dd>
+                        </div>
+                        <div>
+                          <dt className="text-sm text-muted">Titular</dt>
+                          <dd className="text-lg font-bold text-primary-900">{m.cuenta.titular}</dd>
+                        </div>
+                      </dl>
+                      <p className="mt-4 text-muted">{m.descripcion}</p>
+                    </div>
+                    <div className="flex shrink-0 flex-col gap-3">
+                      <CopiarTexto
+                        texto={m.cuenta.numero}
+                        etiqueta="Copiar número de cuenta"
+                        banco={m.cuenta.banco}
+                      />
+                      <WhatsAppLink
+                        numero={sitio.whatsapp}
+                        mensaje={mensajesWhatsApp.comprobante()}
+                        ubicacion="pagos_comprobante"
+                      >
+                        Enviar comprobante por WhatsApp
+                      </WhatsAppLink>
+                    </div>
+                  </div>
+                </li>
+              ) : (
+                <li key={m.id} className="rounded-2xl border border-line bg-white p-6 shadow-card">
+                  <Wallet className="size-8 text-primary-600" aria-hidden />
+                  <h3 className="mt-3 text-lg font-bold text-primary-900">
+                    {m.nombre} <ExampleBadge show={m.ejemplo} />
+                  </h3>
+                  <p className="mt-2 text-muted">{m.descripcion}</p>
+                </li>
+              ),
+            )}
           </ul>
         ) : (
           <p className="text-lg text-muted">
             Consulta los medios de pago disponibles por WhatsApp.
           </p>
         )}
-        <WhatsAppLink
-          numero={sitio.whatsapp}
-          mensaje={mensajesWhatsApp.pagos()}
-          ubicacion="pagos"
-          className="mt-8"
-        >
-          Pedir datos de pago por WhatsApp
-        </WhatsAppLink>
       </Section>
 
       <Section id="fechas" title="Fechas de corte y recomendaciones" align="left">

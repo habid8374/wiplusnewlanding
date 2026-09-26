@@ -128,3 +128,12 @@ test('enlaces de interés en el pie de página (CiberPaz)', async ({ page }) => 
   await expect(link).toHaveAttribute('rel', /noopener/)
   await expect(link.getByRole('img')).toHaveAttribute('alt', /CiberPaz/)
 })
+
+test('cuenta Bancolombia en /pagos con comprobante por WhatsApp', async ({ page }) => {
+  await page.goto('/pagos')
+  await expect(page.getByTestId('numero-cuenta')).toHaveText('12096593587')
+  await expect(page.getByText('Wiplus Comunicaciones', { exact: true })).toBeVisible()
+  const wa = page.locator('a[href*="comprobante"]')
+  await expect(wa).toBeVisible()
+  await expect(page.getByRole('button', { name: /Copiar número de cuenta/ })).toBeVisible()
+})

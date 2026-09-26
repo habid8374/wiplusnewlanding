@@ -11,7 +11,7 @@ on:
         type: boolean
         default: false
       datos_reales:
-        description: 'Solo aplicar los datos reales del volante (planes y precios, clientes, WhatsApp, NIT, redes) sin tocar lo demás'
+        description: 'Solo aplicar los datos reales del volante (planes y precios, clientes, cuenta Bancolombia, WhatsApp, NIT, redes) sin tocar lo demás'
         type: boolean
         default: false
 

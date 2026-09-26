@@ -96,18 +96,22 @@ puede reemplazar desde el CMS (`/studio`) sin programador.
 
 ## Técnico / cuentas
 
-- [ ] Proyecto de Sanity (projectId, dataset) y token.
-- [ ] **Correo de los formularios (Brevo)**: crear la cuenta en brevo.com, autenticar el dominio
-      wiplus.com.co (DKIM/DMARC, sin tocar MX) o al menos verificar el remitente, crear la API key y
-      poner en Vercel `BREVO_API_KEY`, `MAIL_FROM` (remitente verificado) y `MAIL_TO` (buzón de WIPLUS
-      que recibe los formularios). Luego redeploy y prueba de envío. Mientras falte, los formularios
-      piden escribir por WhatsApp.
+- [x] Proyecto de Sanity (k3vbxtev, dataset production) y token de escritura.
+- [x] Dominio: www.wiplus.com.co apunta a Vercel (A 216.198.79.1 en cPanel; `wiplus.com.co` redirige
+      a www). El correo sigue en el hosting de cPanel: **no cancelar el hosting**.
+- [x] Correo de los formularios con Brevo: dominio autenticado (brevo-code, DKIM brevo1/brevo2,
+      DMARC con rua), `BREVO_API_KEY`, `MAIL_FROM` y `MAIL_TO` en Vercel. Probado: llega sin spam.
+- [x] Google Search Console: propiedad de dominio verificada por DNS (TXT) y sitemap enviado
+      (21 páginas, «Correcto»).
+- [ ] Sanity › API › CORS origins: agregar `https://www.wiplus.com.co` (para /studio en el dominio).
+- [ ] Borrar el WordPress viejo del hosting (solo la instalación, desde Softaculous) cuando se
+      confirme que todo funciona. Hay copia con All-in-One WP Migration.
 - [ ] Servidor propio de test de velocidad (OpenSpeedTest, código abierto) dentro de la red de WIPLUS,
       p. ej. `test.wiplus.com.co`, para que el cliente mida su plan sin pasar por Bogotá. Hoy se usa el
       servidor público de openspeedtest.com (`components/sections/SpeedTest.tsx`).
-- [ ] Claves de Cloudflare Turnstile.
+- [x] Claves de Cloudflare Turnstile (formularios probados en el dominio).
 - [ ] ID de Google Analytics 4.
-- [ ] Acceso a Cloudflare (zona wiplus.com.co) y Google Search Console.
+- [ ] Acceso a Cloudflare (solo si se migra el despliegue a Cloudflare Workers).
 - [ ] Crear en Cloudflare el bucket R2 y la base D1 y poner el `database_id` real en `wrangler.jsonc`
       (ver README › Despliegue).
 

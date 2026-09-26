@@ -239,7 +239,12 @@ export function Footer({
           </div>
           <p className="inline-flex items-center gap-2">
             Powered by
-            <span className="inline-flex items-center gap-1.5 font-semibold text-white">
+            <a
+              href="https://axentiatechnologies.com/"
+              target="_blank"
+              rel="noopener"
+              className="inline-flex items-center gap-1.5 font-semibold text-white hover:underline"
+            >
               <Image
                 src={axentia}
                 alt=""
@@ -248,7 +253,8 @@ export function Footer({
                 className="h-6 w-auto rounded bg-white p-0.5"
               />
               Axentia Technologies
-            </span>
+              <span className="sr-only"> (abre en una nueva pestaña)</span>
+            </a>
           </p>
         </Container>
       </div>

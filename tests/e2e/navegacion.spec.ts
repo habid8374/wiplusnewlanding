@@ -151,3 +151,10 @@ test('Ley 679: canales de denuncia en /proteccion-infantil y en el pie', async (
   }
   await expect(page.locator('main a[href="tel:141"]')).toBeVisible()
 })
+
+test('«Powered by» enlaza a Axentia Technologies', async ({ page }) => {
+  await page.goto('/')
+  const link = page.locator('footer a[href="https://axentiatechnologies.com/"]')
+  await expect(link).toContainText('Axentia Technologies')
+  await expect(link).toHaveAttribute('target', '_blank')
+})

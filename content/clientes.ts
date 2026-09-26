@@ -4,8 +4,6 @@ import type { ClienteEmpresarial } from '@/lib/types'
  * Clientes corporativos (lista enviada por WIPLUS). Los `id` no cambian aunque cambie el nombre:
  * son los mismos documentos en Sanity (`cliente-<id>`).
  * Logos en public/clientes/. Los de Berboj Salud IPS e Inversiones Noreña se redibujaron (foto de la fachada y captura del sitio anterior).
- * TODO(WIPLUS): logo de Olmos Drill (se suben en CMS › Clientes empresariales; mientras
- * tanto se muestra el nombre).
  */
 const logo = (archivo: string, nombre: string, width: number, height: number) => ({
   src: `/clientes/${archivo}`,
@@ -25,7 +23,6 @@ export const clientes: ClienteEmpresarial[] = [
     nombre: 'Lewis Energy Group',
     logo: logo('lewis-energy-group-logo.png', 'Lewis Energy Group', 503, 204),
   },
-  { id: 'olmos-drill', nombre: 'Olmos Drill' },
   {
     id: 'berboj-salub',
     nombre: 'Berboj Salud IPS',

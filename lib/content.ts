@@ -5,6 +5,7 @@ import * as local from '@/content'
 import { enlaceSeguro } from '@/lib/safe-url'
 import { SHOW_EXAMPLES, WHATSAPP_OVERRIDE } from '@/lib/env'
 import type {
+  EnlaceInteres,
   Aviso,
   ConfigCobertura,
   OfertaFlotante,
@@ -214,3 +215,6 @@ function stripNulls<T extends object>(obj: T): Partial<T> {
     Object.entries(obj).filter(([, v]) => v !== null && v !== undefined && v !== ''),
   ) as Partial<T>
 }
+
+/** Enlaces de interés del pie de página (entidades del Gobierno). Solo contenido local por ahora. */
+export const getEnlacesInteres = cache(async (): Promise<EnlaceInteres[]> => local.enlacesInteres)

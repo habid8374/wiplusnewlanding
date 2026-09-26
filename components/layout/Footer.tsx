@@ -5,12 +5,18 @@ import { CallLink, PortalClientesLink, WhatsAppLink } from '@/components/analyti
 import { FacebookIcon, InstagramIcon } from '@/components/icons/brands'
 import { Container } from '@/components/ui/Container'
 import { legalNav, mainNav } from '@/lib/nav'
-import type { SiteSettings } from '@/lib/types'
+import type { EnlaceInteres, SiteSettings } from '@/lib/types'
 import { mensajesWhatsApp } from '@/lib/whatsapp'
 import axentia from '@/public/axentia/axentia-logo.png'
 import icono from '@/public/brand/wiplus-icono-app.png'
 
-export function Footer({ sitio }: { sitio: SiteSettings }) {
+export function Footer({
+  sitio,
+  enlacesInteres = [],
+}: {
+  sitio: SiteSettings
+  enlacesInteres?: EnlaceInteres[]
+}) {
   const year = new Date().getFullYear()
   return (
     <footer className="bg-primary-950 text-primary-100">
@@ -30,8 +36,8 @@ export function Footer({ sitio }: { sitio: SiteSettings }) {
             </span>
           </Link>
           <p className="mt-4 text-sm leading-relaxed">
-            Internet por fibra óptica para hogares y empresas en Sabanalarga y Luruaco, Atlántico.
-            Más de {sitio.experienciaAnios} años conectando la región.
+            Internet por fibra óptica para hogares y empresas en Sabanalarga, Luruaco y sus
+            alrededores (Atlántico). Más de {sitio.experienciaAnios} años conectando la región.
           </p>
           <div className="mt-4 flex flex-col items-start gap-2">
             {sitio.redes.facebook && (
@@ -169,6 +175,38 @@ export function Footer({ sitio }: { sitio: SiteSettings }) {
           </ul>
         </nav>
       </Container>
+      {enlacesInteres.length > 0 && (
+        <div className="border-t border-white/10">
+          <Container className="py-8">
+            <h2 className="text-center text-sm font-bold tracking-wider text-primary-200 uppercase">
+              Enlaces de interés
+            </h2>
+            <ul className="mt-5 flex flex-wrap justify-center gap-4">
+              {enlacesInteres.map((e) => (
+                <li key={e.id}>
+                  <a
+                    href={e.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    title={e.nombre}
+                    className="block rounded-2xl ring-1 ring-white/15 transition hover:-translate-y-0.5 hover:ring-white/50 focus-visible:-translate-y-0.5 motion-reduce:transition-none motion-reduce:hover:translate-y-0"
+                  >
+                    <Image
+                      src={e.logo.src}
+                      alt={e.logo.alt}
+                      width={80}
+                      height={80}
+                      sizes="80px"
+                      className="size-20 rounded-2xl"
+                    />
+                    <span className="sr-only"> ({e.nombre}, abre en una nueva pestaña)</span>
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </Container>
+        </div>
+      )}
       <div className="border-t border-white/10">
         <Container className="flex flex-col gap-2 pt-6 pb-24 text-xs text-primary-200 sm:flex-row sm:items-center sm:justify-between">
           <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:gap-4">

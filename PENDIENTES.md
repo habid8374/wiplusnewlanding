@@ -59,6 +59,12 @@ puede reemplazar desde el CMS (`/studio`) sin programador.
 - [ ] **Medios de pago** aceptados (oficina, corresponsales, Nequi, Daviplata, transferencia…).
 - [ ] Fechas de corte, fechas límite de pago y política de suspensión/reconexión.
 
+## Enlaces de interés
+
+- [x] CiberPaz (MinTIC) con su logo en el pie de página.
+- [ ] Resto de enlaces y logos que enviará WIPLUS → `content/enlaces-interes.ts` (logo en
+      `public/enlaces/`, cuadrado).
+
 ## Empresa
 
 - [x] Razón social WIPLUS COMUNICACIONES DE COLOMBIA SAS, NIT 901194958-0.

@@ -96,6 +96,13 @@ export type ClienteEmpresarial = {
   ejemplo?: boolean
 }
 
+export type EnlaceInteres = {
+  id: string
+  nombre: string
+  url: string
+  logo: Imagen
+}
+
 export type EstadoCobertura = 'cubierto' | 'parcial' | 'proximamente' | 'sin_cobertura'
 export type TipoZona = 'barrio' | 'urbanizacion' | 'sector' | 'vereda' | 'corregimiento'
 

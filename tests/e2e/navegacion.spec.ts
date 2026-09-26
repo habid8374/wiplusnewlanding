@@ -120,3 +120,11 @@ test.describe('Portal de clientes (WispHub)', () => {
     await expect(page.getByTestId('portal-clientes-barra_superior')).toBeVisible()
   })
 })
+
+test('enlaces de interés en el pie de página (CiberPaz)', async ({ page }) => {
+  await page.goto('/')
+  const link = page.locator('footer a[href="https://ciberpaz.gov.co/portal/"]')
+  await expect(link).toBeVisible()
+  await expect(link).toHaveAttribute('rel', /noopener/)
+  await expect(link.getByRole('img')).toHaveAttribute('alt', /CiberPaz/)
+})

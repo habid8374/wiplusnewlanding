@@ -10,6 +10,14 @@ on:
         description: 'Sobrescribir lo que ya exista en Sanity con el contenido de content/ (¡borra las ediciones hechas en el panel!)'
         type: boolean
         default: false
+      restaurar_barrios:
+        description: 'Restaurar barrios borrados, formato «Municipio:Barrio|Municipio:Barrio» (vacío = no)'
+        type: string
+        default: ''
+      restaurar_hasta:
+        description: 'Fecha ISO: se toma la versión del historial anterior a este momento'
+        type: string
+        default: ''
       limpiar_muestras:
         description: 'Solo borrar los barrios de muestra (demo o «REEMPLAZAR…») y apagar el aviso de datos de muestra'
         type: boolean
@@ -32,9 +40,14 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 22
+      - if: ${{ inputs.restaurar_barrios != '' }}
+        run: npx --yes tsx@4 scripts/sanity-restaurar-barrios.ts "$BARRIOS" "$HASTA"
+        env:
+          BARRIOS: ${{ inputs.restaurar_barrios }}
+          HASTA: ${{ inputs.restaurar_hasta }}
       - if: ${{ inputs.limpiar_muestras }}
         run: npx --yes tsx@4 scripts/sanity-limpiar-muestras.ts
-      - if: ${{ !inputs.datos_reales && !inputs.limpiar_muestras }}
+      - if: ${{ !inputs.datos_reales && !inputs.limpiar_muestras && inputs.restaurar_barrios == '' }}
         run: npx --yes tsx@4 scripts/sanity-cargar.ts ${{ inputs.reemplazar && '--reemplazar' || '' }}
-      - if: ${{ inputs.datos_reales && !inputs.limpiar_muestras }}
+      - if: ${{ inputs.datos_reales && !inputs.limpiar_muestras && inputs.restaurar_barrios == '' }}
         run: npx --yes tsx@4 scripts/sanity-datos-reales.ts

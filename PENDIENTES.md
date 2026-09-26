@@ -33,6 +33,7 @@ puede reemplazar desde el CMS (`/studio`) sin programador.
       datos estructurados propios; todas en el sitemap.
 - [ ] En la ficha de Google Business Profile, agregar las 7 zonas como «Áreas de servicio».
 
+- [x] Barrios de muestra borrados de Sanity y aviso «Datos de muestra» apagado (sitio en producción).
 - [ ] **Recibir del cliente la lista real de barrios por municipio con su estado** (cubierto, parcial,
       próximamente, sin cobertura) → reemplazar `data/barrios-cobertura.csv` y ejecutar
       `npm run cobertura:importar -- --reemplazar-demo`, o pegarla en _Studio › Importar barrios_

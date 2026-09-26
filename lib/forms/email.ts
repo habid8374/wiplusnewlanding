@@ -1,4 +1,8 @@
+import { SITE_URL } from '@/lib/env'
 import { FORM_LABELS, type FormType } from '@/lib/schemas/forms'
+
+/** Logo del encabezado de los correos (URL absoluta: los clientes de correo no ven rutas relativas). */
+const LOGO_CORREO = `${SITE_URL}/brand/wiplus-logo-correo.png`
 
 /** Etiquetas legibles de cada campo para el correo. */
 const CAMPOS: Record<string, string> = {
@@ -47,7 +51,7 @@ function layout(titulo: string, cuerpo: string) {
   return `<!doctype html><html lang="es"><body style="margin:0;background:#f5f8fc;font-family:Arial,Helvetica,sans-serif;color:#08163c">
 <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#f5f8fc;padding:24px 0"><tr><td align="center">
 <table role="presentation" width="600" cellpadding="0" cellspacing="0" style="max-width:600px;width:100%;background:#ffffff;border-radius:16px;overflow:hidden">
-<tr><td style="background:#0a2a6e;padding:20px 24px;color:#ffffff;font-size:20px;font-weight:bold">WIPLUS <span style="color:#00bbfe">Comunicaciones</span></td></tr>
+<tr><td style="background:#ffffff;padding:20px 24px;border-bottom:4px solid #00bbfe"><a href="${SITE_URL}" style="text-decoration:none"><img src="${LOGO_CORREO}" width="240" height="56" alt="WIPLUS Comunicaciones" style="display:block;border:0;height:auto;max-width:240px;color:#0a2a6e;font-size:20px;font-weight:bold"></a></td></tr>
 <tr><td style="padding:24px"><h1 style="margin:0 0 16px;font-size:20px;color:#0a2a6e">${escapeHtml(titulo)}</h1>${cuerpo}</td></tr>
 <tr><td style="padding:16px 24px;background:#f5f8fc;font-size:12px;color:#475569">WIPLUS Comunicaciones · Calle 13 #17-04, Sabanalarga, Atlántico · atencionalcliente@wiplus.com.co</td></tr>
 </table></td></tr></table></body></html>`

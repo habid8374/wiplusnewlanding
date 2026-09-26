@@ -10,6 +10,6 @@ export const configCobertura: ConfigCobertura = {
     sin_cobertura: 'Aún no llegamos a {barrio}, pero queremos saber que te interesa.',
     noAparece: 'Cuéntanos dónde estás y te confirmamos.',
   },
-  mostrarAvisoDemo: true,
+  mostrarAvisoDemo: false,
   mostrarMuestras: false,
 }

@@ -1,5 +1,6 @@
 import { ExternalLink, Phone, ShieldAlert } from 'lucide-react'
 import type { Metadata } from 'next'
+import Image from 'next/image'
 import Link from 'next/link'
 import { CallLink, WhatsAppLink } from '@/components/analytics/TrackedLinks'
 import { Container } from '@/components/ui/Container'
@@ -42,7 +43,17 @@ export default async function ProteccionInfantilPage() {
               key={e.id}
               className="flex flex-col rounded-2xl border border-line bg-white p-6 shadow-card"
             >
-              <ShieldAlert className="size-8 text-primary-600" aria-hidden />
+              {e.logo ? (
+                <Image
+                  src={e.logo.src}
+                  alt={e.logo.alt}
+                  width={80}
+                  height={80}
+                  className="size-20 rounded-xl ring-1 ring-line"
+                />
+              ) : (
+                <ShieldAlert className="size-8 text-primary-600" aria-hidden />
+              )}
               <h3 className="mt-3 text-lg font-bold text-primary-900">{e.nombre}</h3>
               {e.descripcion && <p className="mt-2 text-muted">{e.descripcion}</p>}
               <div className="mt-auto flex flex-wrap gap-3 pt-5">

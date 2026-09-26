@@ -5,7 +5,6 @@ import type { EnlaceInteres } from '@/lib/types'
  * denunciar pornografía infantil ante las autoridades). Se muestran en el pie de página y en
  * /proteccion-infantil. Logos en public/enlaces/ (cuadrados, 224 × 224 px); sin logo se muestra
  * el nombre.
- * TODO(WIPLUS): logos oficiales de los enlaces que aún no tienen.
  */
 export const enlacesInteres: EnlaceInteres[] = [
   {
@@ -14,6 +13,7 @@ export const enlacesInteres: EnlaceInteres[] = [
     descripcion:
       'Canal de denuncia virtual de material de abuso sexual infantil y otras situaciones que afectan a niños, niñas y adolescentes.',
     url: 'https://www.teprotejo.org',
+    logo: { src: '/enlaces/teprotejo.png', alt: 'Logo de Te Protejo' },
     denuncia: true,
   },
   {
@@ -21,6 +21,7 @@ export const enlacesInteres: EnlaceInteres[] = [
     nombre: 'ICBF — Bienestar Familiar',
     descripcion: 'Instituto Colombiano de Bienestar Familiar. Línea gratuita nacional 141.',
     url: 'https://www.icbf.gov.co',
+    logo: { src: '/enlaces/icbf.png', alt: 'Logo del ICBF, Bienestar Familiar' },
     linea: '141',
     denuncia: true,
   },
@@ -29,6 +30,10 @@ export const enlacesInteres: EnlaceInteres[] = [
     nombre: 'Centro Cibernético Policial',
     descripcion: 'CAI Virtual de la Policía Nacional: denuncia de delitos informáticos.',
     url: 'https://caivirtual.policia.gov.co',
+    logo: {
+      src: '/enlaces/centro-cibernetico-policial.png',
+      alt: 'Logo del Centro Cibernético Policial',
+    },
     linea: '123',
     denuncia: true,
   },
@@ -37,6 +42,7 @@ export const enlacesInteres: EnlaceInteres[] = [
     nombre: 'Fiscalía General de la Nación',
     descripcion: 'Denuncia penal en línea o en la línea 122.',
     url: 'https://www.fiscalia.gov.co',
+    logo: { src: '/enlaces/fiscalia.png', alt: 'Logo de la Fiscalía General de la Nación' },
     linea: '122',
     denuncia: true,
   },
@@ -45,6 +51,7 @@ export const enlacesInteres: EnlaceInteres[] = [
     nombre: 'En TIC Confío+',
     descripcion: 'Estrategia del MinTIC para el uso seguro y responsable de internet.',
     url: 'https://www.enticconfio.gov.co',
+    logo: { src: '/enlaces/enticconfio.png', alt: 'Logo de En TIC Confío+' },
   },
   {
     id: 'ciberpaz',

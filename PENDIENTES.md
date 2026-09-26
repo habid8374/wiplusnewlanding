@@ -72,8 +72,7 @@ puede reemplazar desde el CMS (`/studio`) sin programador.
       pie de todo el sitio; cláusula 11 en /terminos.
 - [ ] Confirmar la herramienta de filtrado/bloqueo de URL (listado DIJIN/MinTIC) que usa la red y que
       el contrato de servicio incluya la cláusula de la Ley 679. Revisión legal del texto.
-- [ ] Logos oficiales de Te Protejo, ICBF, Policía, Fiscalía y En TIC Confío+ (hoy se ve el nombre)
-      → `public/enlaces/` y `content/enlaces-interes.ts`.
+- [x] Logos de Te Protejo, ICBF, Centro Cibernético Policial, Fiscalía y En TIC Confío+.
 
 ## Empresa
 

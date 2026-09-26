@@ -103,7 +103,7 @@ puede reemplazar desde el CMS (`/studio`) sin programador.
       DMARC con rua), `BREVO_API_KEY`, `MAIL_FROM` y `MAIL_TO` en Vercel. Probado: llega sin spam.
 - [x] Google Search Console: propiedad de dominio verificada por DNS (TXT) y sitemap enviado
       (21 páginas, «Correcto»).
-- [ ] Sanity › API › CORS origins: agregar `https://www.wiplus.com.co` (para /studio en el dominio).
+- [x] Sanity › API › CORS origins: `https://www.wiplus.com.co` agregado (/studio en el dominio).
 - [ ] Borrar el WordPress viejo del hosting (solo la instalación, desde Softaculous) cuando se
       confirme que todo funciona. Hay copia con All-in-One WP Migration.
 - [ ] Servidor propio de test de velocidad (OpenSpeedTest, código abierto) dentro de la red de WIPLUS,

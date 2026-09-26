@@ -32,6 +32,8 @@ export function FinalCta({
             sizes="170px"
             className="pointer-events-none absolute right-8 -bottom-24 hidden w-44 xl:block"
           />
+          {/* En celular y tableta, el superhéroe va arriba del título. */}
+          <Mascota sizes="96px" className="relative mx-auto mb-4 w-20 sm:w-24 xl:hidden" />
           <h2
             id={`${ubicacion}-titulo`}
             className="relative text-3xl font-extrabold tracking-tight text-balance sm:text-4xl"

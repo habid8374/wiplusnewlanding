@@ -117,4 +117,13 @@ export const RUTAS: Ruta[] = [
     prioridad: 0.3,
     frecuencia: 'yearly',
   },
+  {
+    path: '/proteccion-infantil',
+    titulo: 'Protección infantil (Ley 679 de 2001)',
+    descripcion:
+      'Dónde denunciar el abuso sexual infantil en internet y cómo proteger a los menores.',
+    grupo: 'Legal',
+    prioridad: 0.4,
+    frecuencia: 'yearly',
+  },
 ]

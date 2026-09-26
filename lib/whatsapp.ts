@@ -19,6 +19,8 @@ export const mensajesWhatsApp = {
   empresas: () => 'Hola, quiero una cotización de internet para mi empresa.',
   soporte: () => 'Hola, tengo una falla con mi servicio. Mi número de contrato es: ',
   pqr: () => 'Hola WIPLUS, quiero radicar una PQR. Mi número de contrato es: ',
+  controlParental: () =>
+    'Hola WIPLUS, quiero ayuda para configurar el control parental o el filtro familiar en mi internet.',
   comprobante: () => 'Hola WIPLUS, envío el comprobante de mi pago. Mi número de contrato es: ',
   pagos: () =>
     'Hola WIPLUS, quiero información sobre cómo pagar mi factura. Mi número de contrato es: ',

@@ -137,3 +137,17 @@ test('cuenta Bancolombia en /pagos con comprobante por WhatsApp', async ({ page 
   await expect(wa).toBeVisible()
   await expect(page.getByRole('button', { name: /Copiar número de cuenta/ })).toBeVisible()
 })
+
+test('Ley 679: canales de denuncia en /proteccion-infantil y en el pie', async ({ page }) => {
+  await page.goto('/proteccion-infantil')
+  for (const url of [
+    'https://www.teprotejo.org',
+    'https://www.icbf.gov.co',
+    'https://caivirtual.policia.gov.co',
+    'https://www.fiscalia.gov.co',
+  ]) {
+    await expect(page.locator(`main a[href="${url}"]`).first()).toBeVisible()
+    await expect(page.locator(`footer a[href="${url}"]`)).toHaveCount(1)
+  }
+  await expect(page.locator('main a[href="tel:141"]')).toBeVisible()
+})

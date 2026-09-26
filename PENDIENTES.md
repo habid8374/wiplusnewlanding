@@ -63,8 +63,13 @@ puede reemplazar desde el CMS (`/studio`) sin programador.
 ## Enlaces de interés
 
 - [x] CiberPaz (MinTIC) con su logo en el pie de página.
-- [ ] Resto de enlaces y logos que enviará WIPLUS → `content/enlaces-interes.ts` (logo en
-      `public/enlaces/`, cuadrado).
+- [x] Ley 679 de 2001: página /proteccion-infantil (deberes, prohibiciones, prevención) y canales de
+      denuncia (Te Protejo, ICBF 141, Centro Cibernético Policial, Fiscalía 122, En TIC Confío+) en el
+      pie de todo el sitio; cláusula 11 en /terminos.
+- [ ] Confirmar la herramienta de filtrado/bloqueo de URL (listado DIJIN/MinTIC) que usa la red y que
+      el contrato de servicio incluya la cláusula de la Ley 679. Revisión legal del texto.
+- [ ] Logos oficiales de Te Protejo, ICBF, Policía, Fiscalía y En TIC Confío+ (hoy se ve el nombre)
+      → `public/enlaces/` y `content/enlaces-interes.ts`.
 
 ## Empresa
 

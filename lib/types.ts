@@ -99,8 +99,13 @@ export type ClienteEmpresarial = {
 export type EnlaceInteres = {
   id: string
   nombre: string
+  descripcion?: string
   url: string
-  logo: Imagen
+  /** Línea telefónica gratuita (p. ej. 141). */
+  linea?: string
+  /** Canal para denunciar (Ley 679 de 2001). */
+  denuncia?: boolean
+  logo?: Imagen | null
 }
 
 export type EstadoCobertura = 'cubierto' | 'parcial' | 'proximamente' | 'sin_cobertura'

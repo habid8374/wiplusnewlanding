@@ -70,6 +70,12 @@ export const OG_PAGES: Record<string, OgPage> = {
     icono: 'phone',
     chips: sitio.telefonos.map((t) => t.numero),
   },
+  'proteccion-infantil': {
+    seccion: 'Protección infantil',
+    titulo: 'Tolerancia cero con la explotación sexual infantil',
+    subtitulo: 'Denuncia: Te Protejo, ICBF 141, Policía y Fiscalía. Ley 679 de 2001.',
+    icono: 'shieldCheck',
+  },
   pqr: {
     seccion: 'PQR',
     titulo: 'Radica tu PQR en línea',

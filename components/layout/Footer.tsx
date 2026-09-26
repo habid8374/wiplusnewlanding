@@ -179,8 +179,14 @@ export function Footer({
         <div className="border-t border-white/10">
           <Container className="py-8">
             <h2 className="text-center text-sm font-bold tracking-wider text-primary-200 uppercase">
-              Enlaces de interés
+              Enlaces de interés y denuncias
             </h2>
+            <p className="mt-2 text-center text-xs text-primary-200">
+              Tolerancia cero con la explotación sexual infantil (Ley 679 de 2001).{' '}
+              <Link href="/proteccion-infantil" className="font-semibold text-white underline">
+                Cómo denunciar y proteger a los menores
+              </Link>
+            </p>
             <ul className="mt-5 flex flex-wrap justify-center gap-4">
               {enlacesInteres.map((e) => (
                 <li key={e.id}>
@@ -189,16 +195,22 @@ export function Footer({
                     target="_blank"
                     rel="noopener noreferrer"
                     title={e.nombre}
-                    className="block rounded-2xl ring-1 ring-white/15 transition hover:-translate-y-0.5 hover:ring-white/50 focus-visible:-translate-y-0.5 motion-reduce:transition-none motion-reduce:hover:translate-y-0"
+                    className="flex size-20 items-center justify-center rounded-2xl text-center ring-1 ring-white/15 transition hover:-translate-y-0.5 hover:ring-white/50 focus-visible:-translate-y-0.5 motion-reduce:transition-none motion-reduce:hover:translate-y-0"
                   >
-                    <Image
-                      src={e.logo.src}
-                      alt={e.logo.alt}
-                      width={80}
-                      height={80}
-                      sizes="80px"
-                      className="size-20 rounded-2xl"
-                    />
+                    {e.logo ? (
+                      <Image
+                        src={e.logo.src}
+                        alt={e.logo.alt}
+                        width={80}
+                        height={80}
+                        sizes="80px"
+                        className="size-20 rounded-2xl"
+                      />
+                    ) : (
+                      <span className="px-1.5 text-[0.7rem] leading-tight font-bold text-white">
+                        {e.nombre.split(' — ')[0]}
+                      </span>
+                    )}
                     <span className="sr-only"> ({e.nombre}, abre en una nueva pestaña)</span>
                   </a>
                 </li>

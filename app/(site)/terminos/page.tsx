@@ -93,6 +93,15 @@ export default async function TerminosPage() {
             El tratamiento de datos se rige por nuestra{' '}
             <Link href="/politica-de-datos">política de tratamiento de datos personales</Link>.
           </p>
+
+          <h2 id="ley-679">11. Protección de menores (Ley 679 de 2001)</h2>
+          <p>
+            Está prohibido usar el servicio para alojar, difundir o enlazar material de abuso o
+            explotación sexual de menores de edad. {s.razonSocial ?? s.nombre} bloquea las
+            direcciones reportadas por las autoridades, puede suspender el servicio ante estos usos
+            y denunciará cualquier caso del que tenga conocimiento. Deberes, prohibiciones y canales
+            de denuncia en <Link href="/proteccion-infantil">Protección infantil</Link>.
+          </p>
         </div>
       </Container>
     </>

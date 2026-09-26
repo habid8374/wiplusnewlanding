@@ -1,6 +1,7 @@
-/** "301 213 3151" → "tel:+573012133151" */
+/** "301 213 3151" → "tel:+573012133151"; líneas cortas ("141", "123") → "tel:141". */
 export function telHref(numero: string) {
   const digits = numero.replace(/\D/g, '')
+  if (digits.length <= 6) return `tel:${digits}`
   return `tel:+${digits.length === 10 ? `57${digits}` : digits}`
 }
 

@@ -8,6 +8,7 @@ import { SpeedTest } from '@/components/sections/SpeedTest'
 import { PageHero } from '@/components/ui/PageHero'
 import { Section } from '@/components/ui/Section'
 import { getFaqs, getSiteSettings } from '@/lib/content'
+import { telefonoPrincipal } from '@/lib/phone'
 import { pageMetadata } from '@/lib/seo'
 import { mensajesWhatsApp } from '@/lib/whatsapp'
 
@@ -59,6 +60,7 @@ const pasos = [
 
 export default async function SoportePage() {
   const [sitio, faqs] = await Promise.all([getSiteSettings(), getFaqs('soporte')])
+  const telPrincipal = telefonoPrincipal(sitio)
   return (
     <>
       <PageHero
@@ -74,13 +76,9 @@ export default async function SoportePage() {
           >
             Soporte por WhatsApp
           </WhatsAppLink>
-          {sitio.telefonos[0] && (
-            <CallLink
-              numero={sitio.telefonos[0].numero}
-              ubicacion="soporte_hero"
-              variant="outline-light"
-            >
-              Llamar al {sitio.telefonos[0].numero}
+          {telPrincipal && (
+            <CallLink numero={telPrincipal.numero} ubicacion="soporte_hero" variant="outline-light">
+              Llamar al {telPrincipal.numero}
             </CallLink>
           )}
         </div>

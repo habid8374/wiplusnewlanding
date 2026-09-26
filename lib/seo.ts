@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
 import { SITE_URL } from '@/lib/env'
-import { telE164 } from '@/lib/phone'
+import { telE164, telefonoPrincipal } from '@/lib/phone'
 import { OG_ALT } from '@/lib/og-alt'
 import { ogImagePath } from '@/lib/og-pages'
 import type { Faq, Plan, SiteSettings } from '@/lib/types'
@@ -80,7 +80,7 @@ export function localBusinessJsonLd(s: SiteSettings) {
     logo: `${SITE_URL}/brand/wiplus-logo.png`,
     image: `${SITE_URL}/brand/wiplus-logo.png`,
     email: s.correo,
-    telephone: s.telefonos[0] ? telE164(s.telefonos[0].numero) : undefined,
+    telephone: telefonoPrincipal(s) ? telE164(telefonoPrincipal(s).numero) : undefined,
     contactPoint: s.telefonos.map((t) => ({
       '@type': 'ContactPoint',
       telephone: telE164(t.numero),

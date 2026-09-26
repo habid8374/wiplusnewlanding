@@ -3,12 +3,11 @@ import Link from 'next/link'
 import { CallLink, PortalClientesLink } from '@/components/analytics/TrackedLinks'
 import { FacebookIcon, InstagramIcon } from '@/components/icons/brands'
 import { Container } from '@/components/ui/Container'
+import { telefonoPrincipal } from '@/lib/phone'
 import type { SiteSettings } from '@/lib/types'
 
 export function TopBar({ sitio }: { sitio: SiteSettings }) {
-  // El número de la barra superior es el mismo del WhatsApp (300 788 8808); si no está en la lista, el primero.
-  const wa = sitio.whatsapp.replace(/^57/, '')
-  const tel = sitio.telefonos.find((t) => t.numero.replace(/\D/g, '') === wa) ?? sitio.telefonos[0]
+  const tel = telefonoPrincipal(sitio)
   return (
     <div className="bg-primary-950 text-xs text-primary-100 sm:text-sm">
       <Container className="flex min-h-9 flex-wrap items-center justify-between gap-x-3 gap-y-0.5 py-1 whitespace-nowrap sm:gap-x-4">

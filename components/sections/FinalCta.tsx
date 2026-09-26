@@ -1,6 +1,7 @@
 import { Phone } from 'lucide-react'
 import { CallLink, WhatsAppLink } from '@/components/analytics/TrackedLinks'
 import { Container } from '@/components/ui/Container'
+import { telefonoPrincipal } from '@/lib/phone'
 import type { SiteSettings } from '@/lib/types'
 
 export function FinalCta({
@@ -16,7 +17,7 @@ export function FinalCta({
   mensaje: string
   ubicacion?: string
 }) {
-  const tel = sitio.telefonos[0]
+  const tel = telefonoPrincipal(sitio)
   return (
     <section aria-labelledby={`${ubicacion}-titulo`} className="py-14 sm:py-20">
       <Container>

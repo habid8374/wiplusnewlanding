@@ -171,3 +171,12 @@ test('barra superior: número 300 788 8808 e Instagram', async ({ page }) => {
     barra.locator('a[href="https://www.instagram.com/wipluscomunicaciones1"]'),
   ).toBeAttached()
 })
+
+test('botón «Llamar» usa el número principal 300 788 8808', async ({ page }) => {
+  await page.goto('/')
+  await expect(page.getByRole('link', { name: /Llamar al 300 788 8808/ }).first()).toHaveAttribute(
+    'href',
+    'tel:+573007888808',
+  )
+  await expect(page.getByRole('link', { name: /Llamar al 301 213 3151/ })).toHaveCount(0)
+})

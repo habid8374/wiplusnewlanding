@@ -18,3 +18,12 @@ export function formatCOP(valor: number) {
     maximumFractionDigits: 0,
   }).format(valor)
 }
+
+/** Número principal para llamar: el mismo del WhatsApp (300 788 8808); si no está, el primero. */
+export function telefonoPrincipal(s: {
+  whatsapp: string
+  telefonos: { numero: string; etiqueta?: string }[]
+}) {
+  const wa = s.whatsapp.replace(/\D/g, '').replace(/^57/, '')
+  return s.telefonos.find((t) => t.numero.replace(/\D/g, '') === wa) ?? s.telefonos[0]
+}

@@ -1,6 +1,7 @@
 'use client'
 
 import { sitio } from '@/content/sitio'
+import { telefonoPrincipal } from '@/lib/phone'
 
 /**
  * Último recurso si falla el diseño principal (ASVS V16 / OWASP A10): página mínima, sin detalles
@@ -30,7 +31,7 @@ export default function ErrorGlobal({
           <h1 style={{ fontSize: '1.75rem' }}>WIPLUS Comunicaciones</h1>
           <p style={{ fontSize: '1.125rem' }}>
             Tenemos un problema temporal con el sitio. Intenta de nuevo en unos segundos o
-            escríbenos por WhatsApp al {sitio.telefonos[0]?.numero}.
+            escríbenos por WhatsApp al {telefonoPrincipal(sitio)?.numero}.
           </p>
           <button
             type="button"

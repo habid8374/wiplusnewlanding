@@ -5,6 +5,7 @@ import { CallLink, PortalClientesLink, WhatsAppLink } from '@/components/analyti
 import { FacebookIcon, InstagramIcon } from '@/components/icons/brands'
 import { Container } from '@/components/ui/Container'
 import { legalNav, mainNav } from '@/lib/nav'
+import { telefonoEmpresas, telefonosClientes } from '@/lib/phone'
 import type { EnlaceInteres, SiteSettings } from '@/lib/types'
 import { mensajesWhatsApp } from '@/lib/whatsapp'
 import axentia from '@/public/axentia/axentia-logo.png'
@@ -18,6 +19,7 @@ export function Footer({
   enlacesInteres?: EnlaceInteres[]
 }) {
   const year = new Date().getFullYear()
+  const telEmpresas = telefonoEmpresas(sitio)
   return (
     <footer className="bg-primary-950 text-primary-100">
       <Container className="grid gap-10 py-14 sm:grid-cols-2 lg:grid-cols-4">
@@ -70,7 +72,7 @@ export function Footer({
         <div>
           <h2 className="font-bold text-white">Contacto</h2>
           <ul className="mt-4 space-y-3 text-sm">
-            {sitio.telefonos.map((t) => (
+            {telefonosClientes(sitio).map((t) => (
               <li key={t.numero}>
                 <CallLink
                   numero={t.numero}
@@ -82,6 +84,21 @@ export function Footer({
                 </CallLink>
               </li>
             ))}
+            {telEmpresas && (
+              <li>
+                <CallLink
+                  numero={telEmpresas.numero}
+                  ubicacion="footer_empresas"
+                  className="inline-flex items-center gap-2 hover:text-white hover:underline"
+                >
+                  <Phone className="size-4 text-accent-400" aria-hidden />
+                  <span>
+                    {telEmpresas.numero}{' '}
+                    <span className="text-primary-200">(empresas y corporativos)</span>
+                  </span>
+                </CallLink>
+              </li>
+            )}
             <li>
               <a
                 href={`mailto:${sitio.correo}`}

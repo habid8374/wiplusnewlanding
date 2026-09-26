@@ -7,6 +7,7 @@ import { Container } from '@/components/ui/Container'
 import { LegalDraftNotice } from '@/components/ui/LegalDraftNotice'
 import { PageHero } from '@/components/ui/PageHero'
 import { getSiteSettings } from '@/lib/content'
+import { telefonosClientes } from '@/lib/phone'
 import { pageMetadata } from '@/lib/seo'
 import { mensajesWhatsApp } from '@/lib/whatsapp'
 
@@ -100,7 +101,7 @@ export default async function UsuarioPage() {
             </li>
             <li>
               <strong>Teléfonos:</strong>{' '}
-              {sitio.telefonos.map((t, i) => (
+              {telefonosClientes(sitio).map((t, i) => (
                 <span key={t.numero}>
                   {i > 0 && ' – '}
                   <CallLink numero={t.numero} ubicacion="usuario_pqr" />

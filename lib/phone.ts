@@ -27,3 +27,24 @@ export function telefonoPrincipal(s: {
   const wa = s.whatsapp.replace(/\D/g, '').replace(/^57/, '')
   return s.telefonos.find((t) => t.numero.replace(/\D/g, '') === wa) ?? s.telefonos[0]
 }
+
+const soloDigitos = (n: string) => n.replace(/\D/g, '').replace(/^57(?=\d{10}$)/, '')
+
+/** Línea de clientes empresariales y corporativos (la del WhatsApp de empresas). */
+export function telefonoEmpresas(s: {
+  whatsappEmpresas?: string | null
+  telefonos: { numero: string; etiqueta?: string }[]
+}) {
+  const emp = s.whatsappEmpresas ? soloDigitos(s.whatsappEmpresas) : ''
+  return emp ? s.telefonos.find((t) => soloDigitos(t.numero) === emp) : undefined
+}
+
+/** Teléfonos para clientes hogar (todos menos la línea empresarial). */
+export function telefonosClientes<T extends { numero: string; etiqueta?: string }>(s: {
+  whatsappEmpresas?: string | null
+  telefonos: T[]
+}): T[] {
+  const emp = telefonoEmpresas(s)
+  const lista = s.telefonos.filter((t) => t !== emp)
+  return lista.length ? lista : s.telefonos
+}

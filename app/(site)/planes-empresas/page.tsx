@@ -1,12 +1,13 @@
-import { Building2, Gauge, Headset, Network, ShieldCheck } from 'lucide-react'
+import { Building2, Gauge, Headset, Network, Phone, ShieldCheck } from 'lucide-react'
 import type { Metadata } from 'next'
-import { WhatsAppLink } from '@/components/analytics/TrackedLinks'
+import { CallLink, WhatsAppLink } from '@/components/analytics/TrackedLinks'
 import { EmpresasForm } from '@/components/forms/Forms'
 import { Clients } from '@/components/sections/Clients'
 import { FaqList } from '@/components/sections/FaqList'
 import { PageHero } from '@/components/ui/PageHero'
 import { Section } from '@/components/ui/Section'
 import { getClientes, getFaqs, getOfertaEmpresarial, getSiteSettings } from '@/lib/content'
+import { telefonoEmpresas } from '@/lib/phone'
 import { pageMetadata } from '@/lib/seo'
 import { mensajesWhatsApp } from '@/lib/whatsapp'
 
@@ -27,6 +28,7 @@ export default async function PlanesEmpresasPage() {
     getFaqs('empresas'),
   ])
   const whatsappEmpresas = sitio.whatsappEmpresas || sitio.whatsapp
+  const telEmpresas = telefonoEmpresas(sitio)
 
   return (
     <>
@@ -109,6 +111,16 @@ export default async function PlanesEmpresasPage() {
             >
               WhatsApp empresas
             </WhatsAppLink>
+            {telEmpresas && (
+              <CallLink
+                numero={telEmpresas.numero}
+                ubicacion="empresas_aside"
+                className="mt-3 flex w-full items-center justify-center gap-2 rounded-full border-2 border-white/60 px-4 py-2.5 font-bold text-white hover:bg-white/10"
+              >
+                <Phone className="size-4" aria-hidden />
+                Llamar al {telEmpresas.numero}
+              </CallLink>
+            )}
           </aside>
         </div>
       </Section>

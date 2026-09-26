@@ -25,7 +25,30 @@ const clientesDeEjemplo = Array.from({ length: 9 }, (_, i) => `cliente-cliente-$
 
 const cuentas = pagos.medios.filter((m) => m.cuenta)
 
-const mutations = [
+const contacto = [
+  { createIfNotExists: { _id: 'siteSettings', _type: 'siteSettings', nombre: sitio.nombre } },
+  { patch: { id: 'siteSettings', setIfMissing: { redes: {} } } },
+  {
+    patch: {
+      id: 'siteSettings',
+      set: {
+        whatsapp: sitio.whatsapp,
+        whatsappEmpresas: sitio.whatsappEmpresas,
+        correo: sitio.correo,
+        telefonos: sitio.telefonos.map((t) => ({
+          _key: t.numero.replace(/\D/g, ''),
+          _type: 'telefono',
+          ...t,
+        })),
+        'redes.instagram': sitio.redes.instagram,
+        razonSocial: sitio.razonSocial,
+        nit: sitio.nit,
+      },
+    },
+  },
+]
+
+const todo = [
   ...[...planesViejos, ...clientesDeEjemplo].map((id) => ({ delete: { id } })),
   ...planes.map((p) => ({
     createOrReplace: {
@@ -47,26 +70,6 @@ const mutations = [
   ...clientes.map((c, n) => ({
     patch: { id: `cliente-${c.id}`, set: { nombre: c.nombre, orden: n + 1 } },
   })),
-  { createIfNotExists: { _id: 'siteSettings', _type: 'siteSettings', nombre: sitio.nombre } },
-  { patch: { id: 'siteSettings', setIfMissing: { redes: {} } } },
-  {
-    patch: {
-      id: 'siteSettings',
-      set: {
-        whatsapp: sitio.whatsapp,
-        whatsappEmpresas: sitio.whatsappEmpresas,
-        correo: sitio.correo,
-        telefonos: sitio.telefonos.map((t) => ({
-          _key: t.numero.replace(/\D/g, ''),
-          _type: 'telefono',
-          ...t,
-        })),
-        'redes.instagram': sitio.redes.instagram,
-        razonSocial: sitio.razonSocial,
-        nit: sitio.nit,
-      },
-    },
-  },
   // Pagos: reemplaza el medio de ejemplo «transferencia» por las cuentas bancarias reales.
   { createIfNotExists: { _id: 'infoPagos', _type: 'infoPagos' } },
   { patch: { id: 'infoPagos', setIfMissing: { medios: [] } } },
@@ -91,7 +94,11 @@ const mutations = [
       },
     },
   },
+  ...contacto,
 ]
+
+// --solo-contacto: solo teléfonos, WhatsApp, correo, redes, razón social y NIT.
+const mutations = process.argv.includes('--solo-contacto') ? contacto : todo
 
 async function main() {
   const res = await fetch(

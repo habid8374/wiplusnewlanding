@@ -3,6 +3,7 @@ import { Container } from '@/components/ui/Container'
 import { LegalDraftNotice } from '@/components/ui/LegalDraftNotice'
 import { PageHero } from '@/components/ui/PageHero'
 import { getSiteSettings } from '@/lib/content'
+import { telefonosClientes } from '@/lib/phone'
 import { pageMetadata } from '@/lib/seo'
 
 export const metadata: Metadata = pageMetadata({
@@ -41,7 +42,10 @@ export default async function PoliticaDatosPage() {
               <strong>Correo:</strong> <a href={`mailto:${s.correo}`}>{s.correo}</a>
             </li>
             <li>
-              <strong>Teléfonos:</strong> {s.telefonos.map((t) => t.numero).join(' – ')}
+              <strong>Teléfonos:</strong>{' '}
+              {telefonosClientes(s)
+                .map((t) => t.numero)
+                .join(' – ')}
             </li>
           </ul>
 

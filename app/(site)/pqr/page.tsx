@@ -6,6 +6,7 @@ import { PqrForm } from '@/components/forms/Forms'
 import { PageHero } from '@/components/ui/PageHero'
 import { Section } from '@/components/ui/Section'
 import { getSiteSettings } from '@/lib/content'
+import { telefonosClientes } from '@/lib/phone'
 import { pageMetadata } from '@/lib/seo'
 import { mensajesWhatsApp } from '@/lib/whatsapp'
 
@@ -77,7 +78,7 @@ export default async function PqrPage() {
                     WhatsApp
                   </WhatsAppLink>
                 </li>
-                {sitio.telefonos.map((t) => (
+                {telefonosClientes(sitio).map((t) => (
                   <li key={t.numero} className="flex items-center gap-2">
                     <Phone className="size-4 shrink-0 text-primary-600" aria-hidden />
                     <CallLink

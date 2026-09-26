@@ -180,3 +180,13 @@ test('botón «Llamar» usa el número principal 300 788 8808', async ({ page })
   )
   await expect(page.getByRole('link', { name: /Llamar al 301 213 3151/ })).toHaveCount(0)
 })
+
+test('301 213 3151 solo para empresas y corporativos', async ({ page }) => {
+  await page.goto('/pqr')
+  await expect(page.locator('main a[href="tel:+573012133151"]')).toHaveCount(0)
+  await expect(page.locator('footer a[href="tel:+573012133151"]')).toContainText(
+    'empresas y corporativos',
+  )
+  await page.goto('/planes-empresas')
+  await expect(page.getByRole('link', { name: /Llamar al 301 213 3151/ })).toBeVisible()
+})

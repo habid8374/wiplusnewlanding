@@ -7,18 +7,20 @@ import { MapEmbed } from '@/components/sections/MapEmbed'
 import { PageHero } from '@/components/ui/PageHero'
 import { Section } from '@/components/ui/Section'
 import { getSiteSettings } from '@/lib/content'
+import { telefonoEmpresas } from '@/lib/phone'
 import { pageMetadata } from '@/lib/seo'
 import { mensajesWhatsApp } from '@/lib/whatsapp'
 
 export const metadata: Metadata = pageMetadata({
   title: 'Contacto: teléfonos, WhatsApp y oficina en Sabanalarga',
   description:
-    'Contacta a WIPLUS Comunicaciones: WhatsApp 300 788 8808, teléfono 301 213 3151, correo y oficina en la Calle 13 #17-04, Sabanalarga, Atlántico.',
+    'Contacta a WIPLUS Comunicaciones: llamadas y WhatsApp al 300 788 8808 (empresas: 301 213 3151), correo y oficina en la Calle 13 #17-04, Sabanalarga, Atlántico.',
   path: '/contacto',
 })
 
 export default async function ContactoPage() {
   const sitio = await getSiteSettings()
+  const telEmpresas = telefonoEmpresas(sitio)
   const direccion = `${sitio.direccion.calle}, ${sitio.direccion.municipio}, ${sitio.direccion.departamento}`
   return (
     <>
@@ -47,7 +49,11 @@ export default async function ContactoPage() {
                 <li key={t.numero} className="flex items-start gap-3">
                   <Phone className="mt-1 size-5 text-primary-600" aria-hidden />
                   <div>
-                    <p className="text-sm text-muted">{t.etiqueta ?? 'Teléfono'}</p>
+                    <p className="text-sm text-muted">
+                      {t === telEmpresas
+                        ? 'Solo clientes empresariales y corporativos'
+                        : (t.etiqueta ?? 'Teléfono')}
+                    </p>
                     <CallLink
                       numero={t.numero}
                       ubicacion="contacto"

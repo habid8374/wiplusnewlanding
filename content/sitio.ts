@@ -6,8 +6,9 @@ export const sitio: SiteSettings = {
   eslogan: 'La mejor fibra óptica. En Wiplus tenemos planes para todos',
   dominio: 'https://www.wiplus.com.co',
   telefonos: [
-    { numero: '301 213 3151', etiqueta: 'Llamadas y ventas empresariales' },
-    { numero: '300 788 8808', etiqueta: 'WhatsApp' },
+    { numero: '300 788 8808', etiqueta: 'Atención al cliente (llamadas y WhatsApp)' },
+    // Solo clientes empresariales y corporativos (indicado por WIPLUS).
+    { numero: '301 213 3151', etiqueta: 'Clientes empresariales y corporativos' },
   ],
   // WhatsApp según el volante oficial. Se puede sobrescribir con NEXT_PUBLIC_WHATSAPP_NUMBER o desde el CMS.
   whatsapp: '573007888808',

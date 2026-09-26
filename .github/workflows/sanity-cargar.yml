@@ -22,6 +22,10 @@ on:
         description: 'Solo borrar los barrios de muestra (demo o «REEMPLAZAR…») y apagar el aviso de datos de muestra'
         type: boolean
         default: false
+      solo_contacto:
+        description: 'Con «datos_reales»: aplicar solo los datos de contacto (teléfonos, WhatsApp, correo, redes)'
+        type: boolean
+        default: false
       datos_reales:
         description: 'Solo aplicar los datos reales del volante (planes y precios, clientes, cuenta Bancolombia, WhatsApp, NIT, redes) sin tocar lo demás'
         type: boolean
@@ -50,4 +54,4 @@ jobs:
       - if: ${{ !inputs.datos_reales && !inputs.limpiar_muestras && inputs.restaurar_barrios == '' }}
         run: npx --yes tsx@4 scripts/sanity-cargar.ts ${{ inputs.reemplazar && '--reemplazar' || '' }}
       - if: ${{ inputs.datos_reales && !inputs.limpiar_muestras && inputs.restaurar_barrios == '' }}
-        run: npx --yes tsx@4 scripts/sanity-datos-reales.ts
+        run: npx --yes tsx@4 scripts/sanity-datos-reales.ts ${{ inputs.solo_contacto && '--solo-contacto' || '' }}

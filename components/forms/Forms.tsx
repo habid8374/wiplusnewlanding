@@ -22,7 +22,7 @@ export function SolicitudForm({ planes, planInicial }: { planes: string[]; planI
         type="tel"
         inputMode="tel"
         autoComplete="tel-national"
-        placeholder="301 213 3151"
+        placeholder="300 123 4567"
       />
       <SelectField name="municipio" label="Municipio" required options={MUNICIPIOS} />
       <TextField name="barrio" label="Barrio o vereda" required />

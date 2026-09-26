@@ -10,13 +10,12 @@ import {
   MessageCircleQuestion,
   Search,
 } from 'lucide-react'
+import dynamic from 'next/dynamic'
 import { useEffect, useId, useMemo, useRef, useState, type KeyboardEvent } from 'react'
 import { WhatsAppLink } from '@/components/analytics/TrackedLinks'
-import { TextField } from '@/components/forms/fields'
-import { FormShell } from '@/components/forms/FormShell'
 import { ButtonLink } from '@/components/ui/ButtonLink'
 import { track } from '@/lib/analytics'
-import { crearBuscador } from '@/lib/cobertura/buscar'
+import { cargarFuse, crearBuscador } from '@/lib/cobertura/buscar'
 import { cn } from '@/lib/cn'
 import type { Barrio, ConfigCobertura, EstadoCobertura, Municipio } from '@/lib/types'
 import { mensajesWhatsApp } from '@/lib/whatsapp'
@@ -62,6 +61,10 @@ const reemplazar = (texto: string, barrio: string, municipio: string) =>
  * Verificador de cobertura por barrio: municipio (chips) + combobox accesible + resultado por estado.
  * `completo` (página /cobertura) sincroniza la URL (?municipio=…&barrio=…) para compartir el resultado.
  */
+const FormularioSolicitud = dynamic(() =>
+  import('./FormularioSolicitudCobertura').then((m) => m.FormularioSolicitud),
+)
+
 export function VerificadorCobertura({
   municipios,
   config,
@@ -84,7 +87,14 @@ export function VerificadorCobertura({
   const [aviso, setAviso] = useState('')
 
   const municipio = municipios.find((m) => m.slug === municipioSlug) ?? municipios[0]
-  const buscador = useMemo(() => crearBuscador(municipio?.barrios ?? []), [municipio])
+  const [FuseClase, setFuseClase] = useState<Awaited<ReturnType<typeof cargarFuse>>>()
+  const pedirFuse = () => {
+    if (!FuseClase) void cargarFuse().then((F) => setFuseClase(() => F))
+  }
+  const buscador = useMemo(
+    () => crearBuscador(municipio?.barrios ?? [], FuseClase),
+    [municipio, FuseClase],
+  )
   const sugerencias = useMemo(() => (texto.trim() ? buscador.buscar(texto) : []), [buscador, texto])
   const hayDemo = config.mostrarAvisoDemo && !!municipio?.barrios.some((b) => b.demo)
   const numero = municipio?.whatsapp || whatsapp
@@ -228,6 +238,7 @@ export function VerificadorCobertura({
               placeholder="Escribe tu barrio…"
               value={texto}
               onChange={(e) => {
+                pedirFuse()
                 setTexto(e.target.value)
                 setAbierto(true)
                 setActivo(-1)
@@ -235,7 +246,10 @@ export function VerificadorCobertura({
               }}
               onKeyDown={onKeyDown}
               onBlur={() => setAbierto(false)}
-              onFocus={() => texto && setAbierto(true)}
+              onFocus={() => {
+                pedirFuse()
+                if (texto) setAbierto(true)
+              }}
               className="h-12 w-full rounded-xl border border-line px-3 text-base"
             />
             <ul
@@ -425,70 +439,5 @@ function TarjetaResultado({
         />
       )}
     </div>
-  )
-}
-
-function FormularioSolicitud({
-  motivo,
-  titulo,
-  municipio,
-  barrio,
-  barrioInicial,
-  conDireccion,
-  className,
-}: {
-  motivo: 'barrio_no_aparece' | 'avisame' | 'parcial_confirmar'
-  titulo: string
-  municipio: Municipio
-  barrio?: Barrio
-  barrioInicial?: string
-  conDireccion?: boolean
-  className: string
-}) {
-  return (
-    <FormShell
-      tipo="solicitudCobertura"
-      titulo={titulo}
-      tituloComo="h3"
-      submitLabel={motivo === 'avisame' ? 'Avísame' : 'Enviar'}
-      exitoTitulo="¡Listo, recibimos tus datos!"
-      onEnviado={() => track('cobertura_solicitud', { tipo: motivo })}
-      className={className}
-    >
-      <input type="hidden" name="motivo" value={motivo} />
-      <input type="hidden" name="municipio" value={municipio.nombre} />
-      {barrio && (
-        <>
-          <input type="hidden" name="barrio" value={barrio.nombre} />
-          <input type="hidden" name="barrioId" value={barrio.id} />
-        </>
-      )}
-      <TextField name="nombre" label="Nombre" required autoComplete="name" />
-      <TextField
-        name="celular"
-        label="Celular"
-        required
-        type="tel"
-        inputMode="tel"
-        autoComplete="tel-national"
-      />
-      {!barrio && (
-        <TextField
-          name="barrio"
-          label="Barrio o vereda"
-          required
-          defaultValue={barrioInicial}
-          autoComplete="address-level3"
-        />
-      )}
-      {conDireccion && (
-        <TextField
-          name="direccion"
-          label="Dirección"
-          autoComplete="street-address"
-          className={barrio ? 'sm:col-span-2' : undefined}
-        />
-      )}
-    </FormShell>
   )
 }

@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import type { Barrio } from '../types'
+import Fuse from 'fuse.js'
 import { crearBuscador, normalizar } from './buscar'
 
 const barrio = (nombre: string, alias: string[] = []): Barrio => ({
@@ -35,7 +36,7 @@ describe('normalizar', () => {
 })
 
 describe('buscar', () => {
-  const s = crearBuscador(sabanalarga)
+  const s = crearBuscador(sabanalarga, Fuse)
 
   it('encuentra el mismo barrio escrito de varias formas', () => {
     for (const q of ['Villa Estadio', 'villa estadio', 'B. Villa Estadio', 'VILLA ESTADIO']) {
@@ -58,13 +59,16 @@ describe('buscar', () => {
   })
 
   it('no mezcla municipios', () => {
-    const l = crearBuscador(luruaco)
+    const l = crearBuscador(luruaco, Fuse)
     expect(l.buscar('villa estadio')).toEqual([])
     expect(s.buscar('tocagua')).toEqual([])
   })
 
   it('devuelve máximo 8 sugerencias', () => {
-    const muchos = crearBuscador(Array.from({ length: 20 }, (_, i) => barrio(`Barrio Norte ${i}`)))
+    const muchos = crearBuscador(
+      Array.from({ length: 20 }, (_, i) => barrio(`Barrio Norte ${i}`)),
+      Fuse,
+    )
     expect(muchos.buscar('norte')).toHaveLength(8)
   })
 

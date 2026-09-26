@@ -1,10 +1,16 @@
 /**
  * Búsqueda de barrios para el verificador de cobertura (se ejecuta en el navegador).
  * Orden: coincidencia exacta normalizada → «empieza por» → «contiene» → difusa (Fuse.js),
- * sobre el nombre y los alias, solo dentro del municipio elegido.
+ * sobre el nombre y los alias, solo dentro del municipio elegido. Sin Fuse (aún no cargado) se
+ * omite solo el paso difuso.
  */
-import Fuse from 'fuse.js'
+import type Fuse from 'fuse.js'
 import type { Barrio } from '../types'
+
+type FuseCtor = typeof Fuse
+
+/** Fuse.js se descarga solo cuando hace falta (al enfocar el buscador), no con la página. */
+export const cargarFuse = (): Promise<FuseCtor> => import('fuse.js').then((m) => m.default)
 
 // Prefijos que la gente escribe o no: «B. Villa Estadio», «Urb. Los Olivos», «El Centro»…
 const PREFIJOS = /^(?:(?:barrio|b|urb|urbanizacion|sector|vereda|corregimiento|el|la|los|las)\s+)+/
@@ -23,17 +29,15 @@ export function normalizar(texto: string) {
 
 type Indexado = { barrio: Barrio; nombre: string; alias: string[] }
 
-export function crearBuscador(barrios: Barrio[]) {
+export function crearBuscador(barrios: Barrio[], FuseClase?: FuseCtor) {
   const indice: Indexado[] = barrios.map((b) => ({
     barrio: b,
     nombre: normalizar(b.nombre),
     alias: b.alias.map(normalizar),
   }))
-  const fuse = new Fuse(indice, {
-    keys: ['nombre', 'alias'],
-    threshold: 0.3,
-    ignoreLocation: true,
-  })
+  const fuse = FuseClase
+    ? new FuseClase(indice, { keys: ['nombre', 'alias'], threshold: 0.3, ignoreLocation: true })
+    : null
   const claves = (x: Indexado) => [x.nombre, ...x.alias]
 
   return {
@@ -48,7 +52,7 @@ export function crearBuscador(barrios: Barrio[]) {
       agregar(indice.filter((x) => claves(x).some((k) => k === q)))
       agregar(indice.filter((x) => claves(x).some((k) => k.startsWith(q))))
       agregar(indice.filter((x) => claves(x).some((k) => k.includes(q))))
-      if (q.length >= 3) agregar(fuse.search(q).map((r) => r.item))
+      if (fuse && q.length >= 3) agregar(fuse.search(q).map((r) => r.item))
       return resultado.slice(0, max)
     },
     /** El barrio cuyo nombre o alias coincide exactamente (tras normalizar), si existe. */

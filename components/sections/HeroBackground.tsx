@@ -36,7 +36,8 @@ export function HeroBackground() {
             fill
             priority={i === 0}
             placeholder={i === 0 ? 'blur' : 'empty'}
-            sizes="100vw"
+            // Va bajo una capa de color: en celular basta una imagen más liviana (mejor LCP).
+            sizes="(max-width: 768px) 60vw, 100vw"
             quality={50}
             className={cn('hero-slide object-cover', s.position)}
             style={{ animationDelay: `${i * 6 - 1}s` }}

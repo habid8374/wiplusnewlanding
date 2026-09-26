@@ -4,6 +4,14 @@ import { telE164 } from '@/lib/phone'
 import { OG_ALT } from '@/lib/og-alt'
 import { ogImagePath } from '@/lib/og-pages'
 import type { Faq, Plan, SiteSettings } from '@/lib/types'
+import { listaNatural } from '@/lib/texto'
+
+/** Municipio o corregimiento servido, dentro del Atlántico (schema.org). */
+const zona = (nombre: string) => ({
+  '@type': 'Place',
+  name: `${nombre}, Atlántico`,
+  containedInPlace: { '@type': 'AdministrativeArea', name: 'Atlántico, Colombia' },
+})
 
 /**
  * Tarjeta para compartir de una ruta: la del inicio (app/opengraph-image.tsx) o la propia de su
@@ -67,8 +75,7 @@ export function localBusinessJsonLd(s: SiteSettings) {
     '@type': 'LocalBusiness',
     '@id': `${SITE_URL}/#empresa`,
     name: s.nombre,
-    description:
-      'Proveedor de internet por fibra óptica para hogares y empresas en Sabanalarga y Luruaco, Atlántico.',
+    description: `Proveedor de internet por fibra óptica para hogares y empresas en ${listaNatural(s.municipiosCobertura)} (Atlántico).`,
     url: SITE_URL,
     logo: `${SITE_URL}/brand/wiplus-logo.png`,
     image: `${SITE_URL}/brand/wiplus-logo.png`,
@@ -98,11 +105,7 @@ export function localBusinessJsonLd(s: SiteSettings) {
         closes: s.horario.cierra,
       },
     ],
-    areaServed: s.municipiosCobertura.map((m) => ({
-      '@type': 'City',
-      name: m,
-      containedInPlace: { '@type': 'AdministrativeArea', name: 'Atlántico, Colombia' },
-    })),
+    areaServed: s.municipiosCobertura.map(zona),
     sameAs: Object.values(s.redes).filter(Boolean),
     ...(s.nit ? { taxID: s.nit } : {}),
     ...(s.razonSocial ? { legalName: s.razonSocial } : {}),
@@ -122,7 +125,7 @@ export function websiteJsonLd() {
 }
 
 /** Product/Offer solo para planes con precio confirmado. */
-export function planesJsonLd(planes: Plan[]) {
+export function planesJsonLd(planes: Plan[], zonas: string[]) {
   return planes
     .filter((p) => p.precio != null)
     .map((p) => ({
@@ -138,7 +141,7 @@ export function planesJsonLd(planes: Plan[]) {
         availability: 'https://schema.org/InStock',
         url: `${SITE_URL}/planes-hogar#plan-${p.velocidadMb}`,
         seller: { '@id': `${SITE_URL}/#empresa` },
-        areaServed: ['Sabanalarga', 'Luruaco'],
+        areaServed: zonas.map(zona),
       },
     }))
 }
@@ -152,6 +155,19 @@ export function faqJsonLd(faqs: Faq[]) {
       name: f.pregunta,
       acceptedAnswer: { '@type': 'Answer', text: f.respuesta },
     })),
+  }
+}
+
+/** Servicio de internet en una zona (páginas /cobertura/<zona>). */
+export function servicioZonaJsonLd(nombre: string, slug: string) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'Service',
+    serviceType: 'Internet por fibra óptica',
+    name: `Internet por fibra óptica en ${nombre}`,
+    url: absoluteUrl(`/cobertura/${slug}`),
+    provider: { '@id': `${SITE_URL}/#empresa` },
+    areaServed: zona(nombre),
   }
 }
 

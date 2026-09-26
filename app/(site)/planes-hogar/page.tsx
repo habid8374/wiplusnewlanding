@@ -17,7 +17,7 @@ import { mensajesWhatsApp } from '@/lib/whatsapp'
 export const metadata: Metadata = pageMetadata({
   title: 'Planes de internet hogar en Sabanalarga y Luruaco',
   description:
-    'Planes de internet por fibra óptica para el hogar de 100 a 300 Mb desde $60.000 al mes en Sabanalarga y Luruaco. Compara velocidades y contrata por WhatsApp en minutos.',
+    'Planes de internet por fibra óptica para el hogar de 100 a 300 Mb desde $60.000 al mes en Sabanalarga, Luruaco y sus alrededores (Atlántico). Compara velocidades y contrata por WhatsApp en minutos.',
   path: '/planes-hogar',
 })
 
@@ -31,11 +31,11 @@ export default async function PlanesHogarPage() {
 
   return (
     <>
-      <JsonLd data={planesJsonLd(planes)} />
+      <JsonLd data={planesJsonLd(planes, sitio.municipiosCobertura)} />
       <PageHero
         crumbs={[{ name: 'Planes Hogar', path: '/planes-hogar' }]}
         title="Planes de internet para tu hogar"
-        description="Fibra óptica en Sabanalarga y Luruaco. Elige tu velocidad, toca “Lo quiero” y te atendemos por WhatsApp."
+        description="Fibra óptica en Sabanalarga, Luruaco y sus alrededores. Elige tu velocidad, toca “Lo quiero” y te atendemos por WhatsApp."
       />
 
       <Section

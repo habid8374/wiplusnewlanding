@@ -1,4 +1,4 @@
-import { planes, sitio } from '@/content'
+import { cobertura, planes, sitio } from '@/content'
 import type { OgIconName } from './og-icons'
 import { formatCOP } from './phone'
 
@@ -107,10 +107,22 @@ export const OG_PAGES: Record<string, OgPage> = {
     subtitulo: 'Planes, cobertura, soporte, pagos y más.',
     icono: 'map',
   },
+  // Una tarjeta por zona de cobertura (/cobertura/<zona> → /og/cobertura-<zona>).
+  ...Object.fromEntries(
+    cobertura.map((m) => [
+      `cobertura-${m.slug}`,
+      {
+        seccion: 'Cobertura',
+        titulo: `Internet por fibra óptica en ${m.nombre}`,
+        subtitulo: `Planes de ${velocidades[0]} a ${velocidades.at(-1)} Mb.${desde} Verifica tu barrio.`,
+        icono: 'mapPin',
+      } satisfies OgPage,
+    ]),
+  ),
 }
 
 /** URL relativa de la tarjeta para una ruta del sitio. */
 export function ogImagePath(path: string) {
-  const slug = path.replace(/^\//, '')
+  const slug = path.replace(/^\//, '').replaceAll('/', '-')
   return slug && slug in OG_PAGES ? `/og/${slug}` : '/opengraph-image'
 }

@@ -4,7 +4,7 @@ export default function manifest(): MetadataRoute.Manifest {
   return {
     name: 'WIPLUS Comunicaciones',
     short_name: 'WIPLUS',
-    description: 'Internet por fibra óptica en Sabanalarga y Luruaco, Atlántico.',
+    description: 'Internet por fibra óptica en Sabanalarga, Luruaco y sus alrededores (Atlántico).',
     start_url: '/',
     display: 'standalone',
     background_color: '#ffffff',

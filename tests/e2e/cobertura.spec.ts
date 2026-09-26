@@ -146,3 +146,29 @@ test('API de solicitudes: valida el motivo y acepta una solicitud correcta', asy
   expect(bueno.status()).toBe(200)
   expect((await bueno.json()).mensaje).toContain('Te avisaremos')
 })
+
+test.describe('Páginas por zona (SEO local)', () => {
+  test('cada zona tiene su página con título propio y está en el sitemap', async ({
+    page,
+    request,
+  }) => {
+    const sitemap = await (await request.get('/sitemap.xml')).text()
+    for (const [slug, nombre] of [
+      ['sabanalarga', 'Sabanalarga'],
+      ['la-pena', 'La Peña'],
+      ['palmar-de-candelaria', 'Palmar de Candelaria'],
+    ]) {
+      expect(sitemap).toContain(`/cobertura/${slug}</loc>`)
+      await page.goto(`/cobertura/${slug}`)
+      await expect(page.getByRole('heading', { level: 1 })).toHaveText(
+        `Internet por fibra óptica en ${nombre}`,
+      )
+      await expect(page).toHaveTitle(new RegExp(`Internet por fibra óptica en ${nombre}`))
+    }
+  })
+
+  test('zona inexistente responde 404', async ({ page }) => {
+    const r = await page.goto('/cobertura/no-existe')
+    expect(r?.status()).toBe(404)
+  })
+})

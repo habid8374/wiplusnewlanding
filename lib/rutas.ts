@@ -15,7 +15,7 @@ export const RUTAS: Ruta[] = [
   {
     path: '/',
     titulo: 'Inicio',
-    descripcion: 'Internet por fibra óptica en Sabanalarga y Luruaco.',
+    descripcion: 'Internet por fibra óptica en Sabanalarga, Luruaco y sus alrededores.',
     grupo: 'Servicios',
     prioridad: 1,
     frecuencia: 'weekly',

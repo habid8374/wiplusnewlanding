@@ -21,11 +21,16 @@ export const metadata: Metadata = {
     template: '%s | WIPLUS Comunicaciones',
   },
   description:
-    'Internet por fibra óptica para hogares y empresas en Sabanalarga y Luruaco, Atlántico. Planes hasta 300 Mb, soporte local y contratación por WhatsApp.',
+    'Internet por fibra óptica para hogares y empresas en Sabanalarga, Luruaco, La Peña, Aguada de Pablo, Hibácharo, Leña y Palmar de Candelaria (Atlántico). Planes hasta 300 Mb, soporte local y contratación por WhatsApp.',
   applicationName: 'WIPLUS Comunicaciones',
   keywords: [
     'internet fibra óptica Sabanalarga',
     'internet hogar Luruaco',
+    'internet La Peña Atlántico',
+    'internet Aguada de Pablo',
+    'internet Hibácharo',
+    'internet Leña Atlántico',
+    'internet Palmar de Candelaria',
     'internet para empresas Atlántico',
     'proveedor de internet Sabanalarga',
     'WIPLUS Comunicaciones',

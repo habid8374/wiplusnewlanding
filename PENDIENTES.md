@@ -29,6 +29,10 @@ puede reemplazar desde el CMS (`/studio`) sin programador.
 
 ## Cobertura
 
+- [x] SEO local: página por zona (/cobertura/<zona>) con título, descripción, tarjeta para compartir y
+      datos estructurados propios; todas en el sitemap.
+- [ ] En la ficha de Google Business Profile, agregar las 7 zonas como «Áreas de servicio».
+
 - [ ] **Recibir del cliente la lista real de barrios por municipio con su estado** (cubierto, parcial,
       próximamente, sin cobertura) → reemplazar `data/barrios-cobertura.csv` y ejecutar
       `npm run cobertura:importar -- --reemplazar-demo`, o pegarla en _Studio › Importar barrios_

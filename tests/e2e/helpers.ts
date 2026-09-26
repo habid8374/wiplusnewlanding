@@ -15,6 +15,7 @@ export const PAGINAS = [
   { path: '/terminos', h1: /Términos y condiciones/ },
   { path: '/mapa-del-sitio', h1: /Mapa del sitio/ },
   { path: '/proteccion-infantil', h1: /Tolerancia cero/ },
+  { path: '/cobertura/la-pena', h1: /Internet por fibra óptica en La Peña/ },
 ] as const
 
 export const WHATSAPP = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || '573007888808'

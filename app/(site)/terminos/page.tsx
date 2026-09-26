@@ -9,7 +9,7 @@ import { pageMetadata } from '@/lib/seo'
 export const metadata: Metadata = pageMetadata({
   title: 'Términos y condiciones de planes y promociones',
   description:
-    'Términos y condiciones de los planes de internet y promociones de WIPLUS Comunicaciones en Sabanalarga y Luruaco, Atlántico.',
+    'Términos y condiciones de los planes de internet y promociones de WIPLUS Comunicaciones en Sabanalarga, Luruaco y sus alrededores (Atlántico).',
   path: '/terminos',
 })
 

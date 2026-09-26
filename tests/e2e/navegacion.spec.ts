@@ -17,7 +17,7 @@ test.describe('Navegación', () => {
       const ogEsperada =
         p.path === '/'
           ? 'https://www.wiplus.com.co/opengraph-image'
-          : `https://www.wiplus.com.co/og${p.path}`
+          : `https://www.wiplus.com.co/og/${p.path.slice(1).replaceAll('/', '-')}`
       await expect(page.locator('meta[property="og:image"]')).toHaveAttribute('content', ogEsperada)
       await expect(page.locator('meta[name="twitter:image"]')).toHaveAttribute(
         'content',

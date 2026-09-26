@@ -4,7 +4,7 @@ import type { OfertaEmpresarial } from '@/lib/types'
 export const ofertaEmpresarial: OfertaEmpresarial = {
   titulo: 'Internet para empresas en el Atlántico',
   descripcion:
-    'Conectividad por fibra óptica para comercios, oficinas, colegios e instituciones de Sabanalarga, Luruaco y sus alrededores, con atención directa de nuestro equipo local.',
+    'Conectividad por fibra óptica para comercios, oficinas, colegios e instituciones de Sabanalarga, Luruaco, La Peña, Aguada de Pablo, Hibácharo, Leña y Palmar de Candelaria, con atención directa de nuestro equipo local.',
   beneficios: [
     {
       titulo: 'Canal dedicado',

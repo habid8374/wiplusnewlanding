@@ -14,7 +14,7 @@ import { mensajesWhatsApp } from '@/lib/whatsapp'
 export const metadata: Metadata = pageMetadata({
   title: 'Soporte técnico y reporte de fallas',
   description:
-    'Soporte técnico de WIPLUS en Sabanalarga y Luruaco: reporta una falla y recibe tu ticket, haz un test de velocidad y sigue nuestra guía para resolver problemas.',
+    'Soporte técnico local de WIPLUS en Sabanalarga, Luruaco y sus alrededores: reporta una falla y recibe tu ticket, haz un test de velocidad y sigue nuestra guía para resolver problemas.',
   path: '/soporte',
 })
 

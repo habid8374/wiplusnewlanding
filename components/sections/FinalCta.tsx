@@ -1,6 +1,7 @@
 import { Phone } from 'lucide-react'
 import { CallLink, WhatsAppLink } from '@/components/analytics/TrackedLinks'
 import { Container } from '@/components/ui/Container'
+import { Mascota } from '@/components/ui/Mascota'
 import { telefonoPrincipal } from '@/lib/phone'
 import type { SiteSettings } from '@/lib/types'
 
@@ -21,10 +22,15 @@ export function FinalCta({
   return (
     <section aria-labelledby={`${ubicacion}-titulo`} className="py-14 sm:py-20">
       <Container>
-        <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-primary-700 via-primary-800 to-primary-950 px-6 py-12 text-center text-white shadow-card-hover sm:px-12">
+        <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-primary-700 via-primary-800 to-primary-950 px-6 py-12 text-center text-white shadow-card-hover sm:px-12 xl:px-52">
           <div
             aria-hidden
             className="pointer-events-none absolute -top-20 -right-20 size-72 rounded-full bg-accent-500/25 blur-3xl"
+          />
+          {/* El superhéroe de WIPLUS señala el título (solo en pantallas anchas, ≥ 1280 px, donde hay espacio). */}
+          <Mascota
+            sizes="170px"
+            className="pointer-events-none absolute right-8 -bottom-24 hidden w-44 xl:block"
           />
           <h2
             id={`${ubicacion}-titulo`}
@@ -32,7 +38,7 @@ export function FinalCta({
           >
             {titulo}
           </h2>
-          <p className="relative mx-auto mt-4 max-w-2xl text-lg text-primary-100">{texto}</p>
+          <p className="relative mx-auto mt-4 max-w-2xl text-lg text-primary-100 xl:max-w-xl">{texto}</p>
           <div className="relative mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
             <WhatsAppLink numero={sitio.whatsapp} mensaje={mensaje} ubicacion={ubicacion} size="lg">
               Escríbenos por WhatsApp

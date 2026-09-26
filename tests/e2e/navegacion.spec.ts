@@ -25,7 +25,7 @@ test.describe('Navegación', () => {
       )
       // Todas las imágenes tienen alt
       expect(await page.locator('img:not([alt])').count()).toBe(0)
-      await page.waitForLoadState('networkidle').catch(() => {})
+      await page.waitForLoadState('networkidle', { timeout: 5_000 }).catch(() => {})
       expect(errores).toEqual([])
     })
   }

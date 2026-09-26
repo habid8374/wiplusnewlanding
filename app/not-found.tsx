@@ -1,9 +1,10 @@
-import { ArrowRight, Home, SearchX } from 'lucide-react'
+import { ArrowRight, Home } from 'lucide-react'
 import type { Metadata } from 'next'
 import { WhatsAppLink } from '@/components/analytics/TrackedLinks'
 import { SiteChrome } from '@/components/layout/SiteChrome'
 import { ButtonLink } from '@/components/ui/ButtonLink'
 import { Container } from '@/components/ui/Container'
+import { Mascota } from '@/components/ui/Mascota'
 import { getSiteSettings } from '@/lib/content'
 import { mainNav } from '@/lib/nav'
 import { mensajesWhatsApp } from '@/lib/whatsapp'
@@ -19,12 +20,12 @@ export default async function NotFound() {
   return (
     <SiteChrome>
       <Container className="py-16 text-center sm:py-24">
-        <SearchX className="mx-auto size-16 text-primary-500" aria-hidden />
+        <Mascota sizes="120px" className="mx-auto w-24 sm:w-28" />
         <p className="mt-4 text-sm font-bold tracking-wider text-primary-600 uppercase">
           Error 404
         </p>
         <h1 className="mt-2 text-3xl font-extrabold text-primary-900 sm:text-5xl">
-          No encontramos esta página
+          ¡Ups! No encontramos esta página
         </h1>
         <p className="mx-auto mt-4 max-w-xl text-lg text-muted">
           Es posible que el enlace haya cambiado con nuestro nuevo sitio. Pero tranquilo: seguimos

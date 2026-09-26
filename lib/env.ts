@@ -7,19 +7,13 @@ const DOMINIO_FINAL = (process.env.NEXT_PUBLIC_SITE_URL || 'https://www.wiplus.c
 )
 
 /**
- * URL pública del despliegue: la usan canónicas, og:url, sitemap y la tarjeta para compartir.
- *  - Vercel producción aún en *.vercel.app → ese dominio. Mientras www.wiplus.com.co siga en
- *    WordPress, WhatsApp/Facebook leerían la tarjeta del sitio viejo si apuntáramos allá.
+ * URL pública del despliegue: la usan canónicas, og:url, og:image, sitemap y robots.
+ *  - Producción (www.wiplus.com.co ya apunta a Vercel) → dominio definitivo.
  *  - Vercel preview → URL de la rama.
- *  - Con el dominio propio conectado en Vercel, o fuera de Vercel → dominio definitivo.
  */
 function siteUrl() {
   const env = process.env.VERCEL_ENV || process.env.NEXT_PUBLIC_VERCEL_ENV
-  const prod =
-    process.env.VERCEL_PROJECT_PRODUCTION_URL ||
-    process.env.NEXT_PUBLIC_VERCEL_PROJECT_PRODUCTION_URL
   const branch = process.env.VERCEL_BRANCH_URL || process.env.NEXT_PUBLIC_VERCEL_BRANCH_URL
-  if (env === 'production' && prod?.endsWith('.vercel.app')) return `https://${prod}`
   if (env === 'preview' && branch) return `https://${branch}`
   return DOMINIO_FINAL
 }

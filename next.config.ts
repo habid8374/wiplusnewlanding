@@ -30,6 +30,14 @@ const nextConfig: NextConfig = {
   },
   async redirects() {
     return [
+      // El dominio de Vercel lleva al definitivo (evita contenido duplicado en Google).
+      // /api y /studio quedan fuera: el webhook de Sanity y el panel pueden seguir usándolo.
+      {
+        source: '/:path((?!api/|studio).*)',
+        has: [{ type: 'host' as const, value: 'wiplusnewlanding.vercel.app' }],
+        destination: 'https://www.wiplus.com.co/:path',
+        permanent: true,
+      },
       ...legacyRedirects.map(([source, destination]) => ({
         source,
         destination,

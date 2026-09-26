@@ -1,6 +1,7 @@
 export const mainNav = [
   { href: '/planes-hogar', label: 'Planes Hogar' },
   { href: '/planes-empresas', label: 'Empresas' },
+  { href: '/planes-tv', label: 'TV' },
   { href: '/cobertura', label: 'Cobertura' },
   { href: '/soporte', label: 'Soporte' },
   { href: '/pagos', label: 'Pagos' },

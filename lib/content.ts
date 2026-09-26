@@ -218,3 +218,6 @@ function stripNulls<T extends object>(obj: T): Partial<T> {
 
 /** Enlaces de interés del pie de página (entidades del Gobierno). Solo contenido local por ahora. */
 export const getEnlacesInteres = cache(async (): Promise<EnlaceInteres[]> => local.enlacesInteres)
+
+/** Planes y parrillas de TV (NUPLIN). Solo contenido local por ahora. */
+export const getTv = cache(async () => ({ planes: local.planesTv, parrillas: local.parrillasTv }))

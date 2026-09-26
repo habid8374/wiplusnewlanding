@@ -29,6 +29,13 @@ export const OG_PAGES: Record<string, OgPage> = {
     foto: 'fibra-puntas',
     chips: velocidades.map((v) => `${v} Mb`),
   },
+  'planes-tv': {
+    seccion: 'Planes TV',
+    titulo: 'TV en vivo con NUPLIN',
+    subtitulo: 'Canales nacionales, deportes, cine e infantiles en tu Smart TV.',
+    icono: 'tv',
+    chips: ['Free', 'Flex', 'Premium'],
+  },
   'planes-empresas': {
     seccion: 'Empresas',
     titulo: 'Internet para empresas en el Atlántico',

@@ -4,6 +4,7 @@ export const PAGINAS = [
   { path: '/', h1: /Internet por fibra óptica en Sabanalarga/ },
   { path: '/planes-hogar', h1: /Planes de internet para tu hogar/ },
   { path: '/planes-empresas', h1: /Internet para empresas/ },
+  { path: '/planes-tv', h1: /TV en vivo con NUPLIN/ },
   { path: '/cobertura', h1: /¿Llegamos a tu barrio\?/ },
   { path: '/soporte', h1: /Soporte técnico/ },
   { path: '/pagos', h1: /Paga tu servicio/ },

@@ -29,6 +29,14 @@ export const RUTAS: Ruta[] = [
     frecuencia: 'weekly',
   },
   {
+    path: '/planes-tv',
+    titulo: 'Planes de TV con NUPLIN',
+    descripcion: 'TV en vivo en tu Smart TV: planes desde Free hasta Premium.',
+    grupo: 'Servicios',
+    prioridad: 0.8,
+    frecuencia: 'monthly',
+  },
+  {
     path: '/planes-empresas',
     titulo: 'Internet para empresas',
     descripcion: 'Canal dedicado, IP fija, soporte prioritario y cotización.',

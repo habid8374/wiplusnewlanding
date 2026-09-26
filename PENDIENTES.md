@@ -6,6 +6,11 @@ puede reemplazar desde el CMS (`/studio`) sin programador.
 
 ## Comercial
 
+- [x] Planes de TV con NUPLIN (/planes-tv): Free, Flex y Premium; precios por WhatsApp; se instala en
+      Smart TV y WIPLUS entrega las credenciales según el plan.
+- [ ] TV: nombre del paquete de la imagen «ESPN, Disney, FX…» y de la de «Win Sports, AMC…»; qué
+      canales trae el plan Free; si el Premium incluye los canales del Flex → `content/tv.ts`.
+
 - [x] Planes y precios (volante oficial): 100 Mb $60.000 · 150 Mb $70.000 · 200 Mb $90.000 ·
       250 Mb $120.000 · 300 Mb $140.000.
 - [ ] **Valor de la suscripción (instalación)**: en el volante está en blanco.

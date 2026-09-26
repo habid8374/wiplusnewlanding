@@ -3,6 +3,10 @@
 export type IconNode = [tag: string, attrs: Record<string, string>][]
 
 export const OG_ICONS = {
+  tv: [
+    ['path', { d: 'm17 2-5 5-5-5' }],
+    ['rect', { width: '20', height: '15', x: '2', y: '7', rx: '2' }],
+  ],
   gauge: [
     ['path', { d: 'm12 14 4-4' }],
     ['path', { d: 'M3.34 19a10 10 0 1 1 17.32 0' }],

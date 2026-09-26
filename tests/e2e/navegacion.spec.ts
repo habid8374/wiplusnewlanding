@@ -190,3 +190,18 @@ test('301 213 3151 solo para empresas y corporativos', async ({ page }) => {
   await page.goto('/planes-empresas')
   await expect(page.getByRole('link', { name: /Llamar al 301 213 3151/ })).toBeVisible()
 })
+
+test('Planes de TV: planes con precio por WhatsApp y parrillas de canales', async ({ page }) => {
+  await page.goto('/planes-tv')
+  for (const plan of ['Free', 'Flex', 'Premium']) {
+    const tarjeta = page.locator(`#tv-${plan.toLowerCase()}`)
+    await expect(tarjeta).toContainText('Consulta el precio')
+    await expect(tarjeta.getByRole('link', { name: /Lo quiero/ })).toHaveAttribute(
+      'href',
+      new RegExp(`plan%20${plan}%20de%20TV`),
+    )
+  }
+  await expect(page.getByRole('img', { name: /Canales: City TV/ })).toBeVisible()
+  // El menú principal está oculto en celular: se busca el enlace aunque no sea visible.
+  await expect(page.locator('nav[aria-label="Principal"] a[href="/planes-tv"]')).toBeAttached()
+})

@@ -8,6 +8,10 @@ export const mensajesWhatsApp = {
     'Hola WIPLUS, quiero contratar internet por fibra óptica. ¿Me pueden dar información?',
   plan: (velocidadMb: number) =>
     `Hola WIPLUS, me interesa el plan de ${velocidadMb} Mb. ¿Me pueden dar información?`,
+  tv: (plan?: string) =>
+    plan
+      ? `Hola WIPLUS, me interesa el plan ${plan} de TV con NUPLIN. ¿Me dan el precio y la información?`
+      : 'Hola WIPLUS, quiero información y precios de los planes de TV con NUPLIN.',
   cobertura: (barrio?: string, municipio?: string) =>
     barrio && municipio
       ? `Hola, quiero saber si tienen cobertura en el barrio ${barrio}, ${municipio}.`
@@ -46,6 +50,7 @@ export function mensajeParaRuta(pathname: string) {
   if (pathname.startsWith('/cobertura')) return mensajesWhatsApp.cobertura()
   if (pathname.startsWith('/pagos')) return mensajesWhatsApp.pagos()
   if (pathname.startsWith('/usuario') || pathname.startsWith('/pqr')) return mensajesWhatsApp.pqr()
+  if (pathname.startsWith('/planes-tv')) return mensajesWhatsApp.tv()
   if (pathname.startsWith('/planes-hogar')) return mensajesWhatsApp.contratar()
   return mensajesWhatsApp.general()
 }

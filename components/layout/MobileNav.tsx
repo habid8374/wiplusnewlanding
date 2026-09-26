@@ -4,14 +4,22 @@ import { Menu, X } from 'lucide-react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { useEffect, useId, useRef, useState } from 'react'
-import { WhatsAppLink } from '@/components/analytics/TrackedLinks'
+import { PortalClientesLink, WhatsAppLink } from '@/components/analytics/TrackedLinks'
 import { cn } from '@/lib/cn'
 import { mensajesWhatsApp } from '@/lib/whatsapp'
 
 type Item = { href: string; label: string }
 
 /** Menú hamburguesa accesible: aria-expanded, Escape para cerrar, foco controlado. */
-export function MobileNav({ items, whatsapp }: { items: readonly Item[]; whatsapp: string }) {
+export function MobileNav({
+  items,
+  whatsapp,
+  portalClientes,
+}: {
+  items: readonly Item[]
+  whatsapp: string
+  portalClientes?: string | null
+}) {
   const [open, setOpen] = useState(false)
   const [openedAt, setOpenedAt] = useState<string | null>(null)
   const pathname = usePathname()
@@ -82,12 +90,20 @@ export function MobileNav({ items, whatsapp }: { items: readonly Item[]; whatsap
               )
             })}
           </ul>
+          {portalClientes && (
+            <PortalClientesLink
+              href={portalClientes}
+              ubicacion="menu_movil"
+              className="mt-6 min-h-14 w-full text-lg"
+              onClick={() => setOpen(false)}
+            />
+          )}
           <WhatsAppLink
             numero={whatsapp}
             mensaje={mensajesWhatsApp.contratar()}
             ubicacion="menu_movil"
             size="lg"
-            className="mt-6 w-full"
+            className="mt-4 w-full"
           >
             Contratar por WhatsApp
           </WhatsAppLink>

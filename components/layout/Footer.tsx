@@ -1,7 +1,7 @@
 import { Clock, FileText, LockKeyhole, Mail, MapPin, Phone } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
-import { CallLink, WhatsAppLink } from '@/components/analytics/TrackedLinks'
+import { CallLink, PortalClientesLink, WhatsAppLink } from '@/components/analytics/TrackedLinks'
 import { FacebookIcon, InstagramIcon } from '@/components/icons/brands'
 import { Container } from '@/components/ui/Container'
 import { legalNav, mainNav } from '@/lib/nav'
@@ -114,6 +114,13 @@ export function Footer({ sitio }: { sitio: SiteSettings }) {
             <FileText className="size-4 text-accent-400" aria-hidden />
             Radicar PQR
           </Link>
+          {sitio.portalClientes && (
+            <PortalClientesLink
+              href={sitio.portalClientes}
+              ubicacion="footer"
+              className="mt-3 min-h-10 px-4 text-sm"
+            />
+          )}
         </div>
 
         <nav aria-label="Secciones del sitio">

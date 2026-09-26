@@ -55,7 +55,8 @@ export const RUTAS: Ruta[] = [
   {
     path: '/pagos',
     titulo: 'Pagos',
-    descripcion: 'Medios de pago y fechas de corte.',
+    descripcion:
+      'Portal de clientes: consulta y paga tu factura. Medios de pago y fechas de corte.',
     grupo: 'Clientes',
     prioridad: 0.6,
     frecuencia: 'monthly',

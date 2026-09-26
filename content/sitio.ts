@@ -34,6 +34,9 @@ export const sitio: SiteSettings = {
     facebook: 'https://www.facebook.com/wipluscomunicaciones',
     instagram: 'https://www.instagram.com/wipluscomunicaciones1',
   },
+  // Portal de facturación y pagos (WispHub).
+  // TODO(WIPLUS): si WispHub les asignó una dirección propia del portal de clientes, ponerla aquí o en el CMS.
+  portalClientes: 'https://wisphub.net',
   experienciaAnios: 7,
   // Zonas con cobertura confirmadas por WIPLUS.
   municipiosCobertura: [

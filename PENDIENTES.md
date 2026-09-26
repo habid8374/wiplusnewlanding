@@ -52,6 +52,10 @@ puede reemplazar desde el CMS (`/studio`) sin programador.
 
 ## Pagos
 
+- [x] Portal de clientes (WispHub) enlazado en «Mi factura» (barra superior, menú, pie) y en /pagos.
+- [ ] Confirmar la dirección exacta del portal de clientes de WIPLUS en WispHub (hoy: https://wisphub.net).
+      Se cambia en CMS › Datos de contacto › Portal de clientes.
+
 - [ ] **Medios de pago** aceptados (oficina, corresponsales, Nequi, Daviplata, transferencia…).
 - [ ] Fechas de corte, fechas límite de pago y política de suspensión/reconexión.
 

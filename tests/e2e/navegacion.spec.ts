@@ -106,3 +106,17 @@ test.describe('Navegación', () => {
     await expect(page.locator('a[href="tel:+573007888808"]').first()).toBeAttached()
   })
 })
+
+test.describe('Portal de clientes (WispHub)', () => {
+  test('botones de factura y pagos visibles y seguros', async ({ page }) => {
+    await page.goto('/pagos')
+    for (const id of ['portal-clientes-pagos_hero', 'portal-clientes-pagos_portal']) {
+      const link = page.getByTestId(id)
+      await expect(link).toBeVisible()
+      await expect(link).toHaveAttribute('href', /^https:\/\/wisphub\.net/)
+      await expect(link).toHaveAttribute('target', '_blank')
+      await expect(link).toHaveAttribute('rel', /noopener/)
+    }
+    await expect(page.getByTestId('portal-clientes-barra_superior')).toBeVisible()
+  })
+})

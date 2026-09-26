@@ -53,7 +53,7 @@ export const OG_PAGES: Record<string, OgPage> = {
   pagos: {
     seccion: 'Pagos',
     titulo: 'Paga tu servicio de internet',
-    subtitulo: 'Medios de pago, fechas de corte y cómo reportar tu pago.',
+    subtitulo: 'Consulta y paga tu factura en línea en el portal de clientes.',
     icono: 'creditCard',
   },
   nosotros: {

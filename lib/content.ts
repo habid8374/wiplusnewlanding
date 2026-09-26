@@ -2,6 +2,7 @@ import 'server-only'
 
 import { cache } from 'react'
 import * as local from '@/content'
+import { enlaceSeguro } from '@/lib/safe-url'
 import { SHOW_EXAMPLES, WHATSAPP_OVERRIDE } from '@/lib/env'
 import type {
   Aviso,
@@ -54,7 +55,7 @@ const visible = <T extends { ejemplo?: boolean }>(items: T[]) =>
 
 export const getSiteSettings = cache(async (): Promise<SiteSettings> => {
   const cms = await fromSanity<Partial<SiteSettings>>(
-    `*[_id == "siteSettings"][0]{nombre, eslogan, telefonos[]{numero, etiqueta}, whatsapp, whatsappEmpresas, correo, direccion, horario{texto, dias, abre, cierra}, redes, experienciaAnios, mision, vision, razonSocial, nit}`,
+    `*[_id == "siteSettings"][0]{nombre, eslogan, telefonos[]{numero, etiqueta}, whatsapp, whatsappEmpresas, correo, direccion, horario{texto, dias, abre, cierra}, redes, portalClientes, experienciaAnios, mision, vision, razonSocial, nit}`,
     'siteSettings',
   )
   const merged: SiteSettings = {
@@ -65,6 +66,7 @@ export const getSiteSettings = cache(async (): Promise<SiteSettings> => {
     redes: { ...local.sitio.redes, ...stripNulls(cms?.redes ?? {}) },
   }
   if (WHATSAPP_OVERRIDE) merged.whatsapp = WHATSAPP_OVERRIDE
+  merged.portalClientes = enlaceSeguro(merged.portalClientes)
   return merged
 })
 

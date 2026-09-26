@@ -1,6 +1,6 @@
-import { Clock, FileText, Phone } from 'lucide-react'
+import { Clock, FileText, Phone, ReceiptText } from 'lucide-react'
 import Link from 'next/link'
-import { CallLink } from '@/components/analytics/TrackedLinks'
+import { CallLink, PortalClientesLink } from '@/components/analytics/TrackedLinks'
 import { FacebookIcon } from '@/components/icons/brands'
 import { Container } from '@/components/ui/Container'
 import type { SiteSettings } from '@/lib/types'
@@ -18,6 +18,17 @@ export function TopBar({ sitio }: { sitio: SiteSettings }) {
           </span>
         </p>
         <div className="flex items-center gap-3 sm:gap-4">
+          {sitio.portalClientes && (
+            <PortalClientesLink
+              href={sitio.portalClientes}
+              ubicacion="barra_superior"
+              variant="none"
+              className="flex items-center gap-1 rounded-full bg-accent-400 px-2 py-0.5 font-bold text-primary-950 hover:bg-accent-300 sm:gap-1.5 sm:px-2.5"
+            >
+              <ReceiptText className="size-4" aria-hidden />
+              Mi factura
+            </PortalClientesLink>
+          )}
           <Link
             href="/pqr"
             className="flex items-center gap-1 rounded-full bg-white/10 px-2 py-0.5 font-semibold text-white hover:bg-white/20 sm:gap-1.5 sm:px-2.5"

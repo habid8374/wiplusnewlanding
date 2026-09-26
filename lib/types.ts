@@ -46,6 +46,8 @@ export type SiteSettings = {
     diasSchema: string[]
   }
   redes: { facebook?: string; instagram?: string; tiktok?: string }
+  /** Portal de clientes (WispHub): consultar y pagar la factura. */
+  portalClientes?: string | null
   experienciaAnios: number
   municipiosCobertura: string[]
   mision: string

@@ -1,4 +1,4 @@
-import { WhatsAppLink } from '@/components/analytics/TrackedLinks'
+import { PortalClientesLink, WhatsAppLink } from '@/components/analytics/TrackedLinks'
 import { Container } from '@/components/ui/Container'
 import { mainNav } from '@/lib/nav'
 import type { SiteSettings } from '@/lib/types'
@@ -16,6 +16,13 @@ export function Header({ sitio }: { sitio: SiteSettings }) {
           <NavLinks items={mainNav} />
         </nav>
         <div className="flex items-center gap-2">
+          {sitio.portalClientes && (
+            <PortalClientesLink
+              href={sitio.portalClientes}
+              ubicacion="header"
+              className="hidden min-h-10 px-4 text-sm whitespace-nowrap 2xl:inline-flex"
+            />
+          )}
           <WhatsAppLink
             numero={sitio.whatsapp}
             mensaje={mensajesWhatsApp.contratar()}
@@ -25,7 +32,11 @@ export function Header({ sitio }: { sitio: SiteSettings }) {
           >
             Contratar
           </WhatsAppLink>
-          <MobileNav items={mainNav} whatsapp={sitio.whatsapp} />
+          <MobileNav
+            items={mainNav}
+            whatsapp={sitio.whatsapp}
+            portalClientes={sitio.portalClientes}
+          />
         </div>
       </Container>
     </header>

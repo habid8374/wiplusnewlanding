@@ -78,6 +78,13 @@ export const siteSettings = defineType({
         defineField({ name: 'tiktok', type: 'url' }),
       ],
     }),
+    defineField({
+      name: 'portalClientes',
+      title: 'Portal de clientes (facturación y pagos)',
+      description: 'Enlace del portal de WispHub. Aparece en «Mi factura» y en la página Pagos.',
+      type: 'url',
+      validation: (r) => r.uri({ scheme: ['https'] }),
+    }),
     defineField({ name: 'experienciaAnios', title: 'Años de experiencia', type: 'number' }),
     defineField({ name: 'mision', title: 'Misión', type: 'text', rows: 3 }),
     defineField({ name: 'vision', title: 'Visión', type: 'text', rows: 3 }),

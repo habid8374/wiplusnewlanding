@@ -9,7 +9,7 @@
         "http://localhost:3300/cobertura",
         "http://localhost:3300/contacto"
       ],
-      "numberOfRuns": 3,
+      "numberOfRuns": 5,
       "settings": {
         "chromeFlags": "--no-sandbox --headless=new",
         "locale": "es-CO"

@@ -38,7 +38,9 @@ export function FinalCta({
           >
             {titulo}
           </h2>
-          <p className="relative mx-auto mt-4 max-w-2xl text-lg text-primary-100 xl:max-w-xl">{texto}</p>
+          <p className="relative mx-auto mt-4 max-w-2xl text-lg text-primary-100 xl:max-w-xl">
+            {texto}
+          </p>
           <div className="relative mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
             <WhatsAppLink numero={sitio.whatsapp} mensaje={mensaje} ubicacion={ubicacion} size="lg">
               Escríbenos por WhatsApp

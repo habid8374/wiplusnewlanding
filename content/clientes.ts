@@ -40,4 +40,4 @@ export const clientes: ClienteEmpresarial[] = [
   },
   { id: 'elecnor', nombre: 'Elecnor', logo: logo('elecnor.png', 'Elecnor', 678, 267) },
   { id: 'deltec', nombre: 'Deltec S.A.', logo: logo('deltec.png', 'Deltec S.A.', 588, 136) },
-].map((c) => ({ sector: null, logo: null, ...c }))
+].map((c) => ({ sector: null, ...c }))

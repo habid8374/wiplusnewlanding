@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { CallLink, PortalClientesLink, WhatsAppLink } from '@/components/analytics/TrackedLinks'
 import { FacebookIcon, InstagramIcon } from '@/components/icons/brands'
 import { Container } from '@/components/ui/Container'
+import { slugify } from '@/lib/cobertura/csv'
 import { legalNav, mainNav } from '@/lib/nav'
 import { telefonoEmpresas, telefonosClientes } from '@/lib/phone'
 import type { EnlaceInteres, SiteSettings } from '@/lib/types'
@@ -153,6 +154,20 @@ export function Footer({
               <li key={i.href}>
                 <Link href={i.href} className="hover:text-white hover:underline">
                   {i.label}
+                </Link>
+              </li>
+            ))}
+          </ul>
+          {/* Enlaces a la página de cada zona: ayudan a que Google la muestre en búsquedas locales. */}
+          <h2 className="mt-8 font-bold text-white">Internet en tu zona</h2>
+          <ul className="mt-4 space-y-2 text-sm">
+            {sitio.municipiosCobertura.map((m) => (
+              <li key={m}>
+                <Link
+                  href={`/cobertura/${slugify(m)}`}
+                  className="hover:text-white hover:underline"
+                >
+                  Internet en {m}
                 </Link>
               </li>
             ))}

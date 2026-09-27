@@ -172,3 +172,10 @@ test.describe('Páginas por zona (SEO local)', () => {
     expect(r?.status()).toBe(404)
   })
 })
+
+test('el pie enlaza la página de cada zona', async ({ page }) => {
+  await page.goto('/')
+  for (const slug of ['sabanalarga', 'hibacharo', 'lena', 'palmar-de-candelaria']) {
+    await expect(page.locator(`footer a[href="/cobertura/${slug}"]`)).toHaveCount(1)
+  }
+})

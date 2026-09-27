@@ -124,26 +124,40 @@ export function websiteJsonLd() {
   }
 }
 
-/** Product/Offer solo para planes con precio confirmado. */
+/**
+ * Planes de internet como `Service` con catálogo de ofertas (no `Product`): un plan de internet es un
+ * servicio, y `Product` hace que Google lo trate como ficha de comerciante (pide imagen, envío,
+ * devoluciones y reseñas, que no aplican). Solo planes con precio confirmado.
+ */
 export function planesJsonLd(planes: Plan[], zonas: string[]) {
-  return planes
-    .filter((p) => p.precio != null)
-    .map((p) => ({
-      '@context': 'https://schema.org',
-      '@type': 'Product',
-      name: `Internet fibra óptica ${p.velocidadMb} Mb — WIPLUS`,
-      description: p.idealPara,
-      brand: { '@type': 'Brand', name: 'WIPLUS Comunicaciones' },
-      offers: {
+  const conPrecio = planes.filter((p) => p.precio != null)
+  if (!conPrecio.length) return []
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'Service',
+    '@id': `${SITE_URL}/planes-hogar#servicio`,
+    serviceType: 'Internet por fibra óptica para el hogar',
+    name: 'Planes de internet hogar WIPLUS',
+    url: `${SITE_URL}/planes-hogar`,
+    provider: { '@id': `${SITE_URL}/#empresa` },
+    areaServed: zonas.map(zona),
+    hasOfferCatalog: {
+      '@type': 'OfferCatalog',
+      name: 'Planes de internet hogar',
+      itemListElement: conPrecio.map((p) => ({
         '@type': 'Offer',
+        name: p.nombre,
+        description: p.idealPara,
         price: p.precio,
         priceCurrency: 'COP',
-        availability: 'https://schema.org/InStock',
         url: `${SITE_URL}/planes-hogar#plan-${p.velocidadMb}`,
-        seller: { '@id': `${SITE_URL}/#empresa` },
-        areaServed: zonas.map(zona),
-      },
-    }))
+        itemOffered: {
+          '@type': 'Service',
+          name: `Internet fibra óptica ${p.velocidadMb} Mb`,
+        },
+      })),
+    },
+  }
 }
 
 export function faqJsonLd(faqs: Faq[]) {

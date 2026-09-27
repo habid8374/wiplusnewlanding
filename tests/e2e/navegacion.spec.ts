@@ -205,3 +205,14 @@ test('Planes de TV: planes con precio por WhatsApp y parrillas de canales', asyn
   // El menú principal está oculto en celular: se busca el enlace aunque no sea visible.
   await expect(page.locator('nav[aria-label="Principal"] a[href="/planes-tv"]')).toBeAttached()
 })
+
+test('datos estructurados: planes como Service (no Product) con precios en COP', async ({
+  page,
+}) => {
+  await page.goto('/planes-hogar')
+  const bloques = await page.locator('script[type="application/ld+json"]').allTextContents()
+  const todo = bloques.join('\n')
+  expect(todo).not.toContain('"Product"')
+  expect(todo).toContain('"OfferCatalog"')
+  expect(todo).toContain('"priceCurrency":"COP"')
+})

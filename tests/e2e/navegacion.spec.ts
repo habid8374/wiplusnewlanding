@@ -221,3 +221,10 @@ test('Plan Premium de TV incluye Win Sports+', async ({ page }) => {
   await page.goto('/planes-tv')
   await expect(page.locator('#tv-premium').getByRole('img', { name: /Win Sports\+/ })).toBeVisible()
 })
+
+test('Plan Flex de TV incluye Win Sports', async ({ page }) => {
+  await page.goto('/planes-tv')
+  await expect(
+    page.locator('#tv-flex').getByRole('img', { name: 'Logo de Win Sports' }),
+  ).toBeVisible()
+})

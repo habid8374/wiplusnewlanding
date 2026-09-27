@@ -145,6 +145,10 @@ export const planesTv: PlanTv[] = [
     nombre: 'Flex',
     descripcion: `${flex.length} canales nacionales, de noticias, series, cine y variedades.`,
     parrilla: 'flex',
+    incluye: {
+      nombre: 'Win Sports',
+      logo: { src: '/tv/win-sports.png', width: 400, height: 210 },
+    },
   },
   {
     id: 'premium',

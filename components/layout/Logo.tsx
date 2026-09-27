@@ -8,7 +8,7 @@ export function Logo({ className }: { className?: string }) {
       <Image
         src={logo}
         alt="WIPLUS Comunicaciones"
-        priority
+        loading="eager"
         sizes="180px"
         className="h-8 w-auto min-[400px]:h-9 sm:h-11"
       />

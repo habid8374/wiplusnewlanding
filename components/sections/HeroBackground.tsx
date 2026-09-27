@@ -34,7 +34,9 @@ export function HeroBackground() {
             src={s.src}
             alt=""
             fill
-            priority={i === 0}
+            // Next 16: `priority` está obsoleto; la primera foto (LCP) se pide de inmediato y con prioridad alta.
+            loading={i === 0 ? 'eager' : 'lazy'}
+            fetchPriority={i === 0 ? 'high' : 'low'}
             placeholder={i === 0 ? 'blur' : 'empty'}
             // Va bajo una capa de color: en celular basta una imagen más liviana (mejor LCP).
             sizes="(max-width: 768px) 60vw, 100vw"

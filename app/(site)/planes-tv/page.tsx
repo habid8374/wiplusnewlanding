@@ -98,6 +98,22 @@ export default async function PlanesTvPage() {
               <p className="text-sm font-bold tracking-wider text-primary-600 uppercase">Plan</p>
               <h3 className="text-3xl font-extrabold text-primary-900">{p.nombre}</h3>
               <p className="mt-3 flex-1 text-muted">{p.descripcion}</p>
+              {p.incluye && (
+                <div className="mt-5 rounded-2xl bg-primary-950 px-4 py-4">
+                  <p className="text-sm font-bold tracking-wider text-accent-300 uppercase">
+                    Incluye
+                  </p>
+                  <Image
+                    src={p.incluye.logo.src}
+                    width={p.incluye.logo.width}
+                    height={p.incluye.logo.height}
+                    sizes="200px"
+                    alt={`Logo de ${p.incluye.nombre}`}
+                    className="mx-auto mt-2 h-14 w-auto"
+                  />
+                  <p className="sr-only">{`Incluye ${p.incluye.nombre}`}</p>
+                </div>
+              )}
               <p className="mt-5 text-xl font-extrabold text-primary-900">Consulta el precio</p>
               <WhatsAppLink
                 numero={sitio.whatsapp}

@@ -216,3 +216,8 @@ test('datos estructurados: planes como Service (no Product) con precios en COP',
   expect(todo).toContain('"OfferCatalog"')
   expect(todo).toContain('"priceCurrency":"COP"')
 })
+
+test('Plan Premium de TV incluye Win Sports+', async ({ page }) => {
+  await page.goto('/planes-tv')
+  await expect(page.locator('#tv-premium').getByRole('img', { name: /Win Sports\+/ })).toBeVisible()
+})

@@ -13,7 +13,14 @@ export type ParrillaTv = {
   canales: string[]
 }
 
-export type PlanTv = { id: string; nombre: string; descripcion: string; parrilla?: string }
+export type PlanTv = {
+  id: string
+  nombre: string
+  descripcion: string
+  parrilla?: string
+  /** Canal o servicio destacado del plan (logo + texto). */
+  incluye?: { nombre: string; logo: { src: string; width: number; height: number } }
+}
 
 const flex = [
   'City TV',
@@ -143,5 +150,9 @@ export const planesTv: PlanTv[] = [
     id: 'premium',
     nombre: 'Premium',
     descripcion: 'La experiencia más completa, con deportes, cine e infantiles.',
+    incluye: {
+      nombre: 'Win Sports+',
+      logo: { src: '/tv/win-sports-plus.png', width: 480, height: 192 },
+    },
   },
 ]

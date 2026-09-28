@@ -20,6 +20,8 @@ export const mensajesWhatsApp = {
     `Hola WIPLUS, quiero saber si tienen cobertura de internet en mi dirección en ${municipio}.`,
   coberturaContratar: (barrio: string, municipio: string) =>
     `Hola WIPLUS, estoy en el barrio ${barrio}, ${municipio} y quiero contratar internet.`,
+  coberturaContratarMunicipio: (municipio: string) =>
+    `Hola WIPLUS, estoy en ${municipio} y quiero contratar internet.`,
   coberturaParcial: (barrio: string, municipio: string) =>
     `Hola WIPLUS, estoy en el barrio ${barrio}, ${municipio}. Quiero confirmar si llegan a mi dirección: `,
   empresas: () => 'Hola, quiero una cotización de internet para mi empresa.',

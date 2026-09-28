@@ -38,6 +38,7 @@ async function generarLocal() {
       departamento: b?.departamento ?? 'Atlántico',
       geo: b?.geo ?? null,
       whatsapp: b?.whatsapp ?? null,
+      coberturaTotal: b?.coberturaTotal ?? false,
       barrios: filas
         .filter((f) => slugify(f.municipio) === slugify(nombre))
         .map((f) => ({

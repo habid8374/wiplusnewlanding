@@ -2,6 +2,7 @@ import 'server-only'
 
 import { cache } from 'react'
 import * as local from '@/content'
+import { municipiosBase } from '@/content/municipios'
 import { enlaceSeguro } from '@/lib/safe-url'
 import { SHOW_EXAMPLES, WHATSAPP_OVERRIDE } from '@/lib/env'
 import type {
@@ -115,13 +116,18 @@ export const getClientes = cache(async (): Promise<ClienteEmpresarial[]> => {
  */
 export const getCobertura = cache(async (): Promise<Municipio[]> => {
   const cms = await fromSanity<Municipio[]>(
-    `*[_type == "municipio" && coalesce(activo, true)] | order(orden asc){"id": _id, "slug": coalesce(slug.current, ""), nombre, "departamento": coalesce(departamento, "Atlántico"), "geo": select(defined(geo.lat) => {"lat": geo.lat, "lng": geo.lng}, null), whatsapp, "barrios": *[_type == "barrio" && municipio._ref == ^._id && defined(estado)] | order(nombre asc){"id": _id, "slug": coalesce(slug.current, ""), nombre, "tipo": coalesce(tipo, "barrio"), estado, "alias": coalesce(alias, []), notaPublica, "demo": coalesce(demo, false)}}`,
+    `*[_type == "municipio" && coalesce(activo, true)] | order(orden asc){"id": _id, "slug": coalesce(slug.current, ""), nombre, "departamento": coalesce(departamento, "Atlántico"), "geo": select(defined(geo.lat) => {"lat": geo.lat, "lng": geo.lng}, null), whatsapp, coberturaTotal, "barrios": *[_type == "barrio" && municipio._ref == ^._id && defined(estado)] | order(nombre asc){"id": _id, "slug": coalesce(slug.current, ""), nombre, "tipo": coalesce(tipo, "barrio"), estado, "alias": coalesce(alias, []), notaPublica, "demo": coalesce(demo, false)}}`,
     'barrio',
   )
   const { mostrarMuestras } = await getConfigCobertura()
   return (cms ?? local.cobertura).map((m) => ({
     ...m,
     slug: m.slug || slugify(m.nombre),
+    // Sin valor en el CMS ⇒ el de content/municipios.ts (confirmado por WIPLUS).
+    coberturaTotal:
+      typeof m.coberturaTotal === 'boolean'
+        ? m.coberturaTotal
+        : municipiosBase.some((b) => b.coberturaTotal && slugify(b.nombre) === slugify(m.nombre)),
     barrios: m.barrios
       .filter((b) => SHOW_EXAMPLES || mostrarMuestras || !b.demo)
       .map((b) => ({ ...b, slug: b.slug || slugify(b.nombre) })),
@@ -130,7 +136,7 @@ export const getCobertura = cache(async (): Promise<Municipio[]> => {
 
 export const getConfigCobertura = cache(async (): Promise<ConfigCobertura> => {
   const cms = await fromSanity<Record<string, string | boolean | null>>(
-    `*[_id == "configCobertura"][0]{titulo, msgCubierto, msgParcial, msgProximamente, msgSinCobertura, msgNoAparece, mostrarAvisoDemo, mostrarMuestras}`,
+    `*[_id == "configCobertura"][0]{titulo, msgCubierto, msgParcial, msgProximamente, msgSinCobertura, msgNoAparece, msgTodoMunicipio, mostrarAvisoDemo, mostrarMuestras}`,
     'configCobertura',
   )
   const base = local.configCobertura
@@ -143,6 +149,7 @@ export const getConfigCobertura = cache(async (): Promise<ConfigCobertura> => {
       proximamente: texto(cms?.msgProximamente, base.mensajes.proximamente),
       sin_cobertura: texto(cms?.msgSinCobertura, base.mensajes.sin_cobertura),
       noAparece: texto(cms?.msgNoAparece, base.mensajes.noAparece),
+      todoMunicipio: texto(cms?.msgTodoMunicipio, base.mensajes.todoMunicipio),
     },
     mostrarAvisoDemo:
       typeof cms?.mostrarAvisoDemo === 'boolean' ? cms.mostrarAvisoDemo : base.mostrarAvisoDemo,

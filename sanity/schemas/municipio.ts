@@ -27,6 +27,14 @@ export const municipio = defineType({
       type: 'string',
       validation: (r) => r.regex(/^57\d{10}$/, { name: 'número colombiano' }),
     }),
+    defineField({
+      name: 'coberturaTotal',
+      title: 'Cobertura en todo el municipio',
+      description:
+        'Activo: el verificador responde «¡Sí llegamos!» aunque el barrio no esté en la lista (los barrios de la lista conservan su estado). Apágalo si solo hay red en algunos barrios.',
+      type: 'boolean',
+      initialValue: true,
+    }),
     defineField({ name: 'geo', title: 'Ubicación (centro del mapa)', type: 'geopoint' }),
     ordenField,
     // Modelo anterior (barrios dentro del municipio). Se conserva oculto para no mostrar

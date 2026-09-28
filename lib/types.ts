@@ -132,13 +132,15 @@ export type Municipio = {
   geo?: { lat: number; lng: number } | null
   /** WhatsApp propio del municipio; vacío = el general del sitio. */
   whatsapp?: string | null
+  /** Hay red en todo el municipio: un barrio que no está en la lista se responde como cubierto. */
+  coberturaTotal?: boolean
   barrios: Barrio[]
 }
 
 /** Textos del verificador (CMS › Cobertura › Configuración). {barrio} y {municipio} se reemplazan. */
 export type ConfigCobertura = {
   titulo: string
-  mensajes: Record<EstadoCobertura | 'noAparece', string>
+  mensajes: Record<EstadoCobertura | 'noAparece' | 'todoMunicipio', string>
   mostrarAvisoDemo: boolean
   /** Publica también los barrios de muestra (pruebas/demostraciones). */
   mostrarMuestras: boolean

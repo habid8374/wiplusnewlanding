@@ -39,10 +39,13 @@ puede reemplazar desde el CMS (`/studio`) sin programador.
 - [ ] En la ficha de Google Business Profile, agregar las 7 zonas como «Áreas de servicio».
 
 - [x] Barrios de muestra borrados de Sanity y aviso «Datos de muestra» apagado (sitio en producción).
-- [ ] **Recibir del cliente la lista real de barrios por municipio con su estado** (cubierto, parcial,
-      próximamente, sin cobertura) → reemplazar `data/barrios-cobertura.csv` y ejecutar
-      `npm run cobertura:importar -- --reemplazar-demo`, o pegarla en _Studio › Importar barrios_
-      marcando «Borrar antes los barrios de muestra». Hoy son de muestra (no se publican).
+- [x] WIPLUS confirmó cobertura en **todos los barrios** de los 7 municipios: cada municipio tiene
+      «Cobertura en todo el municipio» (`coberturaTotal`, editable en _Studio › Cobertura: municipio_).
+      El verificador responde «¡Sí llegamos a {barrio}! Tenemos cobertura en todo {municipio}» aunque
+      el barrio no esté en la lista; los barrios que sí estén en la lista conservan su estado.
+- [ ] (Opcional) Lista de barrios por municipio: ya no es obligatoria; sirve para que aparezcan como
+      sugerencias al escribir y en la página de cada zona. Se carga con `data/barrios-cobertura.csv` +
+      `npm run cobertura:importar` o en _Studio › Importar barrios_.
 - [ ] Poner `SANITY_WRITE_TOKEN` (tipo Secret) en Vercel para guardar las solicitudes de cobertura en
       el panel (sin él solo llegan por correo).
 

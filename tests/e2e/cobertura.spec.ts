@@ -64,33 +64,48 @@ test.describe('Verificador de cobertura', () => {
     ).toHaveAttribute('href', `https://wa.me/${WHATSAPP}?text=${encodeURIComponent(msg)}`)
   })
 
-  test('barrio que no aparece: formulario con API simulada', async ({ page }) => {
+  test('municipio con cobertura total: un barrio que no está en la lista responde que sí', async ({
+    page,
+  }) => {
+    const m = cobertura[0]
+    const { v } = await buscar(page, m.nombre, 'Barrio Inventado Xyz')
+    await expect(v.getByText(`Cobertura en todos los barrios de ${m.nombre}`)).toBeVisible()
+    await v.getByRole('button', { name: 'Verificar' }).click()
+    const r = v.getByTestId('resultado-cobertura')
+    await expect(r).toHaveAttribute('data-estado', 'cubierto_municipio')
+    await expect(r).toContainText(`Tenemos cobertura en todo ${m.nombre}`)
+    const msg = `Hola WIPLUS, estoy en el barrio Barrio Inventado Xyz, ${m.nombre} y quiero contratar internet.`
+    await expect(r.getByRole('link', { name: /Contratar por WhatsApp/ })).toHaveAttribute(
+      'href',
+      `https://wa.me/${WHATSAPP}?text=${encodeURIComponent(msg)}`,
+    )
+  })
+
+  test('«Avísame cuando lleguen»: formulario con API simulada', async ({ page }) => {
     let enviado: Record<string, unknown> | null = null
     await page.route('**/api/cobertura/solicitud', async (route) => {
       enviado = route.request().postDataJSON()
-      await route.fulfill({ json: { ok: true, mensaje: 'Un asesor te contactará.' } })
+      await route.fulfill({ json: { ok: true, mensaje: 'Te avisaremos.' } })
     })
-    const { v } = await buscar(page, cobertura[0].nombre, 'Barrio Inventado Xyz')
-    await v.getByRole('button', { name: 'Verificar' }).click()
+    const { municipio, barrio } = barrioCon('sin_cobertura')
+    const { v, input } = await buscar(page, municipio.nombre, barrio.nombre)
+    await input.press('Enter')
     const r = v.getByTestId('resultado-cobertura')
-    await expect(r).toHaveAttribute('data-estado', 'no_aparece')
+    await expect(r).toHaveAttribute('data-estado', 'sin_cobertura')
     const form = r.getByTestId('form-solicitudCobertura')
-    await expect(form.getByLabel(/Barrio o vereda/)).toHaveValue('Barrio Inventado Xyz')
     await form.getByLabel(/Nombre/).fill('Ana Pérez')
     await form.getByLabel(/Celular/).fill('3012133151')
     await form.getByRole('checkbox', { name: /Acepto la política/ }).check()
-    await form.getByRole('button', { name: 'Enviar' }).click()
+    await form.getByRole('button', { name: 'Avísame' }).click()
     await expect(r.getByTestId('form-solicitudCobertura-exito')).toBeVisible()
     expect(enviado).toMatchObject({
-      motivo: 'barrio_no_aparece',
-      municipio: cobertura[0].nombre,
-      barrio: 'Barrio Inventado Xyz',
+      motivo: 'avisame',
+      municipio: municipio.nombre,
+      barrio: barrio.nombre,
       aceptaPolitica: true,
     })
     const eventos = await page.evaluate(() => window.__wiplusEvents ?? [])
-    expect(eventos.map((e) => e.name)).toEqual(
-      expect.arrayContaining(['cobertura_no_aparece', 'cobertura_solicitud']),
-    )
+    expect(eventos.map((e) => e.name)).toEqual(expect.arrayContaining(['cobertura_solicitud']))
   })
 
   test('una URL compartida muestra el mismo resultado', async ({ page }) => {

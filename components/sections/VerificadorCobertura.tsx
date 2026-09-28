@@ -20,7 +20,12 @@ import { cn } from '@/lib/cn'
 import type { Barrio, ConfigCobertura, EstadoCobertura, Municipio } from '@/lib/types'
 import { mensajesWhatsApp } from '@/lib/whatsapp'
 
-type Resultado = { tipo: 'barrio'; barrio: Barrio } | { tipo: 'noAparece'; texto: string } | null
+type Resultado =
+  | { tipo: 'barrio'; barrio: Barrio }
+  | { tipo: 'noAparece'; texto: string }
+  /** El barrio no está en la lista, pero el municipio tiene cobertura total. */
+  | { tipo: 'todo'; texto: string }
+  | null
 
 /** Presentación de cada estado: el color nunca va solo (siempre con icono y texto). */
 const ESTADOS = {
@@ -124,8 +129,17 @@ export function VerificadorCobertura({
     if (!municipio) return
     setAbierto(false)
     setAviso('')
-    setResultado({ tipo: 'noAparece', texto: texto.trim() })
     actualizarUrl(municipio)
+    if (municipio.coberturaTotal) {
+      setResultado({ tipo: 'todo', texto: texto.trim() })
+      track('verificar_cobertura', {
+        municipio: municipio.nombre,
+        barrio: texto.trim(),
+        estado: 'cubierto_municipio',
+      })
+      return
+    }
+    setResultado({ tipo: 'noAparece', texto: texto.trim() })
     track('cobertura_no_aparece', { municipio: municipio.nombre, texto_buscado: texto.trim() })
   }
 
@@ -138,7 +152,8 @@ export function VerificadorCobertura({
       setAviso('Elige tu barrio en la lista o pulsa «¿No encuentras tu barrio?».')
       return
     }
-    if (texto.trim().length >= 2) return noAparece()
+    const t = texto.trim()
+    if (t.length >= 2 || (municipio?.coberturaTotal && !t)) return noAparece()
     setAviso('Escribe el nombre de tu barrio o vereda.')
     inputRef.current?.focus()
   }
@@ -214,6 +229,12 @@ export function VerificadorCobertura({
             </label>
           ))}
         </div>
+        {municipio.coberturaTotal && (
+          <p className="mt-3 inline-flex items-center gap-1.5 rounded-full bg-green-50 px-3 py-1 text-sm font-semibold text-green-900 ring-1 ring-green-200">
+            <CircleCheck className="size-4 text-green-700" aria-hidden />
+            Cobertura en todos los barrios de {municipio.nombre}
+          </p>
+        )}
       </fieldset>
 
       <div className="mt-4">
@@ -325,7 +346,11 @@ export function VerificadorCobertura({
       <div aria-live="polite">
         {resultado && (
           <TarjetaResultado
-            key={resultado.tipo === 'barrio' ? resultado.barrio.id : `no-${resultado.texto}`}
+            key={
+              resultado.tipo === 'barrio'
+                ? resultado.barrio.id
+                : `${resultado.tipo}-${municipio.slug}-${resultado.texto}`
+            }
             resultado={resultado}
             municipio={municipio}
             config={config}
@@ -349,6 +374,46 @@ function TarjetaResultado({
   numero: string
 }) {
   const claseForm = 'mt-4 rounded-2xl bg-white p-4 ring-1 ring-line sm:p-5'
+
+  if (resultado.tipo === 'todo') {
+    const e = ESTADOS.cubierto
+    const lugar = resultado.texto
+    const mensaje = lugar
+      ? reemplazar(config.mensajes.todoMunicipio, lugar, municipio.nombre)
+      : `¡Sí llegamos! Tenemos cobertura en todo ${municipio.nombre}.`
+    return (
+      <div
+        data-testid="resultado-cobertura"
+        data-estado="cubierto_municipio"
+        className={cn('mt-5 rounded-2xl p-4 ring-1 sm:p-5', e.caja)}
+      >
+        <p className="inline-flex items-center gap-1.5 text-xs font-bold tracking-wide uppercase">
+          <e.Icono className={cn('size-4', e.icono)} aria-hidden />
+          {e.etiqueta} · {lugar ? `${lugar}, ` : ''}
+          {municipio.nombre}
+        </p>
+        <p className="mt-2 text-lg font-extrabold text-primary-950">{mensaje}</p>
+        <div className="mt-4 flex flex-wrap gap-3">
+          <WhatsAppLink
+            numero={numero}
+            mensaje={
+              lugar
+                ? mensajesWhatsApp.coberturaContratar(lugar, municipio.nombre)
+                : mensajesWhatsApp.coberturaContratarMunicipio(municipio.nombre)
+            }
+            ubicacion="cobertura"
+            size="md"
+          >
+            Contratar por WhatsApp
+          </WhatsAppLink>
+          <ButtonLink href="/planes-hogar" variant="outline" size="md">
+            Ver planes
+            <ArrowRight className="size-4" aria-hidden />
+          </ButtonLink>
+        </div>
+      </div>
+    )
+  }
 
   if (resultado.tipo === 'noAparece') {
     return (

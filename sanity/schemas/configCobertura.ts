@@ -35,6 +35,12 @@ export const configCobertura = defineType({
     }),
     defineField({ name: 'msgNoAparece', title: 'Mensaje: el barrio no aparece', type: 'string' }),
     defineField({
+      name: 'msgTodoMunicipio',
+      title: 'Mensaje: municipio con cobertura total',
+      description: `Se muestra cuando el barrio no está en la lista pero el municipio tiene cobertura en todos sus barrios. ${ayuda}`,
+      type: 'string',
+    }),
+    defineField({
       name: 'mostrarMuestras',
       title: 'Mostrar los barrios de muestra en el sitio publicado',
       description:

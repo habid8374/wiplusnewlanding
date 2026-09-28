@@ -22,6 +22,7 @@ export function mutacionesMunicipios(filas: FilaCobertura[]): Mutacion[] {
         slug: { _type: 'slug', current: slugify(nombre) },
         departamento: b?.departamento ?? 'Atlántico',
         activo: true,
+        coberturaTotal: b?.coberturaTotal ?? false,
         orden: i + 1,
         ...(b?.geo ? { geo: { _type: 'geopoint', ...b.geo } } : {}),
       },

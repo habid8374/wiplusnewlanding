@@ -27,26 +27,39 @@ export function BarriosMunicipio({ municipio: m }: { municipio: Municipio }) {
     ...g,
     barrios: m.barrios.filter((b: Barrio) => b.estado === g.estado),
   })).filter((g) => g.barrios.length > 0)
+  const total = m.coberturaTotal && (
+    <p className="mt-3 flex items-start gap-2 font-semibold text-green-800">
+      <CircleCheck className="mt-0.5 size-5 shrink-0" aria-hidden />
+      Tenemos cobertura en todos los barrios de {m.nombre}.
+    </p>
+  )
   if (grupos.length === 0) {
     return (
-      <p className="mt-3 text-muted">
-        Tenemos servicio en {m.nombre}. Busca tu barrio en el verificador o escríbenos y te
-        confirmamos la cobertura.
-      </p>
+      total || (
+        <p className="mt-3 text-muted">
+          Tenemos servicio en {m.nombre}. Busca tu barrio en el verificador o escríbenos y te
+          confirmamos la cobertura.
+        </p>
+      )
     )
   }
-  return grupos.map((g) => (
-    <div key={g.estado}>
-      <h4 className={`mt-5 flex items-center gap-2 font-bold ${g.clase}`}>
-        <g.Icono className="size-5" aria-hidden /> {g.titulo}
-      </h4>
-      <ul className="mt-2 flex flex-wrap gap-2">
-        {g.barrios.map((b) => (
-          <li key={b.id} className={`rounded-full px-3 py-1 text-sm ring-1 ${CHIP[b.estado]}`}>
-            {b.nombre} <ExampleBadge show={b.demo} />
-          </li>
-        ))}
-      </ul>
-    </div>
-  ))
+  return (
+    <>
+      {total}
+      {grupos.map((g) => (
+        <div key={g.estado}>
+          <h4 className={`mt-5 flex items-center gap-2 font-bold ${g.clase}`}>
+            <g.Icono className="size-5" aria-hidden /> {g.titulo}
+          </h4>
+          <ul className="mt-2 flex flex-wrap gap-2">
+            {g.barrios.map((b) => (
+              <li key={b.id} className={`rounded-full px-3 py-1 text-sm ring-1 ${CHIP[b.estado]}`}>
+                {b.nombre} <ExampleBadge show={b.demo} />
+              </li>
+            ))}
+          </ul>
+        </div>
+      ))}
+    </>
+  )
 }

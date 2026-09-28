@@ -37,7 +37,7 @@ export const sitio: SiteSettings = {
   },
   // Portal de facturación y pagos (WispHub).
   // TODO(WIPLUS): si WispHub les asignó una dirección propia del portal de clientes, ponerla aquí o en el CMS.
-  portalClientes: 'https://wisphub.net',
+  portalClientes: 'https://wisphub.net/pagos/',
   experienciaAnios: 7,
   // Zonas con cobertura confirmadas por WIPLUS.
   municipiosCobertura: [

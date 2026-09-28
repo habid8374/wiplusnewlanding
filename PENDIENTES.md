@@ -65,7 +65,7 @@ puede reemplazar desde el CMS (`/studio`) sin programador.
 ## Pagos
 
 - [x] Portal de clientes (WispHub) enlazado en «Mi factura» (barra superior, menú, pie) y en /pagos.
-- [ ] Confirmar la dirección exacta del portal de clientes de WIPLUS en WispHub (hoy: https://wisphub.net).
+- [x] Portal de pagos de WispHub confirmado por WIPLUS: https://wisphub.net/pagos/
       Se cambia en CMS › Datos de contacto › Portal de clientes.
 
 - [x] Cuenta de ahorros Bancolombia 12096593587 (Wiplus Comunicaciones), comprobante por WhatsApp.

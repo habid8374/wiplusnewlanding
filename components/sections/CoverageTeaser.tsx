@@ -1,6 +1,7 @@
 import { ArrowRight, MapPin } from 'lucide-react'
 import { ButtonLink } from '@/components/ui/ButtonLink'
 import { Section } from '@/components/ui/Section'
+import { listaNatural } from '@/lib/texto'
 import type { ConfigCobertura, Municipio } from '@/lib/types'
 import { VerificadorCobertura } from './VerificadorCobertura'
 
@@ -21,7 +22,7 @@ export function CoverageTeaser({
             Cobertura
           </p>
           <h2 id="cobertura-titulo" className="text-3xl font-extrabold tracking-tight sm:text-4xl">
-            Estamos en {municipios.map((m) => m.nombre).join(' y ')}
+            Estamos en {listaNatural(municipios.map((m) => m.nombre))}
           </h2>
           <p className="mt-4 text-lg text-primary-100">
             Seguimos ampliando nuestra red de fibra óptica. Verifica si ya llegamos a tu barrio o

@@ -4,6 +4,7 @@ import { WhatsAppLink } from '@/components/analytics/TrackedLinks'
 import { ButtonLink } from '@/components/ui/ButtonLink'
 import { Container } from '@/components/ui/Container'
 import { formatCOP } from '@/lib/phone'
+import { listaNatural } from '@/lib/texto'
 import type { Plan, SiteSettings } from '@/lib/types'
 import { mensajesWhatsApp } from '@/lib/whatsapp'
 import { HeroBackground } from './HeroBackground'
@@ -43,15 +44,14 @@ export function Hero({ sitio, planes }: { sitio: SiteSettings; planes: Plan[] })
             <MapPin className="size-4" aria-hidden />
             {sitio.municipiosCobertura.length > 2
               ? `${sitio.municipiosCobertura.slice(0, 2).join(', ')} y ${sitio.municipiosCobertura.length - 2} zonas más`
-              : sitio.municipiosCobertura.join(' y ')}
+              : listaNatural(sitio.municipiosCobertura)}
             , Atlántico
           </p>
           <h1
             id="hero-titulo"
             className="mt-4 pr-14 text-[2.15rem] leading-[1.08] font-extrabold tracking-tight text-balance sm:pr-28 sm:text-5xl lg:pr-0 lg:text-6xl"
           >
-            Internet por fibra óptica en <span className="text-accent-400">Sabanalarga</span> y{' '}
-            <span className="text-accent-400">Luruaco</span>
+            Internet por <span className="text-accent-400">fibra óptica</span>
           </h1>
           <p className="mt-4 max-w-xl text-lg text-pretty text-primary-100 sm:mt-5 sm:text-xl">
             Conexión estable para tu casa o tu negocio, con soporte técnico local e instalación

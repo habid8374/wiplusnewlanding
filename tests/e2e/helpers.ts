@@ -1,7 +1,7 @@
 import type { Page } from '@playwright/test'
 
 export const PAGINAS = [
-  { path: '/', h1: /Internet por fibra óptica en Sabanalarga/ },
+  { path: '/', h1: /^Internet por fibra óptica$/ },
   { path: '/planes-hogar', h1: /Planes de internet para tu hogar/ },
   { path: '/planes-empresas', h1: /Internet para empresas/ },
   { path: '/planes-tv', h1: /TV en vivo con NUPLIN/ },

@@ -228,3 +228,9 @@ test('Plan Flex de TV incluye Win Sports', async ({ page }) => {
     page.locator('#tv-flex').getByRole('img', { name: 'Logo de Win Sports' }),
   ).toBeVisible()
 })
+
+test('/llms.txt responde en Markdown para asistentes de IA', async ({ request }) => {
+  const r = await request.get('/llms.txt')
+  expect(r.status()).toBe(200)
+  expect(r.headers()['content-type']).toContain('text/markdown')
+})

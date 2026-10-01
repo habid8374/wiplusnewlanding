@@ -20,14 +20,16 @@ import {
   getSiteSettings,
   getTestimonios,
 } from '@/lib/content'
+import { agruparZonas } from '@/lib/planes-zona'
 import { pageMetadata, planesJsonLd } from '@/lib/seo'
+import { listaNatural } from '@/lib/texto'
 import type { Plan } from '@/lib/types'
 import { mensajesWhatsApp } from '@/lib/whatsapp'
 
 export const metadata: Metadata = pageMetadata({
   title: 'Internet por fibra óptica en Sabanalarga y Luruaco | WIPLUS Comunicaciones',
   description:
-    'Internet por fibra óptica en Sabanalarga, Luruaco, La Peña, Aguada de Pablo, Hibácharo, Leña y Palmar de Candelaria (Atlántico). Planes de 100 a 300 Mb desde $60.000, soporte local y contratación por WhatsApp.',
+    'Internet por fibra óptica en Sabanalarga, Luruaco, La Peña, Aguada de Pablo, Hibácharo, Leña y Palmar de Candelaria (Atlántico). Planes hasta 300 Mb, soporte técnico local y contratación por WhatsApp.',
   path: '/',
   absoluteTitle: true,
 })
@@ -56,14 +58,14 @@ export default async function HomePage() {
 
   return (
     <>
-      <JsonLd data={planesJsonLd(planes, sitio.municipiosCobertura)} />
+      <JsonLd data={planesJsonLd(planes, agruparZonas(municipios).generales)} />
       <Hero sitio={sitio} planes={planes} />
 
       <Section
         id="planes"
         eyebrow="Planes hogar"
         title="Elige la velocidad para tu casa"
-        description="Todos nuestros planes son por fibra óptica. Toca “Lo quiero” y te atendemos por WhatsApp."
+        description={`Precios para ${listaNatural(agruparZonas(municipios).generales)}. Toca “Lo quiero” y te atendemos por WhatsApp.`}
       >
         <ul className="grid gap-6 pt-3 sm:grid-cols-2 lg:grid-cols-4">
           {destacados.map((plan) => (
@@ -74,7 +76,7 @@ export default async function HomePage() {
         </ul>
         <div className="mt-10 text-center">
           <ButtonLink href="/planes-hogar" variant="outline">
-            Ver todos los planes y comparar
+            Ver los planes de cada municipio
             <ArrowRight className="size-5" aria-hidden />
           </ButtonLink>
         </div>

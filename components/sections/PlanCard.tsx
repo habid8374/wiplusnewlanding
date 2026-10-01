@@ -11,20 +11,24 @@ export function PlanCard({
   plan,
   whatsapp,
   ubicacion,
+  zona,
   headingLevel = 'h3',
 }: {
   plan: Plan
   whatsapp: string
   ubicacion: string
+  /** Zona con planes propios: va en el mensaje de WhatsApp y en el id del ancla. */
+  zona?: { slug: string; nombre: string }
   headingLevel?: 'h2' | 'h3'
 }) {
   const Heading = headingLevel
   const destacado = plan.destacado
+  const ancla = `plan-${zona ? `${zona.slug}-` : ''}${plan.velocidadMb}`
   return (
     <TrackPlanView plan={`${plan.velocidadMb} Mb`} ubicacion={ubicacion} className="h-full">
       <article
-        id={`plan-${plan.velocidadMb}`}
-        aria-labelledby={`plan-${plan.velocidadMb}-${ubicacion}-titulo`}
+        id={ancla}
+        aria-labelledby={`${ancla}-${ubicacion}-titulo`}
         className={cn(
           'relative flex h-full flex-col rounded-3xl border bg-white p-6 shadow-card transition-shadow hover:shadow-card-hover',
           destacado ? 'border-primary-500 ring-2 ring-primary-500' : 'border-line',
@@ -37,7 +41,7 @@ export function PlanCard({
           </p>
         )}
         <Heading
-          id={`plan-${plan.velocidadMb}-${ubicacion}-titulo`}
+          id={`${ancla}-${ubicacion}-titulo`}
           className="text-sm font-bold tracking-wider text-primary-600 uppercase"
         >
           <span className="sr-only">Plan de internet de </span>
@@ -63,7 +67,7 @@ export function PlanCard({
             </p>
           )}
         </div>
-        <p className="mt-3 text-sm text-muted">{plan.idealPara}</p>
+        {plan.idealPara && <p className="mt-3 text-sm text-muted">{plan.idealPara}</p>}
         <ul className="mt-5 space-y-2.5 text-sm">
           {plan.beneficios.map((b) => (
             <li key={b} className="flex gap-2">
@@ -75,7 +79,7 @@ export function PlanCard({
         <div className="mt-auto pt-6">
           <WhatsAppLink
             numero={whatsapp}
-            mensaje={mensajesWhatsApp.plan(plan.velocidadMb)}
+            mensaje={mensajesWhatsApp.plan(plan.velocidadMb, zona?.nombre)}
             ubicacion={ubicacion}
             plan={`${plan.velocidadMb} Mb`}
             className="w-full"

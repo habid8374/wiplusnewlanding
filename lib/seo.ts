@@ -173,7 +173,8 @@ export function faqJsonLd(faqs: Faq[]) {
 }
 
 /** Servicio de internet en una zona (páginas /cobertura/<zona>). */
-export function servicioZonaJsonLd(nombre: string, slug: string) {
+export function servicioZonaJsonLd(nombre: string, slug: string, planes: Plan[] = []) {
+  const conPrecio = planes.filter((p) => p.precio != null)
   return {
     '@context': 'https://schema.org',
     '@type': 'Service',
@@ -182,6 +183,20 @@ export function servicioZonaJsonLd(nombre: string, slug: string) {
     url: absoluteUrl(`/cobertura/${slug}`),
     provider: { '@id': `${SITE_URL}/#empresa` },
     areaServed: zona(nombre),
+    ...(conPrecio.length && {
+      hasOfferCatalog: {
+        '@type': 'OfferCatalog',
+        name: `Planes de internet en ${nombre}`,
+        itemListElement: conPrecio.map((p) => ({
+          '@type': 'Offer',
+          name: p.nombre,
+          price: p.precio,
+          priceCurrency: 'COP',
+          url: absoluteUrl(`/cobertura/${slug}#planes`),
+          itemOffered: { '@type': 'Service', name: `Internet fibra óptica ${p.velocidadMb} Mb` },
+        })),
+      },
+    }),
   }
 }
 

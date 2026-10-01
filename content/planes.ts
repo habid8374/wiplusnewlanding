@@ -5,7 +5,7 @@ import type { Plan } from '@/lib/types'
  * TODO(WIPLUS): valor de la suscripción (instalación): en el volante está en blanco.
  * TODO(WIPLUS): confirmar qué incluye cada plan y cuál destacar (hoy: 200 Mb como «Recomendado»).
  */
-const beneficiosBase = [
+export const beneficiosBase = [
   'Conexión por fibra óptica',
   'Soporte técnico local en Sabanalarga',
   'Atención por WhatsApp y teléfono',

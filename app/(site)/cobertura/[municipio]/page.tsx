@@ -7,11 +7,13 @@ import { JsonLd } from '@/components/seo/JsonLd'
 import { BarriosMunicipio } from '@/components/sections/BarriosMunicipio'
 import { MapEmbed } from '@/components/sections/MapEmbed'
 import { PlanCard } from '@/components/sections/PlanCard'
+import { PlanesConsulta } from '@/components/sections/PlanesConsulta'
 import { VerificadorCobertura } from '@/components/sections/VerificadorCobertura'
 import { PageHero } from '@/components/ui/PageHero'
 import { Section } from '@/components/ui/Section'
 import { getCobertura, getConfigCobertura, getPlanes, getSiteSettings } from '@/lib/content'
-import { formatCOP } from '@/lib/phone'
+import { telefonoPrincipal } from '@/lib/phone'
+import { resumenPlanesZona } from '@/lib/planes-zona'
 import { pageMetadata, servicioZonaJsonLd } from '@/lib/seo'
 import { mensajesWhatsApp } from '@/lib/whatsapp'
 
@@ -25,25 +27,22 @@ export async function generateStaticParams() {
 }
 
 async function datos(slug: string) {
-  const [municipios, planes] = await Promise.all([getCobertura(), getPlanes()])
+  const [municipios, generales] = await Promise.all([getCobertura(), getPlanes()])
   const municipio = municipios.find((m) => m.slug === slug)
-  const precios = planes.flatMap((p) => (p.precio != null ? [p.precio] : []))
-  const desde = precios.length ? formatCOP(Math.min(...precios)) : null
-  const maxMb = Math.max(...planes.map((p) => p.velocidadMb))
-  return { municipios, planes, municipio, desde, maxMb }
+  return { municipios, municipio, zona: resumenPlanesZona(slug, generales) }
 }
 
 export async function generateMetadata({
   params,
 }: PageProps<'/cobertura/[municipio]'>): Promise<Metadata> {
   const { municipio: slug } = await params
-  const { municipio: m, desde, maxMb } = await datos(slug)
+  const { municipio: m, zona } = await datos(slug)
   if (!m) return {}
   return pageMetadata({
     title: `Internet por fibra óptica en ${m.nombre}, ${m.departamento}`,
     description:
       `WIPLUS lleva internet por fibra óptica a hogares y empresas de ${m.nombre} (${m.departamento}): ` +
-      `planes hasta ${maxMb} Mb${desde ? ` desde ${desde} al mes` : ''}, soporte técnico local y ` +
+      `${zona.texto}, soporte técnico local y ` +
       `contratación por WhatsApp. Verifica la cobertura en tu barrio.`,
     path: `/cobertura/${m.slug}`,
   })
@@ -51,7 +50,7 @@ export async function generateMetadata({
 
 export default async function MunicipioPage({ params }: PageProps<'/cobertura/[municipio]'>) {
   const { municipio: slug } = await params
-  const [{ municipios, planes, municipio: m, desde, maxMb }, sitio, config] = await Promise.all([
+  const [{ municipios, municipio: m, zona }, sitio, config] = await Promise.all([
     datos(slug),
     getSiteSettings(),
     getConfigCobertura(),
@@ -65,11 +64,11 @@ export default async function MunicipioPage({ params }: PageProps<'/cobertura/[m
 
   return (
     <>
-      <JsonLd data={servicioZonaJsonLd(m.nombre, m.slug)} />
+      <JsonLd data={servicioZonaJsonLd(m.nombre, m.slug, zona.planes)} />
       <PageHero
         crumbs={crumbs}
         title={`Internet por fibra óptica en ${m.nombre}`}
-        description={`Planes para tu hogar y tu empresa en ${m.nombre}, ${m.departamento}: hasta ${maxMb} Mb${desde ? ` desde ${desde} al mes` : ''}, con soporte técnico local de nuestro equipo en Sabanalarga.`}
+        description={`Internet para tu hogar y tu empresa en ${m.nombre}, ${m.departamento}: ${zona.texto}, con soporte técnico local de nuestro equipo en Sabanalarga.`}
       >
         <WhatsAppLink
           numero={m.whatsapp || sitio.whatsapp}
@@ -110,17 +109,32 @@ export default async function MunicipioPage({ params }: PageProps<'/cobertura/[m
       </Section>
 
       <Section id="planes" title={`Planes de internet en ${m.nombre}`}>
-        <ul className="flex flex-wrap justify-center gap-6 pt-3">
-          {planes.map((plan) => (
-            <li key={plan.id} className="w-full sm:w-[calc(50%-0.75rem)] lg:w-[calc(33.333%-1rem)]">
-              <PlanCard
-                plan={plan}
-                whatsapp={m.whatsapp || sitio.whatsapp}
-                ubicacion={`zona_${m.slug}`}
-              />
-            </li>
-          ))}
-        </ul>
+        {zona.tipo === 'consulta' ? (
+          <PlanesConsulta
+            zonas={[m.nombre]}
+            desdeMb={zona.desdeMb}
+            hastaMb={zona.hastaMb}
+            whatsapp={m.whatsapp || sitio.whatsapp}
+            telefono={telefonoPrincipal(sitio)?.numero}
+            ubicacion={`zona_${m.slug}`}
+          />
+        ) : (
+          <ul className="flex flex-wrap justify-center gap-6 pt-3">
+            {zona.planes.map((plan) => (
+              <li
+                key={plan.id}
+                className="w-full sm:w-[calc(50%-0.75rem)] lg:w-[calc(33.333%-1rem)]"
+              >
+                <PlanCard
+                  plan={plan}
+                  whatsapp={m.whatsapp || sitio.whatsapp}
+                  ubicacion={`zona_${m.slug}`}
+                  zona={zona.tipo === 'propios' ? { slug: m.slug, nombre: m.nombre } : undefined}
+                />
+              </li>
+            ))}
+          </ul>
+        )}
       </Section>
 
       {otras.length > 0 && (

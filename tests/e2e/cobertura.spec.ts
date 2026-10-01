@@ -194,3 +194,40 @@ test('el pie enlaza la página de cada zona', async ({ page }) => {
     await expect(page.locator(`footer a[href="/cobertura/${slug}"]`)).toHaveCount(1)
   }
 })
+
+test.describe('Planes por zona', () => {
+  test('Luruaco muestra sus propios planes y precios', async ({ page }) => {
+    await page.goto('/cobertura/luruaco')
+    const planes = page.locator('#planes')
+    for (const [mb, precio] of [
+      [50, '60.000'],
+      [100, '80.000'],
+      [150, '100.000'],
+      [200, '120.000'],
+    ] as const) {
+      await expect(planes.locator(`#plan-luruaco-${mb}`)).toContainText(precio)
+    }
+    await expect(planes.locator('#plan-luruaco-50 a[data-plan="50"]')).toHaveAttribute(
+      'href',
+      new RegExp(encodeURIComponent('plan de 50 Mb en Luruaco')),
+    )
+  })
+
+  for (const slug of ['la-pena', 'aguada-de-pablo', 'hibacharo', 'lena', 'palmar-de-candelaria']) {
+    test(`${slug}: planes de 20 a 100 Mb sin precio`, async ({ page }) => {
+      await page.goto(`/cobertura/${slug}`)
+      const planes = page.locator('#planes')
+      await expect(planes).toContainText('Planes desde 20 hasta 100 Mb')
+      await expect(planes).toContainText('Consulta el precio')
+      await expect(planes).not.toContainText('$')
+      await expect(planes.getByRole('link', { name: /Consultar por WhatsApp/ })).toBeVisible()
+    })
+  }
+
+  test('Planes Hogar separa los planes por municipio', async ({ page }) => {
+    await page.goto('/planes-hogar')
+    await expect(page.locator('#planes h2')).toHaveText('Planes en Sabanalarga')
+    await expect(page.locator('#planes-luruaco')).toContainText('120.000')
+    await expect(page.locator('#otras-zonas')).toContainText('Planes desde 20 hasta 100 Mb')
+  })
+})

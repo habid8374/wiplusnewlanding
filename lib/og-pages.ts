@@ -1,6 +1,6 @@
 import { cobertura, planes, sitio } from '@/content'
 import type { OgIconName } from './og-icons'
-import { formatCOP } from './phone'
+import { resumenPlanesZona } from './planes-zona'
 
 /**
  * Contenido de la tarjeta para compartir de cada página (Open Graph / WhatsApp / Facebook / X).
@@ -17,14 +17,13 @@ export type OgPage = {
 }
 
 const velocidades = [...new Set(planes.map((p) => p.velocidadMb))].sort((a, b) => a - b)
-const precios = planes.flatMap((p) => (p.precio != null ? [p.precio] : []))
-const desde = precios.length ? ` Desde ${formatCOP(Math.min(...precios))} al mes.` : ''
+const capitalizar = (t: string) => t.charAt(0).toUpperCase() + t.slice(1)
 
 export const OG_PAGES: Record<string, OgPage> = {
   'planes-hogar': {
     seccion: 'Planes hogar',
-    titulo: `Internet por fibra de ${velocidades[0]} a ${velocidades.at(-1)} Mb`,
-    subtitulo: `Elige tu velocidad y contrata por WhatsApp.${desde}`,
+    titulo: `Internet por fibra hasta ${velocidades.at(-1)} Mb`,
+    subtitulo: 'Planes para cada municipio. Elige tu velocidad y contrata por WhatsApp.',
     icono: 'gauge',
     foto: 'fibra-puntas',
     chips: velocidades.map((v) => `${v} Mb`),
@@ -121,7 +120,7 @@ export const OG_PAGES: Record<string, OgPage> = {
       {
         seccion: 'Cobertura',
         titulo: `Internet por fibra óptica en ${m.nombre}`,
-        subtitulo: `Planes de ${velocidades[0]} a ${velocidades.at(-1)} Mb.${desde} Verifica tu barrio.`,
+        subtitulo: `${capitalizar(resumenPlanesZona(m.slug, planes).texto)}. Verifica tu barrio.`,
         icono: 'mapPin',
       } satisfies OgPage,
     ]),

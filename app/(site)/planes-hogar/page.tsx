@@ -7,40 +7,47 @@ import { JsonLd } from '@/components/seo/JsonLd'
 import { FaqList } from '@/components/sections/FaqList'
 import { FinalCta } from '@/components/sections/FinalCta'
 import { PlanCard } from '@/components/sections/PlanCard'
+import { PlanesConsulta } from '@/components/sections/PlanesConsulta'
 import { PageHero } from '@/components/ui/PageHero'
 import { Section } from '@/components/ui/Section'
-import { getFaqs, getPlanes, getSiteSettings } from '@/lib/content'
-import { formatCOP } from '@/lib/phone'
+import { getCobertura, getFaqs, getPlanes, getSiteSettings } from '@/lib/content'
+import { formatCOP, telefonoPrincipal } from '@/lib/phone'
+import { agruparZonas } from '@/lib/planes-zona'
 import { pageMetadata, planesJsonLd } from '@/lib/seo'
+import { listaNatural } from '@/lib/texto'
 import { mensajesWhatsApp } from '@/lib/whatsapp'
 
 export const metadata: Metadata = pageMetadata({
   title: 'Planes de internet hogar en Sabanalarga y Luruaco',
   description:
-    'Planes de internet por fibra óptica para el hogar de 100 a 300 Mb desde $60.000 al mes en Sabanalarga, Luruaco y sus alrededores (Atlántico). Compara velocidades y contrata por WhatsApp en minutos.',
+    'Planes de internet por fibra óptica para el hogar en Sabanalarga, Luruaco, La Peña, Aguada de Pablo, Hibácharo, Leña y Palmar de Candelaria (Atlántico). Precios por municipio y contratación por WhatsApp en minutos.',
   path: '/planes-hogar',
 })
 
 export default async function PlanesHogarPage() {
-  const [sitio, planes, faqs] = await Promise.all([
+  const [sitio, planes, faqs, municipios] = await Promise.all([
     getSiteSettings(),
     getPlanes(),
     getFaqs('planes'),
+    getCobertura(),
   ])
+  const zonas = agruparZonas(municipios)
+  const enGenerales = listaNatural(zonas.generales)
+  const telefono = telefonoPrincipal(sitio)?.numero
   const beneficios = Array.from(new Set(planes.flatMap((p) => p.beneficios)))
 
   return (
     <>
-      <JsonLd data={planesJsonLd(planes, sitio.municipiosCobertura)} />
+      <JsonLd data={planesJsonLd(planes, zonas.generales)} />
       <PageHero
         crumbs={[{ name: 'Planes Hogar', path: '/planes-hogar' }]}
         title="Planes de internet para tu hogar"
-        description="Fibra óptica en Sabanalarga, Luruaco y sus alrededores. Elige tu velocidad, toca “Lo quiero” y te atendemos por WhatsApp."
+        description="Fibra óptica en Sabanalarga, Luruaco y sus alrededores. Busca tu municipio, elige tu velocidad, toca “Lo quiero” y te atendemos por WhatsApp."
       />
 
       <Section
         id="planes"
-        title="Nuestros planes"
+        title={`Planes en ${enGenerales}`}
         description="Todos los planes incluyen conexión por fibra óptica y soporte técnico local."
       >
         <ul className="flex flex-wrap justify-center gap-6 pt-3">
@@ -52,7 +59,49 @@ export default async function PlanesHogarPage() {
         </ul>
       </Section>
 
-      <Section id="comparar" title="Compara los planes" tone="surface">
+      {zonas.propios.map((z) => (
+        <Section
+          key={z.slug}
+          id={`planes-${z.slug}`}
+          title={`Planes en ${z.nombre}`}
+          tone="surface"
+        >
+          <ul className="flex flex-wrap justify-center gap-6 pt-3">
+            {z.planes.map((plan) => (
+              <li
+                key={plan.id}
+                className="w-full sm:w-[calc(50%-0.75rem)] lg:w-[calc(25%-1.125rem)]"
+              >
+                <PlanCard
+                  plan={plan}
+                  whatsapp={sitio.whatsapp}
+                  ubicacion="planes_hogar"
+                  zona={{ slug: z.slug, nombre: z.nombre }}
+                />
+              </li>
+            ))}
+          </ul>
+        </Section>
+      ))}
+
+      {zonas.consulta.map((c) => (
+        <Section
+          key={c.nombres.join()}
+          id="otras-zonas"
+          title={`Planes en ${listaNatural(c.nombres)}`}
+        >
+          <PlanesConsulta
+            zonas={c.nombres}
+            desdeMb={c.desdeMb}
+            hastaMb={c.hastaMb}
+            whatsapp={sitio.whatsapp}
+            telefono={telefono}
+            ubicacion="planes_hogar_consulta"
+          />
+        </Section>
+      ))}
+
+      <Section id="comparar" title={`Compara los planes de ${enGenerales}`} tone="surface">
         <div className="relative overflow-x-auto rounded-2xl border border-line bg-white shadow-card">
           <table className="w-full min-w-[40rem] text-left text-sm">
             <caption className="sr-only">Comparativo de planes de internet hogar de WIPLUS</caption>

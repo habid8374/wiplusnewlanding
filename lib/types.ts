@@ -70,6 +70,12 @@ export type Plan = {
   ejemplo?: boolean
 }
 
+/** Planes que se ofrecen en una zona de cobertura (content/planes-zonas.ts). */
+export type PlanesZona =
+  | { tipo: 'generales' }
+  | { tipo: 'propios'; planes: Plan[] }
+  | { tipo: 'consulta'; desdeMb: number; hastaMb: number }
+
 export type Faq = {
   id: string
   pregunta: string

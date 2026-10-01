@@ -406,7 +406,7 @@ function TarjetaResultado({
           >
             Contratar por WhatsApp
           </WhatsAppLink>
-          <ButtonLink href="/planes-hogar" variant="outline" size="md">
+          <ButtonLink href={`/cobertura/${municipio.slug}#planes`} variant="outline" size="md">
             Ver planes
             <ArrowRight className="size-4" aria-hidden />
           </ButtonLink>
@@ -465,7 +465,7 @@ function TarjetaResultado({
           >
             Contratar por WhatsApp
           </WhatsAppLink>
-          <ButtonLink href="/planes-hogar" variant="outline" size="md">
+          <ButtonLink href={`/cobertura/${municipio.slug}#planes`} variant="outline" size="md">
             Ver planes
             <ArrowRight className="size-4" aria-hidden />
           </ButtonLink>

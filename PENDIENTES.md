@@ -13,6 +13,11 @@ puede reemplazar desde el CMS (`/studio`) sin programador.
 
 - [x] Planes y precios (volante oficial): 100 Mb $60.000 · 150 Mb $70.000 · 200 Mb $90.000 ·
       250 Mb $120.000 · 300 Mb $140.000.
+- [x] Planes por municipio (WIPLUS, 2026-10-01): Sabanalarga = planes generales (100–300 Mb);
+      Luruaco = 50 Mb $60.000, 100 Mb $80.000, 150 Mb $100.000, 200 Mb $120.000 (volante de Luruaco);
+      La Peña, Aguada de Pablo, Hibácharo, Leña y Palmar de Candelaria = 20 a 100 Mb, precio por
+      consulta. Se editan en `content/planes-zonas.ts` (aún no en el CMS).
+- [ ] Velocidades exactas y precios de los planes de 20 a 100 Mb (si WIPLUS quiere publicarlos).
 - [ ] **Valor de la suscripción (instalación)**: en el volante está en blanco.
 - [ ] Qué incluye cada plan (router/ONT, soporte, permanencia, etc.).
 - [ ] Confirmar el plan destacado (hoy: 200 Mb, etiqueta «Recomendado»).

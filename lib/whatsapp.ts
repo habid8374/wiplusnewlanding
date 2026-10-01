@@ -6,8 +6,12 @@ export const mensajesWhatsApp = {
   general: () => 'Hola WIPLUS, quiero información sobre sus planes de internet.',
   contratar: () =>
     'Hola WIPLUS, quiero contratar internet por fibra óptica. ¿Me pueden dar información?',
-  plan: (velocidadMb: number) =>
-    `Hola WIPLUS, me interesa el plan de ${velocidadMb} Mb. ¿Me pueden dar información?`,
+  plan: (velocidadMb: number, zona?: string) =>
+    `Hola WIPLUS, me interesa el plan de ${velocidadMb} Mb${zona ? ` en ${zona}` : ''}. ¿Me pueden dar información?`,
+  planesZona: (zona?: string) =>
+    zona
+      ? `Hola WIPLUS, estoy en ${zona} y quiero conocer los planes de internet y sus precios.`
+      : 'Hola WIPLUS, quiero conocer los planes de internet y sus precios en mi municipio.',
   tv: (plan?: string) =>
     plan
       ? `Hola WIPLUS, me interesa el plan ${plan} de TV con NUPLIN. ¿Me dan el precio y la información?`

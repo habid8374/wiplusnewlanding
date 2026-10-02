@@ -2,11 +2,13 @@ import { ConsentAndAnalytics } from '@/components/analytics/ConsentAndAnalytics'
 import { JsonLd } from '@/components/seo/JsonLd'
 import {
   getAvisoActivo,
+  getCobertura,
   getEnlacesInteres,
   getOfertaFlotante,
   getSiteSettings,
 } from '@/lib/content'
 import { GA_ID } from '@/lib/env'
+import { construirMenu } from '@/lib/menu'
 import { localBusinessJsonLd, websiteJsonLd } from '@/lib/seo'
 import { AnnouncementBar } from './AnnouncementBar'
 import { FloatingWhatsApp } from './FloatingWhatsApp'
@@ -17,11 +19,12 @@ import { TopBar } from './TopBar'
 
 /** Estructura común de las páginas públicas (también la usa la página 404). */
 export async function SiteChrome({ children }: { children: React.ReactNode }) {
-  const [sitio, aviso, oferta, enlaces] = await Promise.all([
+  const [sitio, aviso, oferta, enlaces, municipios] = await Promise.all([
     getSiteSettings(),
     getAvisoActivo(),
     getOfertaFlotante(),
     getEnlacesInteres(),
+    getCobertura(),
   ])
   return (
     <>
@@ -34,7 +37,7 @@ export async function SiteChrome({ children }: { children: React.ReactNode }) {
       <JsonLd data={[localBusinessJsonLd(sitio), websiteJsonLd()]} />
       <AnnouncementBar aviso={aviso} />
       <TopBar sitio={sitio} />
-      <Header sitio={sitio} />
+      <Header sitio={sitio} menu={construirMenu(municipios)} />
       <main id="contenido" tabIndex={-1} className="outline-none">
         {children}
       </main>

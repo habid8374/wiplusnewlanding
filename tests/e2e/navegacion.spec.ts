@@ -234,3 +234,21 @@ test('/llms.txt responde en Markdown para asistentes de IA', async ({ request })
   expect(r.status()).toBe(200)
   expect(r.headers()['content-type']).toContain('text/markdown')
 })
+
+test('el menú despliega los municipios de Cobertura y abre la página de la zona', async ({
+  page,
+}, info) => {
+  test.skip(info.project.name !== 'escritorio-1280', 'El menú desplegable es de escritorio')
+  await page.goto('/')
+  await cerrarCookies(page)
+  const nav = page.locator('nav[aria-label="Principal"]')
+  const zona = nav.getByRole('link', { name: 'Hibácharo' })
+  await expect(zona).toBeHidden()
+  await nav.getByRole('link', { name: 'Cobertura', exact: true }).hover()
+  await expect(zona).toBeVisible()
+  await zona.click()
+  await expect(page).toHaveURL(/\/cobertura\/hibacharo$/)
+  await expect(page.getByRole('heading', { level: 1 })).toHaveText(
+    'Internet por fibra óptica en Hibácharo',
+  )
+})

@@ -1,5 +1,6 @@
 import { PortalClientesLink, WhatsAppLink } from '@/components/analytics/TrackedLinks'
 import { Container } from '@/components/ui/Container'
+import type { MenuItem } from '@/lib/menu'
 import { mainNav } from '@/lib/nav'
 import type { SiteSettings } from '@/lib/types'
 import { mensajesWhatsApp } from '@/lib/whatsapp'
@@ -7,13 +8,13 @@ import { Logo } from './Logo'
 import { MobileNav } from './MobileNav'
 import { NavLinks } from './NavLinks'
 
-export function Header({ sitio }: { sitio: SiteSettings }) {
+export function Header({ sitio, menu }: { sitio: SiteSettings; menu: MenuItem[] }) {
   return (
     <header className="sticky top-0 z-40 border-b border-line bg-white/95 backdrop-blur supports-[backdrop-filter]:bg-white/85">
       <Container className="flex h-16 items-center justify-between gap-4 sm:h-18">
         <Logo className="shrink-0" />
         <nav aria-label="Principal" className="hidden lg:block">
-          <NavLinks items={mainNav} />
+          <NavLinks items={menu} />
         </nav>
         <div className="flex items-center gap-2">
           {sitio.portalClientes && (

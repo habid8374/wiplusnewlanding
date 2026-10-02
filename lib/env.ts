@@ -33,7 +33,9 @@ export const SHOW_EXAMPLES = !IS_PRODUCTION_SITE
 
 export const WHATSAPP_OVERRIDE = (process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || '').replace(/\D/g, '')
 
-export const GA_ID = process.env.NEXT_PUBLIC_GA_ID || ''
+/** Google Analytics 4 de WIPLUS (no es secreto). Solo mide en producción y con consentimiento. */
+const GA_WIPLUS = 'G-D17QJZ7JZ1'
+export const GA_ID = process.env.NEXT_PUBLIC_GA_ID || (IS_PRODUCTION_SITE ? GA_WIPLUS : '')
 export const TURNSTILE_SITE_KEY = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY || ''
 
 /** Verificación de propiedad (método "etiqueta HTML") de Google Search Console y Bing Webmaster Tools. */

@@ -122,7 +122,7 @@ puede reemplazar desde el CMS (`/studio`) sin programador.
       p. ej. `test.wiplus.com.co`, para que el cliente mida su plan sin pasar por Bogotá. Hoy se usa el
       servidor público de openspeedtest.com (`components/sections/SpeedTest.tsx`).
 - [x] Claves de Cloudflare Turnstile (formularios probados en el dominio).
-- [ ] ID de Google Analytics 4.
+- [x] Google Analytics 4 conectado (ID G-D17QJZ7JZ1). Pendiente: marcar eventos clave y vincular Search Console en Analytics.
 - [ ] Acceso a Cloudflare (solo si se migra el despliegue a Cloudflare Workers).
 - [ ] Crear en Cloudflare el bucket R2 y la base D1 y poner el `database_id` real en `wrangler.jsonc`
       (ver README › Despliegue).

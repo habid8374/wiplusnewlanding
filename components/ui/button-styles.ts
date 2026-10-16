@@ -9,7 +9,7 @@ export function buttonClasses(
   className?: string,
 ) {
   return cn(
-    'inline-flex items-center justify-center gap-2 rounded-full font-bold transition-colors duration-150 disabled:cursor-not-allowed disabled:opacity-60 select-none',
+    'inline-flex items-center justify-center gap-2 rounded-full font-bold transition duration-150 not-disabled:active:scale-[0.97] disabled:cursor-not-allowed disabled:opacity-60 select-none',
     size === 'sm' && 'min-h-10 px-4 text-sm',
     size === 'md' && 'min-h-12 px-6 text-base',
     size === 'lg' && 'min-h-14 px-7 text-lg',

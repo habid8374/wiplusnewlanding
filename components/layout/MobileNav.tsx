@@ -67,7 +67,7 @@ export function MobileNav({
         id={panelId}
         ref={panelRef}
         hidden={!isOpen}
-        className="absolute inset-x-0 top-full z-40 h-[calc(100dvh-4rem)] overflow-y-auto border-t border-line bg-white shadow-card sm:h-[calc(100dvh-4.5rem)]"
+        className="absolute inset-x-0 top-full z-40 h-[calc(100dvh-4rem)] motion-safe:animate-menu-entra overflow-y-auto border-t border-line bg-white shadow-card sm:h-[calc(100dvh-4.5rem)]"
       >
         <nav aria-label="Menú móvil" className="px-4 py-4">
           <ul className="divide-y divide-line">

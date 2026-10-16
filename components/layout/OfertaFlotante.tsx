@@ -88,7 +88,7 @@ export function OfertaFlotante({ oferta, whatsapp }: { oferta: Oferta; whatsapp:
           role="dialog"
           aria-labelledby={tituloId}
           tabIndex={-1}
-          className="w-[min(22rem,calc(100vw-2rem))] animate-fade-up overflow-hidden rounded-3xl bg-white shadow-card-hover ring-1 ring-line outline-none"
+          className="w-[min(22rem,calc(100vw-2rem))] origin-bottom-right animate-pop-entra overflow-hidden rounded-3xl bg-white shadow-card-hover ring-1 ring-line outline-none"
         >
           <div className="flex items-center justify-between gap-3 bg-gradient-to-r from-primary-800 to-primary-600 py-3 pr-2 pl-4 text-white">
             <p id={tituloId} className="flex items-center gap-2 font-extrabold">
@@ -121,7 +121,7 @@ export function OfertaFlotante({ oferta, whatsapp }: { oferta: Oferta; whatsapp:
       )}
 
       {!abierto && globo && oferta.mensaje && (
-        <div className="relative max-w-[15rem] animate-fade-up rounded-2xl bg-white py-2.5 pr-9 pl-3.5 text-sm font-semibold text-primary-900 shadow-card-hover ring-1 ring-line">
+        <div className="relative max-w-[15rem] origin-bottom-right animate-pop-entra rounded-2xl bg-white py-2.5 pr-9 pl-3.5 text-sm font-semibold text-primary-900 shadow-card-hover ring-1 ring-line">
           <button type="button" onClick={abrir} className="text-left">
             {oferta.mensaje}{' '}
             <span className="whitespace-nowrap text-primary-600 underline underline-offset-2">
@@ -150,7 +150,7 @@ export function OfertaFlotante({ oferta, whatsapp }: { oferta: Oferta; whatsapp:
         onClick={() => (abierto ? cerrar() : abrir())}
         aria-expanded={abierto}
         aria-controls={abierto ? panelId : undefined}
-        className="oferta-flota relative mr-1 size-16 rounded-2xl bg-white shadow-lg ring-4 ring-white transition-transform hover:scale-105 focus-visible:scale-105 sm:mr-0 sm:size-[4.5rem]"
+        className="oferta-flota relative mr-1 size-16 rounded-2xl bg-white shadow-lg ring-4 ring-white transition-transform hover:scale-105 focus-visible:scale-105 active:scale-95 sm:mr-0 sm:size-[4.5rem]"
       >
         <Image src={icono} alt="" fill sizes="72px" className="rounded-xl object-cover" />
         <span className="absolute -top-3 left-1/2 inline-flex -translate-x-1/2 items-center gap-0.5 rounded-full bg-gradient-to-r from-accent-500 to-primary-600 px-2 py-0.5 text-[0.625rem] font-extrabold tracking-wide whitespace-nowrap text-white uppercase shadow-md">

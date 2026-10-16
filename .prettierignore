@@ -7,3 +7,6 @@ playwright-report
 test-results
 .lighthouseci
 public
+# Skills de terceros (npx skills add): no se reformatean
+.agents
+skills-lock.json

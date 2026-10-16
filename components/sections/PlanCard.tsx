@@ -35,9 +35,11 @@ export function PlanCard({
         )}
       >
         {plan.etiqueta && (
-          <p className="absolute -top-3.5 left-1/2 inline-flex -translate-x-1/2 items-center gap-1 rounded-full bg-accent-500 px-3 py-1 text-xs font-extrabold tracking-wide whitespace-nowrap text-primary-950 uppercase shadow">
-            <Star className="size-3.5 fill-current" aria-hidden />
-            {plan.etiqueta}
+          <p className="absolute -top-3.5 left-1/2 inline-flex max-w-[calc(100%-2rem)] -translate-x-1/2 items-center gap-1 rounded-full bg-accent-500 px-3 py-1 text-xs font-extrabold tracking-wide whitespace-nowrap text-primary-950 uppercase shadow">
+            <Star className="size-3.5 shrink-0 fill-current" aria-hidden />
+            <span className="truncate" title={plan.etiqueta}>
+              {plan.etiqueta}
+            </span>
           </p>
         )}
         <Heading
@@ -72,7 +74,7 @@ export function PlanCard({
           {plan.beneficios.map((b) => (
             <li key={b} className="flex gap-2">
               <Check className="mt-0.5 size-4 shrink-0 text-whatsapp-700" aria-hidden />
-              <span>{b}</span>
+              <span className="min-w-0 [overflow-wrap:anywhere]">{b}</span>
             </li>
           ))}
         </ul>

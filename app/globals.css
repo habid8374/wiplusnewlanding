@@ -132,9 +132,7 @@
   textarea {
     touch-action: manipulation;
   }
-  a,
-  button,
-  summary {
+  html {
     -webkit-tap-highlight-color: transparent;
   }
   /* Una pulsación larga en un botón no debe seleccionar su texto */
@@ -218,7 +216,8 @@
   .hero-slide {
     animation: none;
   }
-  .hero-slide:first-child {
+  /* La primera foto está dentro de <picture> (después de <source>), no es :first-child. */
+  picture > .hero-slide {
     opacity: 1;
   }
 }
@@ -237,7 +236,8 @@
     transparent 100%
   );
   transform: translateX(-120%);
-  animation: aviso-brillo 5s ease-in-out infinite;
+  /* Tres pasadas y se detiene (WCAG 2.2.2: movimiento automático de más de 5 s). */
+  animation: aviso-brillo 5s ease-in-out 3;
 }
 @keyframes aviso-brillo {
   0%,

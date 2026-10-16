@@ -256,6 +256,7 @@ export function VerificadorCobertura({
               }
               aria-describedby={aviso ? `${id}-aviso` : undefined}
               autoComplete="off"
+              enterKeyHint="search"
               placeholder="Escribe tu barrio…"
               value={texto}
               onChange={(e) => {
@@ -385,7 +386,7 @@ function TarjetaResultado({
       <div
         data-testid="resultado-cobertura"
         data-estado="cubierto_municipio"
-        className={cn('mt-5 rounded-2xl p-4 ring-1 sm:p-5', e.caja)}
+        className={cn('mt-5 rounded-2xl p-4 [overflow-wrap:anywhere] ring-1 sm:p-5', e.caja)}
       >
         <p className="inline-flex items-center gap-1.5 text-xs font-bold tracking-wide uppercase">
           <e.Icono className={cn('size-4', e.icono)} aria-hidden />
@@ -420,7 +421,7 @@ function TarjetaResultado({
       <div
         data-testid="resultado-cobertura"
         data-estado="no_aparece"
-        className="mt-5 rounded-2xl bg-primary-50 p-4 ring-1 ring-primary-100 sm:p-5"
+        className="mt-5 rounded-2xl bg-primary-50 p-4 [overflow-wrap:anywhere] ring-1 ring-primary-100 sm:p-5"
       >
         <p className="flex items-start gap-2 font-bold text-primary-950">
           <MessageCircleQuestion className="mt-0.5 size-5 shrink-0 text-primary-700" aria-hidden />
@@ -446,7 +447,7 @@ function TarjetaResultado({
     <div
       data-testid="resultado-cobertura"
       data-estado={barrio.estado}
-      className={cn('mt-5 rounded-2xl p-4 ring-1 sm:p-5', e.caja)}
+      className={cn('mt-5 rounded-2xl p-4 [overflow-wrap:anywhere] ring-1 sm:p-5', e.caja)}
     >
       <p className="inline-flex items-center gap-1.5 text-xs font-bold tracking-wide uppercase">
         <e.Icono className={cn('size-4', e.icono)} aria-hidden />

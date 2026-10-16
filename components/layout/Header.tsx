@@ -11,7 +11,7 @@ import { NavLinks } from './NavLinks'
 export function Header({ sitio, menu }: { sitio: SiteSettings; menu: MenuItem[] }) {
   return (
     <header className="sticky top-0 z-40 border-b border-line bg-white/95 backdrop-blur supports-[backdrop-filter]:bg-white/85">
-      <Container className="flex h-16 items-center justify-between gap-4 sm:h-18">
+      <Container className="flex h-16 items-center justify-between gap-2 sm:h-18 sm:gap-4">
         <Logo className="shrink-0" />
         <nav aria-label="Principal" className="hidden lg:block">
           <NavLinks items={menu} />

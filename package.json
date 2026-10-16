@@ -24,14 +24,14 @@
     "test:unit": "vitest run"
   },
   "dependencies": {
-    "@next/third-parties": "^16.3.6",
+    "@next/third-parties": "^16.4.2",
     "@sanity/icons": "^5.2.2",
     "@sanity/ui": "^4.2.4",
     "@sanity/vision": "^6.16.0",
     "clsx": "^2.1.1",
     "fuse.js": "^7.5.0",
     "lucide-react": "^1.47.0",
-    "next": "16.3.6",
+    "next": "16.4.2",
     "next-sanity": "^13.3.4",
     "react": "19.2.8",
     "react-dom": "19.2.8",
@@ -51,10 +51,10 @@
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "eslint": "^9",
-    "eslint-config-next": "16.3.6",
+    "eslint-config-next": "16.4.2",
     "prettier": "^3.9.9",
     "prettier-plugin-tailwindcss": "^0.8.1",
-    "sharp": "^0.35.4",
+    "sharp": "^0.35.5",
     "tailwindcss": "^4",
     "tsx": "^4.23.15",
     "typescript": "^5",
@@ -68,6 +68,8 @@
     "adm-zip": "^0.6.1",
     "smol-toml": "^1.9.0",
     "js-yaml@<3.15.2": "^3.15.2",
-    "undici@7": "^7.30.0"
+    "undici@7": "^7.30.0",
+    "sharp": "$sharp",
+    "source-map-js": "^1.2.2"
   }
 }

@@ -15,6 +15,7 @@ import { FloatingWhatsApp } from './FloatingWhatsApp'
 import { Footer } from './Footer'
 import { Header } from './Header'
 import { OfertaFlotante } from './OfertaFlotante'
+import { TarjetaFecha } from './TarjetaFecha'
 import { TopBar } from './TopBar'
 
 /** Estructura común de las páginas públicas (también la usa la página 404). */
@@ -43,6 +44,7 @@ export async function SiteChrome({ children }: { children: React.ReactNode }) {
       </main>
       <Footer sitio={sitio} enlacesInteres={enlaces} />
       {oferta && <OfertaFlotante oferta={oferta} whatsapp={sitio.whatsapp} />}
+      <TarjetaFecha />
       <FloatingWhatsApp numero={sitio.whatsapp} numeroEmpresas={sitio.whatsappEmpresas} />
       <ConsentAndAnalytics gaId={GA_ID} />
     </>

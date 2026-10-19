@@ -43,26 +43,34 @@ export function TarjetaFecha() {
   return (
     <aside
       aria-label="Día Internacional de la Lucha contra el Cáncer de Mama"
-      className="fixed bottom-4 left-4 z-40 w-[min(19rem,calc(100vw-7rem))] origin-bottom-left animate-pop-entra rounded-2xl bg-gradient-to-br from-pink-700 to-pink-600 p-4 pr-10 text-white shadow-card-hover ring-1 ring-white/30 sm:bottom-6 sm:left-6"
+      className="fixed bottom-4 left-4 z-40 w-[min(19rem,calc(100vw-7rem))] origin-bottom-left animate-pop-entra overflow-hidden rounded-2xl bg-gradient-to-br from-white via-rose-50 to-pink-100 p-4 pr-10 text-rose-950 shadow-[0_10px_30px_-12px_rgb(190_18_60/0.35)] ring-1 ring-rose-200/80 sm:bottom-6 sm:left-6"
     >
+      <span aria-hidden className="absolute inset-y-0 left-0 w-1 bg-rose-300" />
       <button
         type="button"
         onClick={cerrar}
-        className="absolute top-2 right-2 inline-flex size-8 items-center justify-center rounded-full text-white/90 hover:bg-white/15 hover:text-white"
+        className="absolute top-2 right-2 inline-flex size-8 items-center justify-center rounded-full text-rose-500 transition-colors hover:bg-rose-100 hover:text-rose-700"
       >
         <X className="size-4" aria-hidden />
         <span className="sr-only">Cerrar</span>
       </button>
-      <p className="flex items-center gap-2 text-xs font-extrabold tracking-wide uppercase">
-        <Ribbon className="size-5 shrink-0" aria-hidden />
-        19 de octubre
-      </p>
-      <p className="mt-1.5 text-base leading-snug font-extrabold">
+      <div className="flex items-center gap-2.5">
+        <span
+          aria-hidden
+          className="inline-flex size-8 shrink-0 items-center justify-center rounded-full bg-rose-100 text-rose-500 ring-1 ring-rose-200"
+        >
+          <Ribbon className="size-4" />
+        </span>
+        <p className="text-[0.7rem] font-semibold tracking-[0.18em] text-rose-700 uppercase">
+          19 de octubre
+        </p>
+      </div>
+      <p className="mt-2.5 text-[0.95rem] leading-snug font-bold text-rose-900">
         Día Internacional de la Lucha contra el Cáncer de Mama
       </p>
-      <p className="mt-1.5 text-sm leading-snug text-white">
+      <p className="mt-1.5 text-sm leading-relaxed text-rose-950/80">
         La detección temprana salva vidas. Hazte el autoexamen y consulta a tu médico. WIPLUS se une
-        a esta causa. 💗
+        a esta causa.
       </p>
     </aside>
   )

@@ -272,3 +272,62 @@
     animation: none;
   }
 }
+
+/* Tarjeta del 19 de octubre: corazones que suben, lazo que late y barra tipo reel */
+.corazon-sube {
+  opacity: 0;
+  animation: corazon-sube var(--t, 4s) cubic-bezier(0.33, 0, 0.2, 1) var(--d, 0s) infinite;
+}
+@keyframes corazon-sube {
+  0% {
+    opacity: 0;
+    transform: translate(0, 0) scale(0.5) rotate(0deg);
+  }
+  15% {
+    opacity: 0.85;
+  }
+  70% {
+    opacity: 0.6;
+  }
+  100% {
+    opacity: 0;
+    transform: translate(var(--dx, 0px), -6.5rem) scale(1) rotate(var(--r, 12deg));
+  }
+}
+.lazo-late {
+  animation: lazo-late 2.4s ease-in-out infinite;
+}
+@keyframes lazo-late {
+  0%,
+  40%,
+  100% {
+    transform: scale(1);
+  }
+  15% {
+    transform: scale(1.12);
+  }
+  28% {
+    transform: scale(1.04);
+  }
+}
+.reel-progreso {
+  transform-origin: left;
+  animation: reel-progreso 6s linear infinite;
+}
+@keyframes reel-progreso {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .corazon-sube,
+  .reel-progreso {
+    display: none;
+  }
+  .lazo-late {
+    animation: none;
+  }
+}

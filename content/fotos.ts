@@ -20,6 +20,20 @@ export const fotos: Foto[] = [
     height: 900,
   },
   {
+    id: 'equipo-oficina',
+    src: '/equipo/equipo-oficina-wiplus.jpg',
+    alt: 'Equipo de oficina, ventas y atención de WIPLUS frente a la fachada azul y blanca de la oficina en Sabanalarga',
+    width: 1200,
+    height: 900,
+  },
+  {
+    id: 'atencion-oficina',
+    src: '/equipo/atencion-oficina-wiplus.jpg',
+    alt: 'Cuatro integrantes del equipo de atención al cliente de WIPLUS dentro de la oficina, frente al letrero de la empresa',
+    width: 1200,
+    height: 900,
+  },
+  {
     id: 'tecnicos-oficina',
     src: '/equipo/tecnicos-oficina-wiplus.jpg',
     alt: 'Técnicos de WIPLUS uniformados y abrazados frente a la oficina de la Calle 13 en Sabanalarga',

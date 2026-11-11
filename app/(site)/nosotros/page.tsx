@@ -92,7 +92,7 @@ export default async function NosotrosPage() {
           <figure className="relative overflow-hidden rounded-3xl shadow-card-hover">
             <Image
               src={equipo}
-              alt="Equipo técnico de WIPLUS Comunicaciones: cinco técnicos con el uniforme azul de la empresa, uno de ellos con casco, haciendo el gesto de aprobación"
+              alt="Equipo técnico de WIPLUS Comunicaciones: siete técnicos con camisa gris con reflectivos, jean y gorra de la empresa, abrazados frente a la camioneta con las escaleras de trabajo"
               sizes="(min-width: 1024px) 55vw, 100vw"
               placeholder="blur"
               className="h-auto w-full"
@@ -135,7 +135,7 @@ export default async function NosotrosPage() {
       </Section>
 
       {fotos.length > 0 && (
-        <Section id="trabajos" title="Nuestro trabajo en campo" tone="surface">
+        <Section id="trabajos" title="Así es el equipo WIPLUS" tone="surface">
           <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {fotos.map((f) => (
               <li key={f.id} className="overflow-hidden rounded-2xl">

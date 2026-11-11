@@ -92,12 +92,12 @@ puede reemplazar desde el CMS (`/studio`) sin programador.
 - [x] Razón social WIPLUS COMUNICACIONES DE COLOMBIA SAS, NIT 901194958-0.
 - [ ] Registro TIC (MinTIC) para los textos legales.
 - [ ] Historia de la empresa (año de fundación, fundadores).
-- [ ] Foto original en alta resolución del equipo técnico (la de /nosotros se recortó del flyer
-      «Conoce nuestro equipo técnico 2023» de Facebook) y autorización de las personas que aparecen.
+- [x] Fotos nuevas del equipo (noviembre de 2026) en /nosotros y en la galería «Así es el equipo WIPLUS».
+- [ ] Autorización de las personas que aparecen en las fotos del equipo.
 - [ ] Confirmar si «La Voz del Pueblo» (aparece en el flyer junto a la dirección) es el barrio de la
       oficina, para agregarlo a la dirección del sitio y de Google Maps.
 - [ ] **Logo en alta resolución / vectorial (SVG o AI)**. El sitio usa el PNG suministrado por chat.
-- [ ] Fotos de trabajos (las del sitio actual no se pudieron descargar desde el entorno de desarrollo).
+- [ ] Fotos de trabajos en campo (instalaciones de fibra); por ahora la galería muestra al equipo.
 
 ## Legal
 

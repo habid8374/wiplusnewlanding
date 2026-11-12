@@ -4,7 +4,7 @@
  * Para verla antes de tiempo: abrir cualquier página con ?navidad=1 (dura la sesión del navegador).
  */
 export const NAVIDAD = {
-  desde: '2026-12-01T00:00:00-05:00',
+  desde: '2026-11-12T00:00:00-05:00',
   hasta: '2027-01-07T00:00:00-05:00',
 } as const
 

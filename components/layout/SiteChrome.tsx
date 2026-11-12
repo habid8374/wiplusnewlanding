@@ -1,4 +1,5 @@
 import { ConsentAndAnalytics } from '@/components/analytics/ConsentAndAnalytics'
+import { Navidad } from '@/components/navidad/Navidad'
 import { JsonLd } from '@/components/seo/JsonLd'
 import {
   getAvisoActivo,
@@ -35,6 +36,11 @@ export async function SiteChrome({ children }: { children: React.ReactNode }) {
         Saltar al contenido
       </a>
       <JsonLd data={[localBusinessJsonLd(sitio), websiteJsonLd()]} />
+      {/* Saludo de temporada: visible solo con <html data-navidad> (lib/temporada.ts) */}
+      <p className="hidden bg-primary-50 px-4 py-2 text-center text-sm font-bold text-primary-900 ring-1 ring-primary-200 navidad:block">
+        <span aria-hidden>❄️ </span>¡Felices fiestas! WIPLUS te desea una Feliz Navidad y un
+        próspero 2027<span aria-hidden> ❄️</span>
+      </p>
       <AnnouncementBar aviso={aviso} />
       <TopBar sitio={sitio} />
       <Header sitio={sitio} menu={construirMenu(municipios)} />
@@ -45,6 +51,7 @@ export async function SiteChrome({ children }: { children: React.ReactNode }) {
       {oferta && <OfertaFlotante oferta={oferta} whatsapp={sitio.whatsapp} />}
       <FloatingWhatsApp numero={sitio.whatsapp} numeroEmpresas={sitio.whatsappEmpresas} />
       <ConsentAndAnalytics gaId={GA_ID} />
+      <Navidad />
     </>
   )
 }

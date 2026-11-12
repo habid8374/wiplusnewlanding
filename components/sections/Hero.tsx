@@ -3,6 +3,7 @@ import Image from 'next/image'
 import { WhatsAppLink } from '@/components/analytics/TrackedLinks'
 import { ButtonLink } from '@/components/ui/ButtonLink'
 import { Container } from '@/components/ui/Container'
+import { Mascota } from '@/components/ui/Mascota'
 import { formatCOP } from '@/lib/phone'
 import { listaNatural } from '@/lib/texto'
 import type { Plan, SiteSettings } from '@/lib/types'
@@ -105,6 +106,23 @@ export function Hero({ sitio, planes }: { sitio: SiteSettings; planes: Plan[] })
           </ul>
         </div>
       </Container>
+      {/* Temporada navideña: el superhéroe con gorro de pie sobre un borde de nieve (solo pantallas anchas) */}
+      <Mascota
+        soloNavidad
+        sizes="(min-width: 1280px) 256px, 208px"
+        className="pointer-events-none absolute right-[25%] bottom-2 w-48 xl:w-60 lg:navidad:block"
+      />
+      <svg
+        aria-hidden
+        viewBox="0 0 1440 60"
+        preserveAspectRatio="none"
+        className="pointer-events-none absolute inset-x-0 -bottom-px hidden h-8 w-full drop-shadow-[0_-3px_6px_rgb(166_209_255/0.7)] sm:h-12 navidad:block"
+      >
+        <path
+          d="M0,30 C120,55 240,5 360,28 C480,52 600,8 720,30 C840,52 960,6 1080,28 C1200,50 1320,10 1440,30 L1440,60 L0,60 Z"
+          fill="#fff"
+        />
+      </svg>
     </section>
   )
 }

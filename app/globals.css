@@ -1,5 +1,8 @@
 @import 'tailwindcss';
 
+/* Temporada navideña: components/navidad/Navidad.tsx marca <html data-navidad> entre las fechas de lib/temporada.ts */
+@custom-variant navidad (&:where([data-navidad], [data-navidad] *));
+
 /*
  * Tokens de marca WIPLUS — extraídos del logo.
  *  navy  #0A2A6E / #082C79  (trazos oscuros de la W)

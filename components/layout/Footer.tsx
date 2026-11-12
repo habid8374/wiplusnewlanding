@@ -3,6 +3,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { CallLink, PortalClientesLink, WhatsAppLink } from '@/components/analytics/TrackedLinks'
 import { FacebookIcon, InstagramIcon } from '@/components/icons/brands'
+import { ArbolesNavidad } from '@/components/navidad/ArbolesNavidad'
 import { Container } from '@/components/ui/Container'
 import { slugify } from '@/lib/cobertura/csv'
 import { legalNav, mainNav } from '@/lib/nav'
@@ -22,7 +23,8 @@ export function Footer({
   const year = new Date().getFullYear()
   const telEmpresas = telefonoEmpresas(sitio)
   return (
-    <footer className="bg-primary-950 text-primary-100">
+    <footer className="relative isolate overflow-hidden bg-primary-950 text-primary-100">
+      <ArbolesNavidad />
       <Container className="grid gap-10 py-14 sm:grid-cols-2 lg:grid-cols-4">
         <div>
           <Link

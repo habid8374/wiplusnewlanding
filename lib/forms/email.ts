@@ -183,6 +183,24 @@ export async function enviarCorreos(
   return { ok: true }
 }
 
+/**
+ * Motivo del rechazo que da el proveedor (p. ej. «unrecognised IP address», «Key not found»,
+ * remitente sin verificar), para verlo en los registros de Vercel. No incluye datos del usuario.
+ */
+async function detalleError(res: Response) {
+  try {
+    const cuerpo = (await res.text()).slice(0, 300)
+    try {
+      const j = JSON.parse(cuerpo) as { code?: string; message?: string; name?: string }
+      return [j.code ?? j.name, j.message].filter(Boolean).join(' · ') || cuerpo
+    } catch {
+      return cuerpo
+    }
+  } catch {
+    return 'sin detalle'
+  }
+}
+
 /** Envío con la API REST de Resend (https://resend.com/docs/api-reference/emails/send-email). */
 async function enviarResend(key: string, body: Correo): Promise<{ error: string | null }> {
   try {
@@ -191,7 +209,7 @@ async function enviarResend(key: string, body: Correo): Promise<{ error: string 
       headers: { Authorization: `Bearer ${key}`, 'Content-Type': 'application/json' },
       body: JSON.stringify(body),
     })
-    if (!res.ok) return { error: `Resend respondió ${res.status}` }
+    if (!res.ok) return { error: `Resend respondió ${res.status}: ${await detalleError(res)}` }
     return { error: null }
   } catch (e) {
     return { error: String(e) }
@@ -218,7 +236,7 @@ async function enviarBrevo(key: string, c: Correo): Promise<{ error: string | nu
         ...(c.reply_to ? { replyTo: direccion(c.reply_to) } : {}),
       }),
     })
-    if (!res.ok) return { error: `Brevo respondió ${res.status}` }
+    if (!res.ok) return { error: `Brevo respondió ${res.status}: ${await detalleError(res)}` }
     return { error: null }
   } catch (e) {
     return { error: String(e) }
